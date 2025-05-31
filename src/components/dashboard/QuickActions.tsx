@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
 interface QuickAction {
@@ -9,8 +9,7 @@ interface QuickAction {
   title: string;
   icon: string;
   route: string;
-  badge?: number;
-  priority: number;
+  description?: string;
 }
 
 interface QuickActionsProps {
@@ -25,12 +24,34 @@ const QuickActions = ({ actions }: QuickActionsProps) => {
   };
 
   const defaultActions = [
-    { id: 'chat', title: 'Chat', icon: '💬', route: '/chat', badge: 2, priority: 1 },
-    { id: 'write', title: 'Write', icon: '📝', route: '/journal', priority: 2 },
-    { id: 'calm', title: 'Calm', icon: '🧘', route: '/meditation', priority: 3 },
-    { id: 'therapy', title: 'Therapy', icon: '🩺', route: '/therapy', priority: 4 },
-    { id: 'community', title: 'Community', icon: '👥', route: '/community', badge: 5, priority: 5 },
-    { id: 'learn', title: 'Learn', icon: '📚', route: '/resources', priority: 6 },
+    { 
+      id: 'lyfbot-chat', 
+      title: 'Chat with LyfBot', 
+      icon: '💬', 
+      route: '/lyfbot',
+      description: 'Get AI-powered support and insights'
+    },
+    { 
+      id: 'journal', 
+      title: 'Journal Entry', 
+      icon: '📝', 
+      route: '/journal',
+      description: 'Reflect on your thoughts and feelings'
+    },
+    { 
+      id: 'meditation', 
+      title: 'Start Meditation', 
+      icon: '🧘', 
+      route: '/meditation',
+      description: 'Find calm with guided sessions'
+    },
+    { 
+      id: 'community', 
+      title: 'Community Feed', 
+      icon: '👥', 
+      route: '/community',
+      description: 'Connect with others on similar journeys'
+    }
   ];
 
   const displayActions = actions.length > 0 ? actions : defaultActions;
@@ -41,24 +62,22 @@ const QuickActions = ({ actions }: QuickActionsProps) => {
         <CardTitle className="text-lg">Quick Actions</CardTitle>
       </CardHeader>
       <CardContent className="p-4 pt-0">
-        <div className="grid grid-cols-3 gap-4">
-          {displayActions.slice(0, 6).map((action) => (
-            <button
+        <div className="space-y-3">
+          {displayActions.map((action) => (
+            <Button
               key={action.id}
+              variant="outline"
               onClick={() => handleActionClick(action.route)}
-              className="flex flex-col items-center p-3 rounded-lg bg-gray-50 hover:bg-primary/10 transition-colors relative"
+              className="w-full p-4 h-auto flex items-center gap-3 text-left hover:bg-primary/5"
             >
-              {action.badge && (
-                <Badge 
-                  variant="destructive" 
-                  className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
-                >
-                  {action.badge}
-                </Badge>
-              )}
-              <div className="text-2xl mb-1">{action.icon}</div>
-              <div className="text-xs font-medium text-gray-700">{action.title}</div>
-            </button>
+              <span className="text-2xl">{action.icon}</span>
+              <div className="flex-1">
+                <div className="font-medium text-gray-900">{action.title}</div>
+                {action.description && (
+                  <div className="text-xs text-gray-600 mt-1">{action.description}</div>
+                )}
+              </div>
+            </Button>
           ))}
         </div>
       </CardContent>

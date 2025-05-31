@@ -3,18 +3,17 @@ import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import WellnessMetrics from '@/components/dashboard/WellnessMetrics';
+import TodayProgress from '@/components/dashboard/TodayProgress';
 import QuickActions from '@/components/dashboard/QuickActions';
 import RecentActivity from '@/components/dashboard/RecentActivity';
-import Recommendations from '@/components/dashboard/Recommendations';
 import { useToast } from '@/hooks/use-toast';
 
-interface WellnessMetrics {
-  moodScore: number;
-  streakDays: number;
-  weeklyGoalProgress: number;
-  totalSessions: number;
-  lastActivity: Date;
-  riskLevel: 'low' | 'medium' | 'high';
+interface ProgressItem {
+  id: string;
+  title: string;
+  completed: boolean;
+  time?: string;
+  icon: string;
 }
 
 interface QuickAction {
@@ -22,8 +21,7 @@ interface QuickAction {
   title: string;
   icon: string;
   route: string;
-  badge?: number;
-  priority: number;
+  description?: string;
 }
 
 interface Activity {
@@ -32,15 +30,6 @@ interface Activity {
   title: string;
   timestamp: string;
   icon: string;
-}
-
-interface Recommendation {
-  id: string;
-  type: string;
-  title: string;
-  description: string;
-  route: string;
-  priority: 'high' | 'medium' | 'low';
 }
 
 const Dashboard = () => {
@@ -52,21 +41,19 @@ const Dashboard = () => {
   const user = {
     firstName: 'John',
     lastName: 'Doe',
-    avatar: '',
   };
 
-  const wellnessData: WellnessMetrics = {
-    moodScore: 8.2,
-    streakDays: 7,
-    weeklyGoalProgress: 75,
-    totalSessions: 42,
-    lastActivity: new Date(),
-    riskLevel: 'low',
+  const wellnessData = {
+    overallScore: 78,
+    goalsCompleted: 3,
+    totalGoals: 5,
+    currentStreak: 12,
+    moodTrend: 'improving' as const,
   };
 
+  const progressItems: ProgressItem[] = [];
   const quickActions: QuickAction[] = [];
   const recentActivity: Activity[] = [];
-  const recommendations: Recommendation[] = [];
   const notificationCount = 3;
 
   const handleRefresh = useCallback(async () => {
@@ -88,10 +75,6 @@ const Dashboard = () => {
       setIsRefreshing(false);
     }
   }, [toast]);
-
-  const handleViewAllActivity = () => {
-    navigate('/dashboard/activity');
-  };
 
   // Pull-to-refresh handler
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -121,7 +104,7 @@ const Dashboard = () => {
 
   return (
     <div 
-      className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5"
+      className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50"
       onTouchStart={handleTouchStart}
     >
       <DashboardHeader 
@@ -138,22 +121,18 @@ const Dashboard = () => {
         )}
         
         <WellnessMetrics
-          moodScore={wellnessData.moodScore}
-          streakDays={wellnessData.streakDays}
-          weeklyGoalProgress={wellnessData.weeklyGoalProgress}
-          totalSessions={wellnessData.totalSessions}
-          lastActivity={wellnessData.lastActivity}
-          riskLevel={wellnessData.riskLevel}
+          overallScore={wellnessData.overallScore}
+          goalsCompleted={wellnessData.goalsCompleted}
+          totalGoals={wellnessData.totalGoals}
+          currentStreak={wellnessData.currentStreak}
+          moodTrend={wellnessData.moodTrend}
         />
+        
+        <TodayProgress progressItems={progressItems} />
         
         <QuickActions actions={quickActions} />
         
-        <RecentActivity 
-          activities={recentActivity}
-          onViewAll={handleViewAllActivity}
-        />
-        
-        <Recommendations recommendations={recommendations} />
+        <RecentActivity activities={recentActivity} />
       </main>
     </div>
   );

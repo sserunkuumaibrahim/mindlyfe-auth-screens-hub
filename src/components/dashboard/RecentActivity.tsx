@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 
 interface Activity {
   id: string;
@@ -13,31 +12,37 @@ interface Activity {
 
 interface RecentActivityProps {
   activities: Activity[];
-  onViewAll: () => void;
 }
 
-const RecentActivity = ({ activities, onViewAll }: RecentActivityProps) => {
+const RecentActivity = ({ activities }: RecentActivityProps) => {
   const defaultActivities = [
     {
       id: '1',
-      type: 'mood_check',
-      title: 'Completed mood check',
+      type: 'achievement',
+      title: 'Earned "Mindful Week"',
       timestamp: '2 hours ago',
-      icon: '😊'
+      icon: '🏆'
     },
     {
       id: '2',
-      type: 'meditation',
-      title: '10 min meditation',
+      type: 'community',
+      title: '3 new community replies',
       timestamp: '4 hours ago',
-      icon: '🧘'
+      icon: '💬'
     },
     {
       id: '3',
-      type: 'journal',
-      title: 'Journal entry written',
+      type: 'analytics',
+      title: 'Weekly report ready',
       timestamp: '1 day ago',
-      icon: '📝'
+      icon: '📊'
+    },
+    {
+      id: '4',
+      type: 'milestone',
+      title: 'Goal milestone reached',
+      timestamp: '1 day ago',
+      icon: '🎯'
     }
   ];
 
@@ -50,7 +55,7 @@ const RecentActivity = ({ activities, onViewAll }: RecentActivityProps) => {
       </CardHeader>
       <CardContent className="p-4 pt-0">
         <div className="space-y-3">
-          {displayActivities.slice(0, 3).map((activity) => (
+          {displayActivities.map((activity) => (
             <div key={activity.id} className="flex items-center gap-3 py-2">
               <div className="text-lg">{activity.icon}</div>
               <div className="flex-1">
@@ -60,13 +65,6 @@ const RecentActivity = ({ activities, onViewAll }: RecentActivityProps) => {
             </div>
           ))}
         </div>
-        <Button
-          variant="ghost"
-          onClick={onViewAll}
-          className="w-full mt-4 text-primary hover:text-primary-dark"
-        >
-          View All
-        </Button>
       </CardContent>
     </Card>
   );
