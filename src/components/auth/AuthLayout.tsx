@@ -34,16 +34,9 @@ const AuthLayout = ({ children, title, subtitle, showBackButton = true, backTo =
         <div className="text-center mb-8">
           <div className="flex justify-center mb-6">
             <img 
-              src="/lovable-uploads/1ba3b96c-3925-4da0-98ba-1ab98cd31b3f.png" 
-              alt="MindLyfe Icon" 
-              className="h-20 w-20"
-            />
-          </div>
-          <div className="mb-4">
-            <img 
-              src="/lovable-uploads/38bd34bd-c9d7-4514-ab53-0e15ddd50ff6.png" 
-              alt="MindLyfe" 
-              className="h-12 mx-auto"
+              src="/lovable-uploads/66c73288-a843-485b-bbc5-7187cb067e2d.png" 
+              alt="MindLyfe - Live Better" 
+              className="h-24 w-auto"
             />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
