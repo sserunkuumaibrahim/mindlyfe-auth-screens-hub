@@ -15,14 +15,14 @@ const AuthLayout = ({ children, title, subtitle, showBackButton = true, backTo =
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5">
-      <div className="max-w-md mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#21A9E1]/5 to-[#8EBC40]/5">
+      <div className="max-w-md mx-auto px-6 py-8">
         {/* Header */}
         {showBackButton && (
           <div className="mb-8">
             <button
               onClick={() => navigate(backTo)}
-              className="flex items-center text-gray-600 hover:text-primary transition-colors"
+              className="flex items-center text-gray-600 hover:text-[#21A9E1] transition-colors"
             >
               <ArrowLeft className="w-5 h-5 mr-2" />
               <span className="text-sm font-medium">Back</span>
@@ -32,8 +32,19 @@ const AuthLayout = ({ children, title, subtitle, showBackButton = true, backTo =
 
         {/* Logo/Brand Area */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span className="text-white text-2xl font-bold">M</span>
+          <div className="flex justify-center mb-6">
+            <img 
+              src="/lovable-uploads/1ba3b96c-3925-4da0-98ba-1ab98cd31b3f.png" 
+              alt="MindLyfe Icon" 
+              className="h-20 w-20"
+            />
+          </div>
+          <div className="mb-4">
+            <img 
+              src="/lovable-uploads/38bd34bd-c9d7-4514-ab53-0e15ddd50ff6.png" 
+              alt="MindLyfe" 
+              className="h-12 mx-auto"
+            />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             {title}
