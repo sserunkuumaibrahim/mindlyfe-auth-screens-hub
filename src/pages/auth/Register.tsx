@@ -4,12 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
 import AuthLayout from '@/components/auth/AuthLayout';
-import PasswordStrengthIndicator from '@/components/auth/PasswordStrengthIndicator';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -17,13 +14,13 @@ const Register = () => {
     lastName: '',
     email: '',
     password: '',
-    accountType: 'individual'
+    confirmPassword: ''
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreements, setAgreements] = useState({
     terms: false,
-    privacy: false,
-    newsletter: false
+    privacy: false
   });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -41,10 +38,18 @@ const Register = () => {
       return;
     }
 
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Passwords don't match",
+        description: "Please ensure both passwords are identical.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       toast({
@@ -70,181 +75,137 @@ const Register = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const updateAgreements = (field: string, value: boolean) => {
-    setAgreements(prev => ({ ...prev, [field]: value }));
-  };
-
   return (
     <AuthLayout
-      title="Create Account"
-      subtitle="Start your wellness journey with MindLyfe"
-      backTo="/"
+      title="there"
+      subtitle="Create an account to access your package history and get real-time updates on all your shipments."
+      backTo="/auth/login"
     >
-      <div className="space-y-6">
-        {/* Welcome Section */}
-        <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-4 text-center">
-          <h3 className="font-semibold text-gray-900 mb-1">Welcome to MindLyfe</h3>
-          <p className="text-sm text-gray-600">Start your wellness journey</p>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Email Input */}
+        <div className="space-y-3">
+          <div className="relative">
+            <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Input
+              type="email"
+              value={formData.email}
+              onChange={(e) => updateFormData('email', e.target.value)}
+              placeholder="Enter your mail/phone number"
+              className="pl-12 h-14 bg-gray-50 border-0 rounded-2xl text-base placeholder:text-gray-500"
+              required
+            />
+            <button
+              type="button"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+            >
+              👁️
+            </button>
+          </div>
         </div>
 
-        {/* Registration Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Personal Information */}
-          <div className="space-y-4">
-            <h4 className="font-medium text-gray-900">Personal Information</h4>
-            
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <Label htmlFor="firstName">First Name</Label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                  <Input
-                    id="firstName"
-                    value={formData.firstName}
-                    onChange={(e) => updateFormData('firstName', e.target.value)}
-                    placeholder="John"
-                    className="pl-10"
-                    required
-                  />
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="lastName">Last Name</Label>
-                <Input
-                  id="lastName"
-                  value={formData.lastName}
-                  onChange={(e) => updateFormData('lastName', e.target.value)}
-                  placeholder="Doe"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => updateFormData('email', e.target.value)}
-                  placeholder="user@mindlyfe.org"
-                  className="pl-10"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  value={formData.password}
-                  onChange={(e) => updateFormData('password', e.target.value)}
-                  placeholder="••••••••••••••••••"
-                  className="pl-10 pr-10"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
-              </div>
-              {formData.password && (
-                <PasswordStrengthIndicator password={formData.password} className="mt-3" />
-              )}
-            </div>
-          </div>
-
-          {/* Account Type */}
-          <div className="space-y-3">
-            <Label>Account Type</Label>
-            <RadioGroup
-              value={formData.accountType}
-              onValueChange={(value) => updateFormData('accountType', value)}
-              className="space-y-2"
+        {/* Password Input */}
+        <div className="space-y-3">
+          <div className="relative">
+            <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Input
+              type={showPassword ? "text" : "password"}
+              value={formData.password}
+              onChange={(e) => updateFormData('password', e.target.value)}
+              placeholder="Create password"
+              className="pl-12 h-14 bg-gray-50 border-0 rounded-2xl text-base"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"
             >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="individual" id="individual" />
-                <Label htmlFor="individual">Individual User</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="organization" id="organization" />
-                <Label htmlFor="organization">Organization Member</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="minor" id="minor" />
-                <Label htmlFor="minor">Minor (Under 18)</Label>
-              </div>
-            </RadioGroup>
+              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            </button>
           </div>
+        </div>
 
-          {/* Agreements */}
-          <div className="space-y-3">
-            <div className="flex items-start space-x-2">
-              <Checkbox
-                id="terms"
-                checked={agreements.terms}
-                onCheckedChange={(checked) => updateAgreements('terms', checked as boolean)}
-                required
-              />
-              <Label htmlFor="terms" className="text-sm">
-                I agree to the <span className="text-primary">Terms of Service</span>
-              </Label>
-            </div>
-            
-            <div className="flex items-start space-x-2">
-              <Checkbox
-                id="privacy"
-                checked={agreements.privacy}
-                onCheckedChange={(checked) => updateAgreements('privacy', checked as boolean)}
-                required
-              />
-              <Label htmlFor="privacy" className="text-sm">
-                I agree to the <span className="text-primary">Privacy Policy</span>
-              </Label>
-            </div>
-            
-            <div className="flex items-start space-x-2">
-              <Checkbox
-                id="newsletter"
-                checked={agreements.newsletter}
-                onCheckedChange={(checked) => updateAgreements('newsletter', checked as boolean)}
-              />
-              <Label htmlFor="newsletter" className="text-sm">
-                Subscribe to newsletter (optional)
-              </Label>
-            </div>
+        {/* Confirm Password Input */}
+        <div className="space-y-3">
+          <div className="relative">
+            <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Input
+              type={showConfirmPassword ? "text" : "password"}
+              value={formData.confirmPassword}
+              onChange={(e) => updateFormData('confirmPassword', e.target.value)}
+              placeholder="Re-type your password"
+              className="pl-12 h-14 bg-gray-50 border-0 rounded-2xl text-base"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+            >
+              {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            </button>
           </div>
+        </div>
 
-          <Button
-            type="submit"
-            className="w-full bg-primary hover:bg-primary-dark text-white"
-            disabled={isLoading}
-          >
-            {isLoading ? "Creating Account..." : "Create Account"}
-          </Button>
-        </form>
+        {/* Terms Agreement */}
+        <div className="space-y-3">
+          <div className="flex items-start space-x-3">
+            <Checkbox
+              id="terms"
+              checked={agreements.terms}
+              onCheckedChange={(checked) => setAgreements(prev => ({ ...prev, terms: checked as boolean }))}
+              className="mt-1 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+              required
+            />
+            <label htmlFor="terms" className="text-sm text-gray-600 leading-relaxed">
+              By signing up you agree to our{' '}
+              <span className="text-red-500">Terms of Service</span> and{' '}
+              <span className="text-red-500">Privacy Policy</span>
+            </label>
+          </div>
+        </div>
+
+        {/* Sign Up Button */}
+        <Button
+          type="submit"
+          className="w-full h-14 bg-red-500 hover:bg-red-600 text-white text-base font-semibold rounded-2xl border-0 mt-8"
+          disabled={isLoading}
+        >
+          {isLoading ? "Creating Account..." : "Sign up"}
+        </Button>
+
+        {/* Divider */}
+        <div className="relative my-8">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-200" />
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-4 bg-white text-gray-500">Or</span>
+          </div>
+        </div>
+
+        {/* Google Sign Up */}
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full h-14 border border-gray-200 rounded-2xl text-base font-medium bg-white hover:bg-gray-50"
+        >
+          <span className="mr-3">🔍</span>
+          Sign up using Google
+        </Button>
 
         {/* Sign In Link */}
-        <div className="text-center">
+        <div className="text-center mt-6">
           <span className="text-gray-600">Already have an account? </span>
           <button
+            type="button"
             onClick={() => navigate('/auth/login')}
-            className="text-primary hover:text-primary-dark font-medium transition-colors"
+            className="text-red-500 font-medium"
           >
-            Sign In
+            Sign in
           </button>
         </div>
-      </div>
+      </form>
     </AuthLayout>
   );
 };
