@@ -44,6 +44,12 @@ import ResourceViewer from "./pages/resources/ResourceViewer";
 import SavedResources from "./pages/resources/SavedResources";
 import ResourceProgress from "./pages/resources/ResourceProgress";
 import ResourceSearch from "./pages/resources/ResourceSearch";
+import Profile from "./pages/Profile";
+import EditProfile from "./pages/profile/EditProfile";
+import PrivacySettings from "./pages/profile/PrivacySettings";
+import NotificationSettings from "./pages/profile/NotificationSettings";
+import AccountSettings from "./pages/profile/AccountSettings";
+import DataExport from "./pages/profile/DataExport";
 
 const queryClient = new QueryClient();
 
@@ -96,6 +102,12 @@ const App = () => (
           <Route path="/resources/saved" element={<SavedResources />} />
           <Route path="/resources/progress" element={<ResourceProgress />} />
           <Route path="/resources/search" element={<ResourceSearch />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
+          <Route path="/profile/privacy" element={<PrivacySettings />} />
+          <Route path="/profile/notifications" element={<NotificationSettings />} />
+          <Route path="/profile/account" element={<AccountSettings />} />
+          <Route path="/profile/data-export" element={<DataExport />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

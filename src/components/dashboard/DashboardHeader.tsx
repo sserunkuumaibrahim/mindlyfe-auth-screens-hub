@@ -138,14 +138,17 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
             </Button>
 
             {/* Profile */}
-            <div className="flex items-center gap-2 md:gap-3">
+            <button
+              onClick={() => navigate('/profile')}
+              className="flex items-center gap-2 md:gap-3 hover:bg-gray-50 rounded-lg p-1 transition-colors"
+            >
               <div className="w-7 h-7 md:w-8 md:h-8 bg-gradient-to-br from-mindlyfe-blue to-mindlyfe-green rounded-full flex items-center justify-center">
                 <User className="w-3 h-3 md:w-4 md:h-4 text-white" />
               </div>
               <span className="hidden sm:block text-sm font-medium text-gray-700">
                 Hi, {firstName}
               </span>
-            </div>
+            </button>
           </div>
         </div>
       </div>
