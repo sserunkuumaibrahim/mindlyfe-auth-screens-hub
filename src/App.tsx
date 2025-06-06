@@ -67,6 +67,7 @@ const App = () => (
           <Route path="/teletherapy/session/:sessionId" element={<VideoSession />} />
           <Route path="/teletherapy/group/:sessionId" element={<GroupSession />} />
           <Route path="/teletherapy/treatment/:therapistId" element={<TreatmentPlan />} />
+          <Route path="/teletherapy/treatment/current" element={<TreatmentPlan />} />
           <Route path="/chat" element={<ChatRoomsList />} />
           <Route path="/chat/room/:roomId" element={<ChatRoom />} />
           <Route path="/chat/create" element={<CreateChatRoom />} />

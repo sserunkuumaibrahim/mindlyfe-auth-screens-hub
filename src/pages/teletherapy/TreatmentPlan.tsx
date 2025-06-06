@@ -1,21 +1,11 @@
 
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { 
-  ArrowLeft, 
-  Target, 
-  Calendar, 
-  FileText, 
-  CheckCircle, 
-  Clock, 
-  Edit,
-  Plus,
-  TrendingUp
-} from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Target, FileText, Progress, CheckCircle, Circle, User, Brain, Heart, TrendingUp, Download, Edit, Plus, History } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
+import { Progress as ProgressBar } from '@/components/ui/progress';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import { useToast } from '@/hooks/use-toast';
 
@@ -23,365 +13,513 @@ interface Goal {
   id: string;
   title: string;
   description: string;
+  category: 'behavioral' | 'emotional' | 'cognitive' | 'social';
+  targetDate: string;
   progress: number;
   status: 'active' | 'completed' | 'paused';
-  targetWeeks: number;
-  currentWeek: number;
+  milestones: Milestone[];
 }
 
 interface Milestone {
   id: string;
   title: string;
-  week: number;
   completed: boolean;
-  date?: string;
+  completedDate?: string;
 }
 
-interface Exercise {
+interface Session {
   id: string;
-  title: string;
-  description: string;
-  status: 'completed' | 'in-progress' | 'pending';
-  dueDate?: string;
+  date: string;
+  type: 'individual' | 'group';
+  duration: number;
+  focus: string;
+  notes: string;
+  homework?: string;
 }
 
 const TreatmentPlan = () => {
   const navigate = useNavigate();
   const { therapistId } = useParams();
   const { toast } = useToast();
+  
+  const [activeTab, setActiveTab] = useState<'overview' | 'goals' | 'sessions' | 'progress'>('overview');
 
+  // Mock data
   const therapist = {
-    id: therapistId,
+    id: therapistId || 'therapist-1',
     name: 'Dr. Sarah Johnson',
-    title: 'Licensed Clinical Therapist'
+    title: 'Licensed Clinical Psychologist',
+    avatar: '/lovable-uploads/therapist1.jpg'
   };
 
-  const goals: Goal[] = [
+  const treatmentPlan = {
+    id: 'plan-1',
+    startDate: '2024-01-15',
+    estimatedDuration: '6 months',
+    primaryDiagnosis: 'Generalized Anxiety Disorder',
+    secondaryDiagnosis: 'Mild Depression',
+    treatmentApproach: 'Cognitive Behavioral Therapy (CBT)',
+    overallProgress: 65,
+    nextSession: '2024-01-22T14:00:00Z'
+  };
+
+  const [goals] = useState<Goal[]>([
     {
       id: 'goal-1',
-      title: 'Reduce anxiety symptoms',
-      description: 'Decrease daily anxiety levels using CBT techniques and mindfulness practices',
+      title: 'Reduce Anxiety Symptoms',
+      description: 'Learn and implement coping strategies to manage daily anxiety',
+      category: 'emotional',
+      targetDate: '2024-03-15',
       progress: 75,
       status: 'active',
-      targetWeeks: 8,
-      currentWeek: 6
+      milestones: [
+        { id: 'm1', title: 'Learn breathing techniques', completed: true, completedDate: '2024-01-20' },
+        { id: 'm2', title: 'Practice mindfulness daily', completed: true, completedDate: '2024-01-25' },
+        { id: 'm3', title: 'Use grounding techniques in stressful situations', completed: false },
+        { id: 'm4', title: 'Maintain anxiety journal for 2 weeks', completed: false }
+      ]
     },
     {
       id: 'goal-2',
-      title: 'Improve sleep quality',
-      description: 'Establish consistent sleep hygiene and reduce sleep-related anxiety',
+      title: 'Improve Social Interactions',
+      description: 'Build confidence in social situations and strengthen relationships',
+      category: 'social',
+      targetDate: '2024-04-01',
       progress: 45,
       status: 'active',
-      targetWeeks: 6,
-      currentWeek: 3
+      milestones: [
+        { id: 'm5', title: 'Attend one social gathering per week', completed: true, completedDate: '2024-01-18' },
+        { id: 'm6', title: 'Practice assertiveness techniques', completed: false },
+        { id: 'm7', title: 'Join a community group or activity', completed: false }
+      ]
     },
     {
       id: 'goal-3',
-      title: 'Develop coping strategies',
-      description: 'Build a toolkit of healthy coping mechanisms for stress management',
-      progress: 60,
+      title: 'Develop Healthy Sleep Patterns',
+      description: 'Establish consistent sleep routine and improve sleep quality',
+      category: 'behavioral',
+      targetDate: '2024-02-29',
+      progress: 90,
       status: 'active',
-      targetWeeks: 10,
-      currentWeek: 6
+      milestones: [
+        { id: 'm8', title: 'Create bedtime routine', completed: true, completedDate: '2024-01-16' },
+        { id: 'm9', title: 'Limit screen time before bed', completed: true, completedDate: '2024-01-20' },
+        { id: 'm10', title: 'Maintain consistent sleep schedule for 3 weeks', completed: true, completedDate: '2024-02-05' }
+      ]
     }
-  ];
+  ]);
 
-  const milestones: Milestone[] = [
+  const [sessions] = useState<Session[]>([
     {
-      id: 'milestone-1',
-      title: 'Anxiety Assessment',
-      week: 6,
-      completed: false,
-      date: 'Jan 22, 2024'
+      id: 'session-1',
+      date: '2024-01-15',
+      type: 'individual',
+      duration: 50,
+      focus: 'Initial Assessment & Goal Setting',
+      notes: 'Discussed primary concerns about anxiety. Established initial treatment goals.',
+      homework: 'Complete anxiety assessment worksheet'
     },
     {
-      id: 'milestone-2',
-      title: 'Sleep Study Review',
-      week: 8,
-      completed: false,
-      date: 'Feb 5, 2024'
+      id: 'session-2',
+      date: '2024-01-22',
+      type: 'individual',
+      duration: 50,
+      focus: 'Introduction to CBT Techniques',
+      notes: 'Introduced cognitive restructuring. Practiced identifying negative thought patterns.',
+      homework: 'Track anxious thoughts using thought record'
     },
     {
-      id: 'milestone-3',
-      title: 'Progress Evaluation',
-      week: 10,
-      completed: false,
-      date: 'Feb 19, 2024'
+      id: 'session-3',
+      date: '2024-01-29',
+      type: 'group',
+      duration: 90,
+      focus: 'Group Therapy - Social Anxiety',
+      notes: 'Participated in group discussion about social anxiety triggers.',
+      homework: 'Practice one social interaction this week'
     }
-  ];
+  ]);
 
-  const exercises: Exercise[] = [
-    {
-      id: 'ex-1',
-      title: 'Daily mood tracking',
-      description: 'Record mood levels and anxiety triggers in journal',
-      status: 'completed'
-    },
-    {
-      id: 'ex-2',
-      title: 'Breathing exercises',
-      description: 'Practice 4-7-8 breathing technique twice daily',
-      status: 'completed'
-    },
-    {
-      id: 'ex-3',
-      title: 'Cognitive restructuring',
-      description: 'Identify and challenge negative thought patterns',
-      status: 'in-progress',
-      dueDate: 'Jan 20, 2024'
-    },
-    {
-      id: 'ex-4',
-      title: 'Sleep hygiene practice',
-      description: 'Implement bedtime routine and limit screen time before bed',
-      status: 'pending',
-      dueDate: 'Jan 25, 2024'
-    }
-  ];
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'completed':
-        return <CheckCircle className="w-4 h-4 text-mindlyfe-green" />;
-      case 'in-progress':
-        return <Clock className="w-4 h-4 text-yellow-500" />;
-      case 'pending':
-        return <Clock className="w-4 h-4 text-gray-400" />;
-      default:
-        return null;
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case 'emotional': return <Heart className="w-4 h-4" />;
+      case 'behavioral': return <Target className="w-4 h-4" />;
+      case 'cognitive': return <Brain className="w-4 h-4" />;
+      case 'social': return <User className="w-4 h-4" />;
+      default: return <Circle className="w-4 h-4" />;
     }
   };
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'completed':
-        return <Badge className="bg-mindlyfe-green text-white">Completed</Badge>;
-      case 'in-progress':
-        return <Badge className="bg-yellow-500 text-white">In Progress</Badge>;
-      case 'pending':
-        return <Badge variant="secondary">Pending</Badge>;
-      case 'active':
-        return <Badge className="bg-mindlyfe-blue text-white">Active</Badge>;
-      default:
-        return null;
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case 'emotional': return 'bg-red-100 text-red-800';
+      case 'behavioral': return 'bg-blue-100 text-blue-800';
+      case 'cognitive': return 'bg-purple-100 text-purple-800';
+      case 'social': return 'bg-green-100 text-green-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
   };
 
-  const handleUpdateGoals = () => {
+  const downloadPlan = () => {
     toast({
-      title: "Goals Updated",
-      description: "Your treatment goals have been updated successfully."
+      title: "Download Started",
+      description: "Your treatment plan PDF is being generated..."
     });
-  };
-
-  const handleScheduleSession = () => {
-    navigate(`/teletherapy/book/${therapistId}`);
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <DashboardHeader firstName="John" notificationCount={3} />
       
-      <div className="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 py-4 md:py-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-4 md:py-6">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-6">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate('/teletherapy/sessions')}
-            className="hover:bg-mindlyfe-blue/10"
-          >
-            <ArrowLeft className="w-5 h-5 text-mindlyfe-blue" />
-          </Button>
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-              Treatment Plan
-            </h1>
-            <p className="text-gray-600">with {therapist.name}</p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Treatment Goals */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="flex items-center gap-2">
-                  <Target className="w-5 h-5 text-mindlyfe-blue" />
-                  Treatment Goals
-                </CardTitle>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleUpdateGoals}
-                  className="border-mindlyfe-blue text-mindlyfe-blue hover:bg-mindlyfe-blue/10"
-                >
-                  <Edit className="w-4 h-4 mr-2" />
-                  Update Goals
-                </Button>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {goals.map((goal) => (
-                  <div key={goal.id} className="space-y-3">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-semibold text-gray-900">{goal.title}</h3>
-                          {getStatusBadge(goal.status)}
-                        </div>
-                        <p className="text-gray-600 text-sm mb-2">{goal.description}</p>
-                        <div className="flex items-center gap-4 text-sm text-gray-500">
-                          <span>Progress: {goal.progress}% complete</span>
-                          <span>Week {goal.currentWeek} of {goal.targetWeeks}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="flex justify-between items-center text-sm">
-                        <span className="text-gray-600">Progress</span>
-                        <span className="font-medium text-mindlyfe-blue">{goal.progress}%</span>
-                      </div>
-                      <Progress value={goal.progress} className="h-2" />
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Homework & Exercises */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-mindlyfe-blue" />
-                  Homework & Exercises
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {exercises.map((exercise) => (
-                  <div key={exercise.id} className="flex items-start gap-3 p-3 border border-gray-200 rounded-lg">
-                    {getStatusIcon(exercise.status)}
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-1">
-                        <h4 className="font-medium text-gray-900">{exercise.title}</h4>
-                        {getStatusBadge(exercise.status)}
-                      </div>
-                      <p className="text-gray-600 text-sm mb-2">{exercise.description}</p>
-                      {exercise.dueDate && (
-                        <p className="text-xs text-gray-500">Due: {exercise.dueDate}</p>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Upcoming Milestones */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-mindlyfe-blue" />
-                  Upcoming Milestones
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {milestones.map((milestone) => (
-                  <div key={milestone.id} className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-mindlyfe-blue/10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-xs font-medium text-mindlyfe-blue">
-                        W{milestone.week}
-                      </span>
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-medium text-gray-900 text-sm">
-                        {milestone.title}
-                      </h4>
-                      <p className="text-xs text-gray-500">{milestone.date}</p>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Session Notes Summary */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-mindlyfe-blue" />
-                  Session Notes Summary
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 text-sm mb-4">
-                  Last updated: Jan 10, 2024
-                </p>
-                <div className="space-y-2 text-sm">
-                  <p className="text-gray-700">
-                    • Significant progress in anxiety management
-                  </p>
-                  <p className="text-gray-700">
-                    • Sleep quality showing improvement
-                  </p>
-                  <p className="text-gray-700">
-                    • Continue with breathing exercises
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full mt-4 border-mindlyfe-blue text-mindlyfe-blue hover:bg-mindlyfe-blue/10"
-                >
-                  View Full Notes
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Progress Chart */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-mindlyfe-blue" />
-                  Overall Progress
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center mb-4">
-                  <div className="text-3xl font-bold text-mindlyfe-blue mb-1">
-                    60%
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    Treatment Plan Completion
-                  </p>
-                </div>
-                <Progress value={60} className="h-3 mb-4" />
-                <div className="text-xs text-gray-500 text-center">
-                  Estimated completion: March 2024
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Actions */}
-            <div className="space-y-3">
-              <Button
-                onClick={handleScheduleSession}
-                className="w-full bg-mindlyfe-blue hover:bg-mindlyfe-blue/90"
-              >
-                <Calendar className="w-4 h-4 mr-2" />
-                Schedule Session
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full border-mindlyfe-blue text-mindlyfe-blue hover:bg-mindlyfe-blue/10"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Add New Goal
-              </Button>
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6 gap-4">
+          <div className="flex items-center gap-4">
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => navigate('/teletherapy')}
+              className="shrink-0"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+                Treatment Plan
+              </h1>
+              <p className="text-gray-600">
+                With {therapist.name}
+              </p>
             </div>
           </div>
+          
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="outline"
+              onClick={() => navigate('/teletherapy/sessions')}
+              className="border-mindlyfe-blue text-mindlyfe-blue hover:bg-mindlyfe-blue/10"
+            >
+              <History className="w-4 h-4 mr-2" />
+              Session History
+            </Button>
+            <Button
+              variant="outline"
+              onClick={downloadPlan}
+              className="border-mindlyfe-green text-mindlyfe-green hover:bg-mindlyfe-green/10"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Download Plan
+            </Button>
+          </div>
         </div>
+
+        {/* Tabs */}
+        <div className="mb-6">
+          <div className="border-b border-gray-200">
+            <nav className="-mb-px flex space-x-8 overflow-x-auto">
+              {[
+                { id: 'overview', label: 'Overview', icon: FileText },
+                { id: 'goals', label: 'Goals & Milestones', icon: Target },
+                { id: 'sessions', label: 'Session History', icon: Calendar },
+                { id: 'progress', label: 'Progress Tracking', icon: TrendingUp }
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`flex items-center gap-2 py-2 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${
+                    activeTab === tab.id
+                      ? 'border-mindlyfe-blue text-mindlyfe-blue'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
+                >
+                  <tab.icon className="w-4 h-4" />
+                  {tab.label}
+                </button>
+              ))}
+            </nav>
+          </div>
+        </div>
+
+        {/* Tab Content */}
+        {activeTab === 'overview' && (
+          <div className="space-y-6">
+            {/* Treatment Overview */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-mindlyfe-blue" />
+                  Treatment Overview
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium text-gray-600">Start Date</label>
+                    <p className="text-gray-900">{new Date(treatmentPlan.startDate).toLocaleDateString()}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-600">Estimated Duration</label>
+                    <p className="text-gray-900">{treatmentPlan.estimatedDuration}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-600">Primary Diagnosis</label>
+                    <p className="text-gray-900">{treatmentPlan.primaryDiagnosis}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-600">Treatment Approach</label>
+                    <p className="text-gray-900">{treatmentPlan.treatmentApproach}</p>
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="text-sm font-medium text-gray-600">Overall Progress</label>
+                  <div className="mt-2 flex items-center gap-3">
+                    <ProgressBar value={treatmentPlan.overallProgress} className="flex-1" />
+                    <span className="text-sm font-medium text-gray-900">{treatmentPlan.overallProgress}%</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Active Goals Summary */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Active Goals</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {goals.filter(goal => goal.status === 'active').map(goal => (
+                    <div key={goal.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2 rounded-lg ${getCategoryColor(goal.category)}`}>
+                          {getCategoryIcon(goal.category)}
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-gray-900">{goal.title}</h4>
+                          <p className="text-sm text-gray-600">{goal.description}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="flex items-center gap-2">
+                          <ProgressBar value={goal.progress} className="w-20" />
+                          <span className="text-sm font-medium text-gray-900">{goal.progress}%</span>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-1">
+                          Due: {new Date(goal.targetDate).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {activeTab === 'goals' && (
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl font-semibold text-gray-900">Treatment Goals</h2>
+              <Button className="bg-mindlyfe-blue hover:bg-mindlyfe-blue/90">
+                <Plus className="w-4 h-4 mr-2" />
+                Add Goal
+              </Button>
+            </div>
+
+            <div className="space-y-6">
+              {goals.map(goal => (
+                <Card key={goal.id}>
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2 rounded-lg ${getCategoryColor(goal.category)}`}>
+                          {getCategoryIcon(goal.category)}
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg">{goal.title}</CardTitle>
+                          <p className="text-gray-600 mt-1">{goal.description}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Badge variant={goal.status === 'active' ? 'default' : 'secondary'}>
+                          {goal.status}
+                        </Badge>
+                        <Button variant="ghost" size="sm">
+                          <Edit className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-600">Progress</span>
+                        <span className="text-sm font-medium">{goal.progress}%</span>
+                      </div>
+                      <ProgressBar value={goal.progress} />
+                      
+                      <div>
+                        <h4 className="font-medium text-gray-900 mb-3">Milestones</h4>
+                        <div className="space-y-2">
+                          {goal.milestones.map(milestone => (
+                            <div key={milestone.id} className="flex items-center gap-3">
+                              {milestone.completed ? (
+                                <CheckCircle className="w-5 h-5 text-green-600" />
+                              ) : (
+                                <Circle className="w-5 h-5 text-gray-400" />
+                              )}
+                              <span className={`flex-1 ${milestone.completed ? 'line-through text-gray-500' : 'text-gray-900'}`}>
+                                {milestone.title}
+                              </span>
+                              {milestone.completed && milestone.completedDate && (
+                                <span className="text-xs text-gray-500">
+                                  {new Date(milestone.completedDate).toLocaleDateString()}
+                                </span>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center justify-between text-sm text-gray-600">
+                        <span>Target Date: {new Date(goal.targetDate).toLocaleDateString()}</span>
+                        <Badge className={getCategoryColor(goal.category)}>
+                          {goal.category}
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'sessions' && (
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-gray-900">Session History</h2>
+            
+            <div className="space-y-4">
+              {sessions.map(session => (
+                <Card key={session.id}>
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-mindlyfe-blue/10 rounded-lg flex items-center justify-center">
+                          <Calendar className="w-5 h-5 text-mindlyfe-blue" />
+                        </div>
+                        <div>
+                          <h3 className="font-medium text-gray-900">{session.focus}</h3>
+                          <div className="flex items-center gap-4 text-sm text-gray-600 mt-1">
+                            <span>{new Date(session.date).toLocaleDateString()}</span>
+                            <span className="flex items-center gap-1">
+                              <Clock className="w-4 h-4" />
+                              {session.duration} minutes
+                            </span>
+                            <Badge variant={session.type === 'individual' ? 'default' : 'secondary'}>
+                              {session.type}
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <div>
+                        <label className="text-sm font-medium text-gray-600">Session Notes</label>
+                        <p className="text-gray-900 mt-1">{session.notes}</p>
+                      </div>
+                      
+                      {session.homework && (
+                        <div>
+                          <label className="text-sm font-medium text-gray-600">Homework Assignment</label>
+                          <p className="text-gray-900 mt-1">{session.homework}</p>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'progress' && (
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-gray-900">Progress Tracking</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Overall Progress</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-mindlyfe-blue mb-2">
+                      {treatmentPlan.overallProgress}%
+                    </div>
+                    <ProgressBar value={treatmentPlan.overallProgress} className="mb-2" />
+                    <p className="text-sm text-gray-600">Treatment completion</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Goals Completed</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-green-600 mb-2">
+                      {goals.filter(g => g.status === 'completed').length}
+                    </div>
+                    <p className="text-sm text-gray-600">of {goals.length} goals</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Sessions Attended</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-mindlyfe-green mb-2">
+                      {sessions.length}
+                    </div>
+                    <p className="text-sm text-gray-600">Total sessions</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Goal Progress Overview</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {goals.map(goal => (
+                    <div key={goal.id} className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2 rounded-lg ${getCategoryColor(goal.category)}`}>
+                          {getCategoryIcon(goal.category)}
+                        </div>
+                        <span className="font-medium text-gray-900">{goal.title}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <ProgressBar value={goal.progress} className="w-32" />
+                        <span className="text-sm font-medium text-gray-900 w-12">
+                          {goal.progress}%
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
       </div>
     </div>
   );
