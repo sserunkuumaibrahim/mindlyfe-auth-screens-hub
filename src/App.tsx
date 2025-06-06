@@ -33,6 +33,12 @@ import ChatRoom from "./pages/chat/ChatRoom";
 import CreateChatRoom from "./pages/chat/CreateChatRoom";
 import ChatPartners from "./pages/chat/ChatPartners";
 import ChatSettings from "./pages/chat/ChatSettings";
+import Journal from "./pages/Journal";
+import JournalWrite from "./pages/journal/JournalWrite";
+import JournalAnalytics from "./pages/journal/JournalAnalytics";
+import JournalHistory from "./pages/journal/JournalHistory";
+import JournalPrompts from "./pages/journal/JournalPrompts";
+import JournalPrivacy from "./pages/journal/JournalPrivacy";
 
 const queryClient = new QueryClient();
 
@@ -73,6 +79,12 @@ const App = () => (
           <Route path="/chat/create" element={<CreateChatRoom />} />
           <Route path="/chat/partners" element={<ChatPartners />} />
           <Route path="/chat/settings" element={<ChatSettings />} />
+          <Route path="/journal" element={<Journal />} />
+          <Route path="/journal/write" element={<JournalWrite />} />
+          <Route path="/journal/analytics" element={<JournalAnalytics />} />
+          <Route path="/journal/history" element={<JournalHistory />} />
+          <Route path="/journal/prompts" element={<JournalPrompts />} />
+          <Route path="/journal/privacy" element={<JournalPrivacy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
