@@ -1,4 +1,3 @@
-
 import React from 'react';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,7 +16,8 @@ import {
   Calendar,
   TrendingUp,
   AlertCircle,
-  Plus
+  Plus,
+  Trophy
 } from 'lucide-react';
 
 const Dashboard = () => {
@@ -64,6 +64,20 @@ const Dashboard = () => {
       icon: BookOpen,
       route: '/resources',
       color: 'bg-orange-500 hover:bg-orange-600'
+    },
+    {
+      title: 'Achievements',
+      description: 'View your progress',
+      icon: Trophy,
+      route: '/gamification',
+      color: 'bg-yellow-500 hover:bg-yellow-600'
+    },
+    {
+      title: 'Community',
+      description: 'Connect with others',
+      icon: Users,
+      route: '/community',
+      color: 'bg-pink-500 hover:bg-pink-600'
     }
   ];
 
@@ -262,11 +276,11 @@ const Dashboard = () => {
               </Button>
               <Button
                 variant="outline"
-                onClick={() => navigate('/dashboard/analytics')}
+                onClick={() => navigate('/gamification')}
                 className="w-full justify-start"
               >
-                <TrendingUp className="w-4 h-4 mr-2" />
-                Analytics & Insights
+                <Trophy className="w-4 h-4 mr-2" />
+                Achievements & Progress
               </Button>
               <Button
                 variant="outline"
