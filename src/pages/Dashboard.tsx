@@ -22,6 +22,7 @@ interface QuickAction {
   icon: string;
   route: string;
   description?: string;
+  color: string;
 }
 
 interface Activity {
@@ -104,35 +105,51 @@ const Dashboard = () => {
 
   return (
     <div 
-      className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50"
+      className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden"
       onTouchStart={handleTouchStart}
     >
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-secondary/20 to-primary/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
       <DashboardHeader 
         firstName={user.firstName}
         notificationCount={notificationCount}
       />
       
-      <main className="px-4 py-6 pb-20">
+      <main className="relative z-10 px-4 py-6 pb-20 space-y-6">
         {isRefreshing && (
-          <div className="text-center py-4">
-            <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-            <p className="text-sm text-gray-600 mt-2">Refreshing...</p>
+          <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-white/90 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg animate-fade-in">
+            <div className="flex items-center gap-3">
+              <div className="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent"></div>
+              <p className="text-sm font-medium text-gray-700">Refreshing...</p>
+            </div>
           </div>
         )}
         
-        <WellnessMetrics
-          overallScore={wellnessData.overallScore}
-          goalsCompleted={wellnessData.goalsCompleted}
-          totalGoals={wellnessData.totalGoals}
-          currentStreak={wellnessData.currentStreak}
-          moodTrend={wellnessData.moodTrend}
-        />
+        <div className="animate-fade-in">
+          <WellnessMetrics
+            overallScore={wellnessData.overallScore}
+            goalsCompleted={wellnessData.goalsCompleted}
+            totalGoals={wellnessData.totalGoals}
+            currentStreak={wellnessData.currentStreak}
+            moodTrend={wellnessData.moodTrend}
+          />
+        </div>
         
-        <TodayProgress progressItems={progressItems} />
+        <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <TodayProgress progressItems={progressItems} />
+        </div>
         
-        <QuickActions actions={quickActions} />
+        <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <QuickActions actions={quickActions} />
+        </div>
         
-        <RecentActivity activities={recentActivity} />
+        <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <RecentActivity activities={recentActivity} />
+        </div>
       </main>
     </div>
   );
