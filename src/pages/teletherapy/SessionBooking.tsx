@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock, Video, Mic, FileText, Star, User } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Video, Mic, FileText, Star, User, Award } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -29,15 +29,15 @@ const SessionBooking = () => {
     title: 'Licensed Clinical Therapist',
     rating: 4.9,
     reviewCount: 127,
-    pricePerSession: 120,
-    sessionDuration: 50
+    sessionDuration: 50,
+    aiMatchScore: 95
   };
 
   const sessionTypes = [
-    { id: 'individual', label: 'Individual Therapy', price: 120 },
-    { id: 'couples', label: 'Couples Therapy', price: 140 },
-    { id: 'group', label: 'Group Therapy', price: 80 },
-    { id: 'family', label: 'Family Therapy', price: 160 }
+    { id: 'individual', label: 'Individual Therapy', description: 'One-on-one session' },
+    { id: 'couples', label: 'Couples Therapy', description: 'For you and your partner' },
+    { id: 'group', label: 'Group Therapy', description: 'Small group session' },
+    { id: 'family', label: 'Family Therapy', description: 'Family counseling session' }
   ];
 
   const availableTimes = [
@@ -104,18 +104,26 @@ const SessionBooking = () => {
                 <div className="w-16 h-16 bg-gradient-to-br from-mindlyfe-blue to-mindlyfe-green rounded-full flex items-center justify-center">
                   <User className="w-8 h-8 text-white" />
                 </div>
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900">{therapist.name}</h2>
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <h2 className="text-xl font-semibold text-gray-900">{therapist.name}</h2>
+                    <Badge className="bg-mindlyfe-blue text-white">
+                      <Award className="w-3 h-3 mr-1" />
+                      {therapist.aiMatchScore}% Match
+                    </Badge>
+                  </div>
                   <p className="text-gray-600">{therapist.title}</p>
                   <div className="flex items-center gap-2 mt-1">
                     <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                     <span className="font-medium">{therapist.rating}</span>
                     <span className="text-gray-500">({therapist.reviewCount} reviews)</span>
+                    <span className="text-gray-400">•</span>
+                    <span className="text-gray-600">{therapist.sessionDuration} minutes</span>
                   </div>
-                  <p className="text-sm text-gray-600 mt-1">
-                    ${therapist.pricePerSession}/session • {therapist.sessionDuration} minutes
-                  </p>
                 </div>
+                <Badge className="bg-mindlyfe-green text-white">
+                  Included in Plan
+                </Badge>
               </div>
             </CardContent>
           </Card>
@@ -140,9 +148,14 @@ const SessionBooking = () => {
                       onChange={(e) => setSelectedSessionType(e.target.value)}
                       className="text-mindlyfe-blue focus:ring-mindlyfe-blue"
                     />
-                    <span className="font-medium">{type.label}</span>
+                    <div>
+                      <span className="font-medium">{type.label}</span>
+                      <p className="text-sm text-gray-500">{type.description}</p>
+                    </div>
                   </div>
-                  <span className="text-mindlyfe-blue font-medium">${type.price}</span>
+                  <Badge variant="outline" className="border-mindlyfe-green text-mindlyfe-green">
+                    Included
+                  </Badge>
                 </label>
               ))}
             </CardContent>
@@ -248,9 +261,11 @@ const SessionBooking = () => {
                       {selectedTime.replace('-', ' at ')}
                     </p>
                   )}
-                  <p className="text-2xl font-bold text-mindlyfe-blue mt-2">
-                    ${selectedSessionTypeData?.price}
-                  </p>
+                  <div className="mt-2">
+                    <Badge className="bg-mindlyfe-green text-white">
+                      Included in Your MindLyfe Plan
+                    </Badge>
+                  </div>
                 </div>
                 
                 <Button
@@ -258,7 +273,7 @@ const SessionBooking = () => {
                   size="lg"
                   className="bg-mindlyfe-blue hover:bg-mindlyfe-blue/90 w-full sm:w-auto"
                 >
-                  Book Session - ${selectedSessionTypeData?.price}
+                  Confirm Booking
                 </Button>
               </div>
             </CardContent>

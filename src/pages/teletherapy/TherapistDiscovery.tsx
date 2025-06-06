@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Star, Calendar, Video, User, Filter } from 'lucide-react';
+import { Search, Star, Calendar, Video, User, Filter, Award, Clock } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -16,8 +16,11 @@ interface Therapist {
   specialties: string[];
   nextAvailable: string;
   image: string;
-  pricePerSession: number;
   verified: boolean;
+  aiMatchScore: number;
+  yearsExperience: number;
+  isRecommended: boolean;
+  availableToday: boolean;
 }
 
 const TherapistDiscovery = () => {
@@ -38,10 +41,13 @@ const TherapistDiscovery = () => {
       rating: 4.9,
       reviewCount: 127,
       specialties: ['Anxiety & Depression', 'Cognitive Behavioral', 'Trauma-Informed Care'],
-      nextAvailable: 'Today 3:00 PM',
+      nextAvailable: 'Available today',
       image: '/lovable-uploads/38bd34bd-c9d7-4514-ab53-0e15ddd50ff6.png',
-      pricePerSession: 120,
-      verified: true
+      verified: true,
+      aiMatchScore: 95,
+      yearsExperience: 12,
+      isRecommended: true,
+      availableToday: true
     },
     {
       id: 'dr-michael-chen',
@@ -50,10 +56,13 @@ const TherapistDiscovery = () => {
       rating: 4.8,
       reviewCount: 89,
       specialties: ['Couples Therapy', 'Family Counseling', 'Communication Skills'],
-      nextAvailable: 'Tomorrow 10:00 AM',
+      nextAvailable: 'Available tomorrow',
       image: '/lovable-uploads/6580209e-3d77-49bd-a18c-113c6584755a.png',
-      pricePerSession: 140,
-      verified: true
+      verified: true,
+      aiMatchScore: 88,
+      yearsExperience: 10,
+      isRecommended: true,
+      availableToday: false
     },
     {
       id: 'dr-emily-davis',
@@ -62,10 +71,13 @@ const TherapistDiscovery = () => {
       rating: 4.7,
       reviewCount: 156,
       specialties: ['PTSD & Trauma', 'Group Therapy', 'Mindfulness-Based Therapy'],
-      nextAvailable: 'Today 5:00 PM',
+      nextAvailable: 'Available today',
       image: '/lovable-uploads/e799fa0d-9c16-46bb-a217-f5bf44b1108b.png',
-      pricePerSession: 110,
-      verified: true
+      verified: true,
+      aiMatchScore: 92,
+      yearsExperience: 8,
+      isRecommended: true,
+      availableToday: true
     },
     {
       id: 'dr-james-williams',
@@ -74,10 +86,13 @@ const TherapistDiscovery = () => {
       rating: 4.6,
       reviewCount: 73,
       specialties: ['Addiction Recovery', 'Men\'s Mental Health', 'Career Counseling'],
-      nextAvailable: 'Wednesday 2:00 PM',
+      nextAvailable: 'Available Wednesday',
       image: '/lovable-uploads/cf7924f0-358d-4fb0-92db-69a028877aed.png',
-      pricePerSession: 100,
-      verified: true
+      verified: true,
+      aiMatchScore: 85,
+      yearsExperience: 15,
+      isRecommended: false,
+      availableToday: false
     }
   ];
 
@@ -101,6 +116,15 @@ const TherapistDiscovery = () => {
     return matchesSearch && matchesFilters;
   });
 
+  // Sort by AI recommendation and availability
+  const sortedTherapists = filteredTherapists.sort((a, b) => {
+    if (a.isRecommended && !b.isRecommended) return -1;
+    if (!a.isRecommended && b.isRecommended) return 1;
+    if (a.availableToday && !b.availableToday) return -1;
+    if (!a.availableToday && b.availableToday) return 1;
+    return b.aiMatchScore - a.aiMatchScore;
+  });
+
   return (
     <div className="min-h-screen bg-gray-50">
       <DashboardHeader firstName="John" notificationCount={3} />
@@ -109,12 +133,31 @@ const TherapistDiscovery = () => {
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-            Find Your Therapist
+            Your Recommended Therapists
           </h1>
           <p className="text-gray-600">
-            Connect with licensed mental health professionals
+            AI-powered recommendations based on your needs and preferences
           </p>
         </div>
+
+        {/* AI Insights Banner */}
+        <Card className="mb-6 border-mindlyfe-blue bg-gradient-to-r from-mindlyfe-blue/5 to-mindlyfe-green/5">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-mindlyfe-blue rounded-full flex items-center justify-center">
+                <Award className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-mindlyfe-blue">
+                  Personalized for You
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Based on your assessment, we recommend specialists in anxiety and depression therapy
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Search Bar */}
         <div className="mb-6">
@@ -160,8 +203,10 @@ const TherapistDiscovery = () => {
 
         {/* Therapist List */}
         <div className="space-y-4">
-          {filteredTherapists.map((therapist) => (
-            <Card key={therapist.id} className="hover:shadow-lg transition-shadow">
+          {sortedTherapists.map((therapist) => (
+            <Card key={therapist.id} className={`hover:shadow-lg transition-shadow ${
+              therapist.isRecommended ? 'ring-2 ring-mindlyfe-blue/20' : ''
+            }`}>
               <CardContent className="p-6">
                 <div className="flex flex-col md:flex-row md:items-center gap-4">
                   {/* Therapist Info */}
@@ -177,17 +222,34 @@ const TherapistDiscovery = () => {
                         </h3>
                         {therapist.verified && (
                           <Badge className="bg-mindlyfe-green text-white">
-                            Verified
+                            MindLyfe Therapist
+                          </Badge>
+                        )}
+                        {therapist.isRecommended && (
+                          <Badge className="bg-mindlyfe-blue text-white">
+                            <Award className="w-3 h-3 mr-1" />
+                            AI Recommended
                           </Badge>
                         )}
                       </div>
                       
                       <p className="text-gray-600 mb-2">{therapist.title}</p>
                       
-                      <div className="flex items-center gap-1 mb-3">
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <span className="font-medium">{therapist.rating}</span>
-                        <span className="text-gray-500">({therapist.reviewCount} reviews)</span>
+                      <div className="flex items-center gap-4 mb-3">
+                        <div className="flex items-center gap-1">
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <span className="font-medium">{therapist.rating}</span>
+                          <span className="text-gray-500">({therapist.reviewCount} reviews)</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-4 h-4 text-mindlyfe-blue" />
+                          <span className="text-gray-700">{therapist.yearsExperience} years exp.</span>
+                        </div>
+                        {therapist.isRecommended && (
+                          <Badge variant="secondary" className="bg-mindlyfe-blue/10 text-mindlyfe-blue">
+                            {therapist.aiMatchScore}% Match
+                          </Badge>
+                        )}
                       </div>
                       
                       <div className="mb-3">
@@ -204,14 +266,17 @@ const TherapistDiscovery = () => {
                       <div className="flex items-center gap-4 text-sm">
                         <div className="flex items-center gap-1">
                           <Calendar className="w-4 h-4 text-mindlyfe-blue" />
-                          <span className="text-gray-700">Next Available:</span>
-                          <span className="font-medium text-mindlyfe-blue">
+                          <span className={`font-medium ${
+                            therapist.availableToday ? 'text-mindlyfe-green' : 'text-mindlyfe-blue'
+                          }`}>
                             {therapist.nextAvailable}
                           </span>
                         </div>
-                        <div className="text-gray-700">
-                          ${therapist.pricePerSession}/session
-                        </div>
+                        {therapist.availableToday && (
+                          <Badge variant="outline" className="border-mindlyfe-green text-mindlyfe-green">
+                            Available Today
+                          </Badge>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -229,7 +294,7 @@ const TherapistDiscovery = () => {
                       onClick={() => navigate(`/teletherapy/book/${therapist.id}`)}
                       className="bg-mindlyfe-blue hover:bg-mindlyfe-blue/90"
                     >
-                      Book Now
+                      Book Session
                     </Button>
                   </div>
                 </div>

@@ -26,6 +26,7 @@ import SessionHistory from "./pages/teletherapy/SessionHistory";
 import VideoSession from "./pages/teletherapy/VideoSession";
 import GroupSession from "./pages/teletherapy/GroupSession";
 import TreatmentPlan from "./pages/teletherapy/TreatmentPlan";
+import TherapistProfile from "./pages/teletherapy/TherapistProfile";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,7 @@ const App = () => (
           <Route path="/community/follows" element={<FollowManagement />} />
           <Route path="/community/moderation" element={<ContentModeration />} />
           <Route path="/teletherapy" element={<TherapistDiscovery />} />
+          <Route path="/teletherapy/profile/:therapistId" element={<TherapistProfile />} />
           <Route path="/teletherapy/book/:therapistId" element={<SessionBooking />} />
           <Route path="/teletherapy/sessions" element={<SessionHistory />} />
           <Route path="/teletherapy/session/:sessionId" element={<VideoSession />} />
