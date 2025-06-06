@@ -1,252 +1,305 @@
-import React, { useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+
+import React from 'react';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
-import WellnessMetrics from '@/components/dashboard/WellnessMetrics';
-import TodayProgress from '@/components/dashboard/TodayProgress';
-import QuickActions from '@/components/dashboard/QuickActions';
-import RecentActivity from '@/components/dashboard/RecentActivity';
-import Recommendations from '@/components/dashboard/Recommendations';
-import CalendarWidget from '@/components/dashboard/CalendarWidget';
-import UpcomingSessions from '@/components/dashboard/UpcomingSessions';
-import { useToast } from '@/hooks/use-toast';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { useNavigate } from 'react-router-dom';
+import { 
+  Brain, 
+  Activity, 
+  Target, 
+  FileText, 
+  BookOpen, 
+  Users, 
+  MessageCircle, 
+  Video,
+  Calendar,
+  TrendingUp,
+  AlertCircle,
+  Plus
+} from 'lucide-react';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { toast } = useToast();
-  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // Mock data - in real app this would come from API
+  // Mock data
   const user = {
-    firstName: 'John',
-    lastName: 'Doe',
+    firstName: 'John'
   };
 
-  const wellnessData = {
-    overallScore: 78,
-    goalsCompleted: 3,
-    totalGoals: 5,
-    currentStreak: 12,
-    moodTrend: 'improving' as const
+  const todayStats = {
+    moodScore: 4,
+    moodEmoji: '🙂',
+    streakDays: 7,
+    goalsCompleted: 2,
+    totalGoals: 5
   };
 
-  const progressData = [
+  const quickActions = [
     {
-      id: '1',
-      title: 'Morning mood check',
-      completed: true,
-      icon: '😊'
+      title: 'Log Mood',
+      description: 'Track your daily mood',
+      icon: Activity,
+      route: '/mental-health/mood',
+      color: 'bg-blue-500 hover:bg-blue-600'
     },
     {
-      id: '2',
-      title: 'Therapy session',
-      completed: false,
-      time: '3 PM',
-      icon: '🩺'
+      title: 'Mental Health Check',
+      description: 'Take wellness assessment',
+      icon: Brain,
+      route: '/mental-health/assessment',
+      color: 'bg-purple-500 hover:bg-purple-600'
     },
     {
-      id: '3',
-      title: 'Meditation',
-      completed: false,
-      time: '5 PM',
-      icon: '🧘'
+      title: 'Journal Entry',
+      description: 'Write in your journal',
+      icon: FileText,
+      route: '/journal/write',
+      color: 'bg-green-500 hover:bg-green-600'
     },
     {
-      id: '4',
-      title: 'Evening reflection',
-      completed: false,
-      icon: '✨'
+      title: 'Browse Resources',
+      description: 'Explore learning materials',
+      icon: BookOpen,
+      route: '/resources',
+      color: 'bg-orange-500 hover:bg-orange-600'
     }
   ];
 
-  const recentActivities = [
+  const recentActivity = [
+    { action: 'Completed mood check', time: '2 hours ago', type: 'mood' },
+    { action: 'Finished anxiety assessment', time: '1 day ago', type: 'assessment' },
+    { action: 'Wrote journal entry', time: '1 day ago', type: 'journal' },
+    { action: 'Completed meditation goal', time: '2 days ago', type: 'goal' }
+  ];
+
+  const upcomingSessions = [
     {
       id: '1',
-      type: 'achievement',
-      title: 'Earned "Mindful Week" badge',
-      timestamp: '2 hours ago',
-      icon: '🏆'
+      type: 'Individual Therapy',
+      therapist: 'Dr. Sarah Johnson',
+      date: 'Today',
+      time: '3:00 PM',
+      status: 'confirmed'
     },
     {
       id: '2',
-      type: 'community',
-      title: '3 new community replies',
-      timestamp: '4 hours ago',
-      icon: '💬'
-    },
-    {
-      id: '3',
-      type: 'analytics',
-      title: 'Weekly wellness report ready',
-      timestamp: '1 day ago',
-      icon: '📊'
-    },
-    {
-      id: '4',
-      type: 'milestone',
-      title: 'Meditation goal milestone reached',
-      timestamp: '1 day ago',
-      icon: '🎯'
+      type: 'Group Session',
+      therapist: 'Dr. Michael Chen',
+      date: 'Tomorrow',
+      time: '10:00 AM',
+      status: 'pending'
     }
   ];
-
-  const recommendations = [
-    {
-      id: '1',
-      type: 'course',
-      title: 'Stress Management Course',
-      description: 'Learn effective stress reduction techniques',
-      route: '/courses/stress-management',
-      priority: 'high' as const
-    },
-    {
-      id: '2',
-      type: 'connection',
-      title: 'Connect with Sarah M.',
-      description: 'Fellow community member with similar interests',
-      route: '/community/profile/sarah-m',
-      priority: 'medium' as const
-    },
-    {
-      id: '3',
-      type: 'activity',
-      title: 'Evening Reflection',
-      description: 'Take time to reflect on your day',
-      route: '/reflection/evening',
-      priority: 'medium' as const
-    }
-  ];
-
-  const handleRefresh = useCallback(async () => {
-    setIsRefreshing(true);
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      toast({
-        title: "Dashboard updated",
-        description: "Your wellness data has been refreshed.",
-      });
-    } catch (error) {
-      toast({
-        title: "Refresh failed",
-        description: "Unable to update dashboard data. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsRefreshing(false);
-    }
-  }, [toast]);
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <DashboardHeader 
-        firstName={user.firstName}
-        notificationCount={3}
-      />
+      <DashboardHeader firstName={user.firstName} notificationCount={3} />
       
-      <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16 py-4 md:py-6 lg:py-8">
-        {isRefreshing && (
-          <div className="fixed top-16 sm:top-20 md:top-24 left-1/2 transform -translate-x-1/2 z-50 bg-white rounded-xl sm:rounded-2xl px-4 sm:px-6 py-3 sm:py-4 shadow-lg border">
-            <div className="flex items-center gap-2 sm:gap-3">
-              <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-2 border-primary border-t-transparent"></div>
-              <p className="text-xs sm:text-sm font-medium text-gray-700">Refreshing dashboard...</p>
-            </div>
-          </div>
-        )}
-        
-        {/* Main Grid Layout - Optimized for Desktop */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6 lg:gap-8">
-          {/* Left Column - Main Content */}
-          <div className="lg:col-span-2 xl:col-span-3 2xl:col-span-3 space-y-4 md:space-y-6">
-            {/* Wellness Metrics - Full Width */}
-            <WellnessMetrics 
-              overallScore={wellnessData.overallScore}
-              goalsCompleted={wellnessData.goalsCompleted}
-              totalGoals={wellnessData.totalGoals}
-              currentStreak={wellnessData.currentStreak}
-              moodTrend={wellnessData.moodTrend}
-            />
-            
-            {/* Progress & Activity Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-              <TodayProgress progressItems={progressData} />
-              <RecentActivity activities={recentActivities} />
-            </div>
-            
-            {/* Recommendations - Full Width on Mobile */}
-            <Recommendations recommendations={recommendations} />
-          </div>
-          
-          {/* Right Column - Sidebar Content */}
-          <div className="lg:col-span-1 xl:col-span-1 2xl:col-span-2 space-y-4 md:space-y-6">
-            {/* Calendar Widget */}
-            <CalendarWidget />
-            
-            {/* Upcoming Sessions */}
-            <UpcomingSessions />
-            
-            {/* Quick Actions - Mobile: Full Width, Desktop: Sidebar */}
-            <div className="lg:block">
-              <QuickActions />
-            </div>
-          </div>
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-6">
+        {/* Welcome Section */}
+        <div className="mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+            Welcome back, {user.firstName}! 👋
+          </h1>
+          <p className="text-gray-600">Here's your wellness overview for today</p>
         </div>
 
-        {/* Action Buttons - Responsive Layout */}
-        <div className="mt-6 md:mt-8 lg:mt-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-4 lg:gap-6">
-            <button 
-              onClick={() => navigate('/dashboard/analytics')}
-              className="w-full px-4 md:px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold text-sm md:text-base"
-            >
-              View Analytics
-            </button>
-            <button 
-              onClick={() => navigate('/dashboard/progress')}
-              className="w-full px-4 md:px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold text-sm md:text-base"
-            >
-              Track Progress
-            </button>
-            <button 
-              onClick={() => navigate('/teletherapy')}
-              className="w-full px-4 md:px-6 py-3 bg-mindlyfe-green text-white rounded-lg hover:bg-mindlyfe-green/90 transition-colors font-semibold text-sm md:text-base"
-            >
-              Teletherapy
-            </button>
-            <button 
-              onClick={() => navigate('/chat')}
-              className="w-full px-4 md:px-6 py-3 bg-mindlyfe-blue text-white rounded-lg hover:bg-mindlyfe-blue/90 transition-colors font-semibold text-sm md:text-base"
-            >
-              Chat
-            </button>
-            <button 
-              onClick={() => navigate('/journal')}
-              className="w-full px-4 md:px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold text-sm md:text-base"
-            >
-              Journal
-            </button>
-            <button 
-              onClick={() => navigate('/resources')}
-              className="w-full px-4 md:px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors font-semibold text-sm md:text-base"
-            >
-              Resources
-            </button>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-3 md:gap-4 lg:gap-6 mt-3">
-            <button 
-              onClick={() => navigate('/community')}
-              className="w-full px-4 md:px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors font-semibold text-sm md:text-base"
-            >
-              Community
-            </button>
-            <button 
-              onClick={handleRefresh}
-              className="w-full px-4 md:px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-semibold text-sm md:text-base"
-              disabled={isRefreshing}
-            >
-              {isRefreshing ? 'Refreshing...' : 'Refresh Data'}
-            </button>
-          </div>
+        {/* Today's Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <Card>
+            <CardContent className="p-4 text-center">
+              <div className="text-3xl mb-2">{todayStats.moodEmoji}</div>
+              <div className="font-semibold text-lg">Today's Mood</div>
+              <div className="text-sm text-gray-600">{todayStats.moodScore}/5</div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-4 text-center">
+              <div className="text-3xl mb-2">🔥</div>
+              <div className="font-semibold text-lg">Streak</div>
+              <div className="text-sm text-gray-600">{todayStats.streakDays} days</div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-4 text-center">
+              <div className="text-3xl mb-2">🎯</div>
+              <div className="font-semibold text-lg">Goals Progress</div>
+              <div className="text-sm text-gray-600">
+                {todayStats.goalsCompleted}/{todayStats.totalGoals} completed
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-4 text-center">
+              <div className="text-3xl mb-2">📊</div>
+              <div className="font-semibold text-lg">Wellness Score</div>
+              <div className="text-sm text-gray-600">7.8/10 ⬆️</div>
+            </CardContent>
+          </Card>
         </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          {/* Quick Actions */}
+          <Card className="lg:col-span-2">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Plus className="w-5 h-5" />
+                Quick Actions
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {quickActions.map((action, index) => (
+                  <Button
+                    key={index}
+                    variant="outline"
+                    onClick={() => navigate(action.route)}
+                    className="h-24 flex flex-col items-center justify-center gap-2 hover:shadow-md transition-all"
+                  >
+                    <action.icon className="w-6 h-6 text-gray-600" />
+                    <div className="text-center">
+                      <div className="font-semibold text-sm">{action.title}</div>
+                      <div className="text-xs text-gray-500">{action.description}</div>
+                    </div>
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Upcoming Sessions */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Calendar className="w-5 h-5" />
+                Upcoming Sessions
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {upcomingSessions.map((session) => (
+                <div key={session.id} className="p-3 border border-gray-200 rounded-lg">
+                  <div className="flex items-start justify-between mb-2">
+                    <h4 className="font-semibold text-sm">{session.type}</h4>
+                    <Badge variant={session.status === 'confirmed' ? 'default' : 'secondary'}>
+                      {session.status}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-gray-600">{session.therapist}</p>
+                  <p className="text-xs text-gray-500">{session.date} at {session.time}</p>
+                </div>
+              ))}
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full"
+                onClick={() => navigate('/teletherapy')}
+              >
+                View All Sessions
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {/* Recent Activity */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Activity className="w-5 h-5" />
+                Recent Activity
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {recentActivity.map((activity, index) => (
+                <div key={index} className="flex items-center gap-3 p-2">
+                  <div className="w-2 h-2 bg-mindlyfe-blue rounded-full flex-shrink-0"></div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-900">{activity.action}</p>
+                    <p className="text-xs text-gray-500">{activity.time}</p>
+                  </div>
+                </div>
+              ))}
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full"
+                onClick={() => navigate('/mental-health/progress')}
+              >
+                View All Activity
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Wellness Navigation */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TrendingUp className="w-5 h-5" />
+                Wellness Tools
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <Button
+                variant="outline"
+                onClick={() => navigate('/mental-health/dashboard')}
+                className="w-full justify-start"
+              >
+                <Brain className="w-4 h-4 mr-2" />
+                Mental Health Dashboard
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => navigate('/mental-health/goals')}
+                className="w-full justify-start"
+              >
+                <Target className="w-4 h-4 mr-2" />
+                Wellness Goals
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => navigate('/dashboard/analytics')}
+                className="w-full justify-start"
+              >
+                <TrendingUp className="w-4 h-4 mr-2" />
+                Analytics & Insights
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => navigate('/community')}
+                className="w-full justify-start"
+              >
+                <Users className="w-4 h-4 mr-2" />
+                Community Support
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Crisis Support Banner */}
+        <Card className="bg-red-50 border-red-200">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+              <div className="flex-1">
+                <p className="font-medium text-red-800">Need immediate support?</p>
+                <p className="text-sm text-red-700">If you're experiencing a mental health crisis, help is available 24/7.</p>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => navigate('/mental-health/crisis')}
+                className="border-red-300 text-red-700 hover:bg-red-100"
+              >
+                Get Help
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

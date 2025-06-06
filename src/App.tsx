@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -50,6 +51,12 @@ import PrivacySettings from "./pages/profile/PrivacySettings";
 import NotificationSettings from "./pages/profile/NotificationSettings";
 import AccountSettings from "./pages/profile/AccountSettings";
 import DataExport from "./pages/profile/DataExport";
+import MentalHealthAssessment from "./pages/mental-health/Assessment";
+import MoodTracker from "./pages/mental-health/MoodTracker";
+import WellnessDashboard from "./pages/mental-health/WellnessDashboard";
+import MentalHealthGoals from "./pages/mental-health/Goals";
+import MentalHealthProgress from "./pages/mental-health/Progress";
+import CrisisAssessment from "./pages/mental-health/CrisisAssessment";
 
 const queryClient = new QueryClient();
 
@@ -102,6 +109,12 @@ const App = () => (
           <Route path="/resources/saved" element={<SavedResources />} />
           <Route path="/resources/progress" element={<ResourceProgress />} />
           <Route path="/resources/search" element={<ResourceSearch />} />
+          <Route path="/mental-health/assessment" element={<MentalHealthAssessment />} />
+          <Route path="/mental-health/mood" element={<MoodTracker />} />
+          <Route path="/mental-health/dashboard" element={<WellnessDashboard />} />
+          <Route path="/mental-health/goals" element={<MentalHealthGoals />} />
+          <Route path="/mental-health/progress" element={<MentalHealthProgress />} />
+          <Route path="/mental-health/crisis" element={<CrisisAssessment />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<EditProfile />} />
           <Route path="/profile/privacy" element={<PrivacySettings />} />
