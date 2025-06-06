@@ -8,27 +8,30 @@ import RecentActivity from '@/components/dashboard/RecentActivity';
 import QuickActions from '@/components/dashboard/QuickActions';
 import Recommendations from '@/components/dashboard/Recommendations';
 import SupportCenter from '@/components/dashboard/SupportCenter';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-  // Sample data for components
+  const navigate = useNavigate();
+
+  // Sample data for components with proper interfaces
   const progressItems = [
-    { title: 'Daily Meditation', completed: true, time: '10 min' },
-    { title: 'Journal Entry', completed: false, time: '15 min' },
-    { title: 'Therapy Session', completed: true, time: '60 min' },
-    { title: 'Mindfulness Exercise', completed: false, time: '5 min' },
+    { id: '1', title: 'Daily Meditation', completed: true, time: '10 min', icon: '🧘' },
+    { id: '2', title: 'Journal Entry', completed: false, time: '15 min', icon: '📝' },
+    { id: '3', title: 'Therapy Session', completed: true, time: '60 min', icon: '💬' },
+    { id: '4', title: 'Mindfulness Exercise', completed: false, time: '5 min', icon: '🌸' },
   ];
 
   const activities = [
-    { type: 'journal', title: 'Completed morning reflection', time: '2 hours ago' },
-    { type: 'therapy', title: 'Session with Dr. Johnson', time: '1 day ago' },
-    { type: 'meditation', title: '15-minute mindfulness', time: '2 days ago' },
-    { type: 'community', title: 'Posted in support group', time: '3 days ago' },
+    { id: '1', type: 'journal', title: 'Completed morning reflection', time: '2 hours ago', timestamp: new Date(), icon: '📝' },
+    { id: '2', type: 'therapy', title: 'Session with Dr. Johnson', time: '1 day ago', timestamp: new Date(), icon: '💬' },
+    { id: '3', type: 'meditation', title: '15-minute mindfulness', time: '2 days ago', timestamp: new Date(), icon: '🧘' },
+    { id: '4', type: 'community', title: 'Posted in support group', time: '3 days ago', timestamp: new Date(), icon: '👥' },
   ];
 
   const recommendations = [
-    { title: 'Breathing Exercise', description: 'Try a 5-minute breathing exercise', type: 'exercise' },
-    { title: 'Sleep Hygiene Tips', description: 'Improve your sleep quality', type: 'article' },
-    { title: 'Gratitude Journal', description: 'Start a daily gratitude practice', type: 'activity' },
+    { id: '1', title: 'Breathing Exercise', description: 'Try a 5-minute breathing exercise', type: 'exercise', route: '/mental-health/mood', priority: 'high' },
+    { id: '2', title: 'Sleep Hygiene Tips', description: 'Improve your sleep quality', type: 'article', route: '/resources', priority: 'medium' },
+    { id: '3', title: 'Gratitude Journal', description: 'Start a daily gratitude practice', type: 'activity', route: '/journal/write', priority: 'low' },
   ];
 
   return (
@@ -85,32 +88,46 @@ const Dashboard = () => {
             <h3 className="font-semibold text-gray-900 mb-4">Quick Access</h3>
             <div className="grid grid-cols-2 gap-4">
               <button 
-                onClick={() => window.location.href = '/teletherapy'}
+                onClick={() => navigate('/chat/lyfbot')}
                 className="p-4 bg-blue-50 rounded-lg text-center hover:bg-blue-100 transition-colors"
               >
-                <div className="text-2xl mb-2">🎯</div>
-                <div className="text-sm font-medium text-blue-700">Teletherapy</div>
+                <div className="text-2xl mb-2">🤖</div>
+                <div className="text-sm font-medium text-blue-700">Chat with AI</div>
               </button>
               <button 
-                onClick={() => window.location.href = '/chat'}
+                onClick={() => navigate('/teletherapy')}
                 className="p-4 bg-green-50 rounded-lg text-center hover:bg-green-100 transition-colors"
               >
-                <div className="text-2xl mb-2">💬</div>
-                <div className="text-sm font-medium text-green-700">Chat</div>
+                <div className="text-2xl mb-2">🎯</div>
+                <div className="text-sm font-medium text-green-700">Therapists</div>
               </button>
               <button 
-                onClick={() => window.location.href = '/journal'}
+                onClick={() => navigate('/journal')}
                 className="p-4 bg-purple-50 rounded-lg text-center hover:bg-purple-100 transition-colors"
               >
                 <div className="text-2xl mb-2">📔</div>
                 <div className="text-sm font-medium text-purple-700">Journal</div>
               </button>
               <button 
-                onClick={() => window.location.href = '/mental-health/mood'}
+                onClick={() => navigate('/mental-health/mood')}
                 className="p-4 bg-orange-50 rounded-lg text-center hover:bg-orange-100 transition-colors"
               >
                 <div className="text-2xl mb-2">🎭</div>
-                <div className="text-sm font-medium text-orange-700">Mood</div>
+                <div className="text-sm font-medium text-orange-700">Mood Tracker</div>
+              </button>
+              <button 
+                onClick={() => navigate('/community')}
+                className="p-4 bg-indigo-50 rounded-lg text-center hover:bg-indigo-100 transition-colors"
+              >
+                <div className="text-2xl mb-2">👥</div>
+                <div className="text-sm font-medium text-indigo-700">Community</div>
+              </button>
+              <button 
+                onClick={() => navigate('/resources')}
+                className="p-4 bg-cyan-50 rounded-lg text-center hover:bg-cyan-100 transition-colors"
+              >
+                <div className="text-2xl mb-2">📚</div>
+                <div className="text-sm font-medium text-cyan-700">Resources</div>
               </button>
             </div>
           </div>

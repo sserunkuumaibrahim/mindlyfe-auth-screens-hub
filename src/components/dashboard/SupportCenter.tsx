@@ -29,7 +29,7 @@ const SupportCenter = () => {
             <Button
               variant="outline"
               className="h-auto p-4 flex flex-col gap-2"
-              onClick={() => navigate('/chat')}
+              onClick={() => navigate('/chat/lyfbot')}
             >
               <MessageSquare className="w-6 h-6 text-blue-600" />
               <span className="text-sm">Live Chat</span>
@@ -95,10 +95,18 @@ const SupportCenter = () => {
           <div className="pt-3 border-t">
             <div className="text-sm text-gray-600 mb-2">Need more help?</div>
             <div className="flex gap-2 text-xs">
-              <Button size="sm" variant="outline">
+              <Button 
+                size="sm" 
+                variant="outline"
+                onClick={() => navigate('/support/tickets')}
+              >
                 Submit Ticket
               </Button>
-              <Button size="sm" variant="outline">
+              <Button 
+                size="sm" 
+                variant="outline"
+                onClick={() => navigate('/support/knowledge-base')}
+              >
                 FAQ
               </Button>
             </div>
