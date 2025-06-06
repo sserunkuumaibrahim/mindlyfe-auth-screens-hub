@@ -16,21 +16,21 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100/50">
       <DashboardHeader firstName="Alex" notificationCount={3} />
       
-      <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {/* Welcome Hero Section */}
-        <div className="bg-gradient-to-r from-mindlyfe-blue via-mindlyfe-blue/90 to-mindlyfe-green rounded-3xl p-8 text-white shadow-2xl">
+        <div className="bg-gradient-to-r from-mindlyfe-blue via-mindlyfe-blue/90 to-mindlyfe-green rounded-2xl p-6 sm:p-8 text-white shadow-xl">
           <div className="max-w-2xl">
-            <h1 className="text-4xl font-bold mb-3">Welcome back, Alex!</h1>
-            <p className="text-xl text-white/90 leading-relaxed">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3">Welcome back, Alex!</h1>
+            <p className="text-base sm:text-lg lg:text-xl text-white/90 leading-relaxed">
               Your wellness journey continues. Here's your personalized overview for today.
             </p>
           </div>
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column - Primary Content */}
-          <div className="lg:col-span-8 space-y-8">
+          <div className="lg:col-span-8 space-y-6">
             {/* Wellness Overview */}
             <WellnessOverview />
             
@@ -39,7 +39,7 @@ const Dashboard = () => {
           </div>
 
           {/* Right Column - Secondary Content */}
-          <div className="lg:col-span-4 space-y-8">
+          <div className="lg:col-span-4 space-y-6">
             {/* Calendar */}
             <CalendarWidget />
             
@@ -49,20 +49,16 @@ const Dashboard = () => {
         </div>
 
         {/* Second Row Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Upcoming Sessions */}
-          <div className="lg:col-span-6">
-            <UpcomingSessions />
-          </div>
+          <UpcomingSessions />
           
           {/* Recent Accomplishments */}
-          <div className="lg:col-span-6">
-            <RecentAccomplishments />
-          </div>
+          <RecentAccomplishments />
         </div>
 
         {/* Third Row Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Recent Activity */}
           <div className="lg:col-span-8">
             <RecentActivity activities={activities} />
