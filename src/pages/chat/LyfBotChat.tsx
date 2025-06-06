@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Settings, Send, Mic, Smile, MoreVertical, ThumbsUp, ThumbsDown, AlertTriangle } from 'lucide-react';
@@ -113,9 +112,9 @@ const LyfBotChat = () => {
       <DashboardHeader firstName="John" notificationCount={3} />
       
       {/* Chat Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3">
+      <div className="bg-white border-b border-gray-200 px-4 py-3 lg:py-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 lg:gap-4">
             <Button
               variant="ghost"
               size="icon"
@@ -125,12 +124,12 @@ const LyfBotChat = () => {
               <ArrowLeft className="w-5 h-5" />
             </Button>
             
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-mindlyfe-blue to-mindlyfe-green flex items-center justify-center text-white font-bold text-lg">
+            <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-gradient-to-br from-mindlyfe-blue to-mindlyfe-green flex items-center justify-center text-white font-bold text-lg lg:text-xl">
               🤖
             </div>
             
             <div>
-              <h2 className="font-semibold text-gray-900">LyfBot</h2>
+              <h2 className="font-semibold text-gray-900 text-lg lg:text-xl">LyfBot</h2>
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <span>Your AI Mental Health Guide</span>
                 {isTyping && (
@@ -165,31 +164,27 @@ const LyfBotChat = () => {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-4xl mx-auto px-4 py-4 space-y-4">
+      <div className="flex-1 overflow-y-auto bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 py-4 lg:py-6 space-y-4 lg:space-y-6">
           {messages.map((message) => (
             <div
               key={message.id}
-              className={`flex gap-3 ${message.role === 'user' ? 'flex-row-reverse' : ''}`}
+              className={`flex gap-3 lg:gap-4 ${message.role === 'user' ? 'flex-row-reverse' : ''}`}
             >
               {message.role === 'assistant' && (
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-mindlyfe-blue to-mindlyfe-green flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+                <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-br from-mindlyfe-blue to-mindlyfe-green flex items-center justify-center text-white text-sm lg:text-base font-bold flex-shrink-0">
                   🤖
                 </div>
               )}
               
-              <div className={`max-w-xs sm:max-w-md ${message.role === 'user' ? 'mr-8' : 'ml-0'}`}>
-                <div
-                  className={`rounded-lg px-3 py-2 ${
-                    message.role === 'user'
-                      ? 'bg-mindlyfe-blue text-white'
-                      : 'bg-white border border-gray-200'
-                  }`}
-                >
-                  <p className="text-sm whitespace-pre-line">{message.content}</p>
-                </div>
+              <div className={`max-w-xs sm:max-w-md lg:max-w-lg ${message.role === 'user' ? 'mr-8 lg:mr-10' : 'ml-0'}`}>
+                <Card className={`${message.role === 'user' ? 'bg-mindlyfe-blue text-white border-mindlyfe-blue' : 'bg-white border-gray-200'} shadow-sm`}>
+                  <CardContent className="p-3 lg:p-4">
+                    <p className="text-sm lg:text-base whitespace-pre-line">{message.content}</p>
+                  </CardContent>
+                </Card>
                 
-                <div className={`flex items-center gap-2 mt-1 text-xs text-gray-500 ${message.role === 'user' ? 'justify-end' : ''}`}>
+                <div className={`flex items-center gap-2 mt-2 text-xs lg:text-sm text-gray-500 ${message.role === 'user' ? 'justify-end' : ''}`}>
                   <span>{message.timestamp}</span>
                   {message.metadata?.crisisDetected && (
                     <Badge variant="destructive" className="text-xs">
@@ -222,7 +217,7 @@ const LyfBotChat = () => {
                       variant="ghost"
                       size="sm"
                       onClick={() => handleFeedback(message.id, true)}
-                      className="h-6 px-2 text-xs hover:bg-green-50 hover:text-green-600"
+                      className="h-6 lg:h-8 px-2 lg:px-3 text-xs lg:text-sm hover:bg-green-50 hover:text-green-600"
                     >
                       <ThumbsUp className="w-3 h-3 mr-1" />
                       Helpful
@@ -231,7 +226,7 @@ const LyfBotChat = () => {
                       variant="ghost"
                       size="sm"
                       onClick={() => handleFeedback(message.id, false)}
-                      className="h-6 px-2 text-xs hover:bg-red-50 hover:text-red-600"
+                      className="h-6 lg:h-8 px-2 lg:px-3 text-xs lg:text-sm hover:bg-red-50 hover:text-red-600"
                     >
                       <ThumbsDown className="w-3 h-3 mr-1" />
                       Not helpful
@@ -243,17 +238,19 @@ const LyfBotChat = () => {
           ))}
           
           {isTyping && (
-            <div className="flex gap-3">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-mindlyfe-blue to-mindlyfe-green flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+            <div className="flex gap-3 lg:gap-4">
+              <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-br from-mindlyfe-blue to-mindlyfe-green flex items-center justify-center text-white text-sm lg:text-base font-bold flex-shrink-0">
                 🤖
               </div>
-              <div className="bg-white border border-gray-200 rounded-lg px-3 py-2 max-w-xs">
-                <div className="flex gap-1">
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                </div>
-              </div>
+              <Card className="bg-white border-gray-200 shadow-sm max-w-xs">
+                <CardContent className="p-3 lg:p-4">
+                  <div className="flex gap-1">
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           )}
           
@@ -262,7 +259,7 @@ const LyfBotChat = () => {
       </div>
 
       {/* Quick Suggestions */}
-      <div className="bg-gray-50 px-4 py-2">
+      <div className="bg-gray-100 px-4 py-3 lg:py-4">
         <div className="max-w-4xl mx-auto">
           <div className="flex gap-2 overflow-x-auto">
             {quickSuggestions.map((suggestion, index) => (
@@ -271,7 +268,7 @@ const LyfBotChat = () => {
                 variant="outline"
                 size="sm"
                 onClick={() => handleQuickSuggestion(suggestion)}
-                className="whitespace-nowrap flex-shrink-0 text-xs border-mindlyfe-blue text-mindlyfe-blue hover:bg-mindlyfe-blue hover:text-white"
+                className="whitespace-nowrap flex-shrink-0 text-xs lg:text-sm border-mindlyfe-blue text-mindlyfe-blue hover:bg-mindlyfe-blue hover:text-white"
               >
                 {suggestion}
               </Button>
@@ -281,16 +278,16 @@ const LyfBotChat = () => {
       </div>
 
       {/* Message Input */}
-      <div className="bg-white border-t border-gray-200 px-4 py-3">
+      <div className="bg-white border-t border-gray-200 px-4 py-3 lg:py-4">
         <div className="max-w-4xl mx-auto">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 lg:gap-3">
             <div className="flex-1 relative">
               <textarea
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Share what's on your mind..."
-                className="w-full px-4 py-2 pr-20 border border-gray-200 rounded-full resize-none focus:outline-none focus:ring-2 focus:ring-mindlyfe-blue focus:border-transparent"
+                className="w-full px-4 py-2 lg:py-3 pr-20 lg:pr-24 border border-gray-200 rounded-full resize-none focus:outline-none focus:ring-2 focus:ring-mindlyfe-blue focus:border-transparent text-sm lg:text-base"
                 rows={1}
               />
               <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex gap-1">
@@ -315,17 +312,17 @@ const LyfBotChat = () => {
               onClick={handleSendMessage}
               disabled={!newMessage.trim()}
               size="icon"
-              className="rounded-full bg-mindlyfe-blue hover:bg-mindlyfe-blue/90 disabled:opacity-50"
+              className="rounded-full bg-mindlyfe-blue hover:bg-mindlyfe-blue/90 disabled:opacity-50 w-10 h-10 lg:w-12 lg:h-12"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-4 h-4 lg:w-5 lg:h-5" />
             </Button>
           </div>
         </div>
       </div>
 
       {/* Privacy Notice */}
-      <div className="bg-gray-50 px-4 py-2">
-        <div className="max-w-4xl mx-auto flex items-center justify-center gap-2 text-xs text-gray-600">
+      <div className="bg-gray-50 px-4 py-2 lg:py-3">
+        <div className="max-w-4xl mx-auto flex items-center justify-center gap-2 text-xs lg:text-sm text-gray-600">
           <span>🔒 Secure & Private • AI responses may take a moment</span>
         </div>
       </div>

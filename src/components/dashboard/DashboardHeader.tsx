@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Bell, Menu, User, Users, BookOpen, FileText, Headphones, MessageSquare } from 'lucide-react';
+import { Bell, Menu, User, Users, BookOpen, FileText, Video, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -16,7 +16,6 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
   const location = useLocation();
 
   const navItems = [
-    { label: 'Dashboard', route: '/dashboard', active: location.pathname === '/dashboard' },
     { label: 'Teletherapy', route: '/teletherapy', active: location.pathname.startsWith('/teletherapy') },
     { label: 'Chat', route: '/chat', active: location.pathname.startsWith('/chat') },
     { label: 'Journal', route: '/journal', active: location.pathname.startsWith('/journal') },
@@ -25,7 +24,7 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
   ];
 
   const mobileQuickActions = [
-    { label: 'Teletherapy', route: '/teletherapy', icon: Headphones },
+    { label: 'Teletherapy', route: '/teletherapy', icon: Video },
     { label: 'Chat', route: '/chat', icon: MessageSquare },
     { label: 'Journal', route: '/journal', icon: FileText },
     { label: 'Resources', route: '/resources', icon: BookOpen },
@@ -38,14 +37,17 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
         <div className="flex items-center justify-between h-16 md:h-18">
           {/* Logo & Navigation */}
           <div className="flex items-center gap-4 md:gap-8">
-            {/* Mindlyfe Logo */}
-            <div className="flex items-center gap-2">
+            {/* Mindlyfe Logo - Clickable */}
+            <button 
+              onClick={() => navigate('/dashboard')}
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            >
               <img 
                 src="/lovable-uploads/0a9198ee-9723-465f-b3fd-397599a1f756.png"
                 alt="Mindlyfe"
                 className="h-12 w-auto md:h-14"
               />
-            </div>
+            </button>
             
             {/* Navigation - Hidden on small screens */}
             <nav className="hidden lg:flex items-center gap-4 xl:gap-6">
