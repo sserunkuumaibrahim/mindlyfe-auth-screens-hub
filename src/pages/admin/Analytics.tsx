@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import { Badge } from '@/components/ui/badge';
-import { trendingUp, dollarSign, users, clock } from 'lucide-react';
+import { TrendingUp, DollarSign, Users, Clock, Activity } from 'lucide-react';
 
 const AnalyticsDashboard = () => {
   return (
@@ -36,38 +36,38 @@ const AnalyticsDashboard = () => {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="text-center p-6 bg-green-50 rounded-lg border">
-                <dollarSign className="w-8 h-8 text-green-600 mx-auto mb-2" />
+                <DollarSign className="w-8 h-8 text-green-600 mx-auto mb-2" />
                 <div className="text-3xl font-bold text-green-600">$847,230</div>
                 <div className="text-sm text-gray-600">Total Revenue</div>
                 <div className="text-xs text-green-600 flex items-center justify-center gap-1 mt-1">
-                  <trendingUp className="w-3 h-3" />
+                  <TrendingUp className="w-3 h-3" />
                   +12.3%
                 </div>
               </div>
               <div className="text-center p-6 bg-blue-50 rounded-lg border">
-                <users className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+                <Users className="w-8 h-8 text-blue-600 mx-auto mb-2" />
                 <div className="text-3xl font-bold text-blue-600">7,429</div>
                 <div className="text-sm text-gray-600">New Users</div>
                 <div className="text-xs text-green-600 flex items-center justify-center gap-1 mt-1">
-                  <trendingUp className="w-3 h-3" />
+                  <TrendingUp className="w-3 h-3" />
                   +8.7%
                 </div>
               </div>
               <div className="text-center p-6 bg-purple-50 rounded-lg border">
-                <activity className="w-8 h-8 text-purple-600 mx-auto mb-2" />
+                <Activity className="w-8 h-8 text-purple-600 mx-auto mb-2" />
                 <div className="text-3xl font-bold text-purple-600">68.4%</div>
                 <div className="text-sm text-gray-600">Retention</div>
                 <div className="text-xs text-green-600 flex items-center justify-center gap-1 mt-1">
-                  <trendingUp className="w-3 h-3" />
+                  <TrendingUp className="w-3 h-3" />
                   +2.1%
                 </div>
               </div>
               <div className="text-center p-6 bg-orange-50 rounded-lg border">
-                <clock className="w-8 h-8 text-orange-600 mx-auto mb-2" />
+                <Clock className="w-8 h-8 text-orange-600 mx-auto mb-2" />
                 <div className="text-3xl font-bold text-orange-600">24.7 min</div>
                 <div className="text-sm text-gray-600">Avg Session</div>
                 <div className="text-xs text-green-600 flex items-center justify-center gap-1 mt-1">
-                  <trendingUp className="w-3 h-3" />
+                  <TrendingUp className="w-3 h-3" />
                   +5.2%
                 </div>
               </div>

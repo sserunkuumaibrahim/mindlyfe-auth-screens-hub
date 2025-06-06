@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
-import { alertTriangle, shield, phone, clock } from 'lucide-react';
+import { AlertTriangle, Shield, Phone, Clock, Users, CheckCircle } from 'lucide-react';
 
 const CrisisManagement = () => {
   const crisisAlerts = [
@@ -77,25 +77,25 @@ const CrisisManagement = () => {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="text-center p-6 bg-red-50 rounded-lg border">
-                <alertTriangle className="w-8 h-8 text-red-600 mx-auto mb-2" />
+                <AlertTriangle className="w-8 h-8 text-red-600 mx-auto mb-2" />
                 <div className="text-3xl font-bold text-red-600">3</div>
                 <div className="text-sm text-gray-600">Active Alerts</div>
                 <div className="text-xs text-red-600 font-medium">🔴 Critical</div>
               </div>
               <div className="text-center p-6 bg-yellow-50 rounded-lg border">
-                <users className="w-8 h-8 text-yellow-600 mx-auto mb-2" />
+                <Users className="w-8 h-8 text-yellow-600 mx-auto mb-2" />
                 <div className="text-3xl font-bold text-yellow-600">23</div>
                 <div className="text-sm text-gray-600">High Risk</div>
                 <div className="text-xs text-yellow-600 font-medium">🟡 Monitoring</div>
               </div>
               <div className="text-center p-6 bg-green-50 rounded-lg border">
-                <checkCircle className="w-8 h-8 text-green-600 mx-auto mb-2" />
+                <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-2" />
                 <div className="text-3xl font-bold text-green-600">7</div>
                 <div className="text-sm text-gray-600">Interventions Today</div>
                 <div className="text-xs text-green-600 font-medium">✅ Resolved</div>
               </div>
               <div className="text-center p-6 bg-blue-50 rounded-lg border">
-                <clock className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+                <Clock className="w-8 h-8 text-blue-600 mx-auto mb-2" />
                 <div className="text-3xl font-bold text-blue-600">4.2min</div>
                 <div className="text-sm text-gray-600">Response Time</div>
                 <div className="text-xs text-blue-600 font-medium">🎯 Target: 5min</div>

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
-import { settings, shield, bell, dollarSign } from 'lucide-react';
+import { Settings, Shield, Bell, DollarSign } from 'lucide-react';
 
 const SystemConfiguration = () => {
   const [activeTab, setActiveTab] = useState('feature-flags');

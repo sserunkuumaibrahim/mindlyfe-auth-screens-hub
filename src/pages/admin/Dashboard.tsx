@@ -1,18 +1,17 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import { Badge } from '@/components/ui/badge';
 import { 
-  users, 
-  activity, 
-  dollarSign, 
-  trendingUp, 
-  alertTriangle, 
-  checkCircle, 
-  clock, 
-  shield 
+  Users, 
+  Activity, 
+  DollarSign, 
+  TrendingUp, 
+  AlertTriangle, 
+  CheckCircle, 
+  Clock, 
+  Shield 
 } from 'lucide-react';
 
 const AdminDashboard = () => {
@@ -35,7 +34,7 @@ const AdminDashboard = () => {
                 <div className="text-2xl font-bold text-blue-600">45,892</div>
                 <div className="text-sm text-gray-600">Total Users</div>
                 <div className="text-xs text-green-600 flex items-center justify-center gap-1">
-                  <trendingUp className="w-3 h-3" />
+                  <TrendingUp className="w-3 h-3" />
                   +2.3%
                 </div>
               </div>
@@ -43,7 +42,7 @@ const AdminDashboard = () => {
                 <div className="text-2xl font-bold text-green-600">12,847</div>
                 <div className="text-sm text-gray-600">Active Users</div>
                 <div className="text-xs text-green-600 flex items-center justify-center gap-1">
-                  <trendingUp className="w-3 h-3" />
+                  <TrendingUp className="w-3 h-3" />
                   +5.1%
                 </div>
               </div>
@@ -51,7 +50,7 @@ const AdminDashboard = () => {
                 <div className="text-2xl font-bold text-purple-600">247</div>
                 <div className="text-sm text-gray-600">New Today</div>
                 <div className="text-xs text-green-600 flex items-center justify-center gap-1">
-                  <trendingUp className="w-3 h-3" />
+                  <TrendingUp className="w-3 h-3" />
                   +12%
                 </div>
               </div>
@@ -59,7 +58,7 @@ const AdminDashboard = () => {
                 <div className="text-2xl font-bold text-yellow-600">$127,450</div>
                 <div className="text-sm text-gray-600">Revenue</div>
                 <div className="text-xs text-green-600 flex items-center justify-center gap-1">
-                  <trendingUp className="w-3 h-3" />
+                  <TrendingUp className="w-3 h-3" />
                   +8.7%
                 </div>
               </div>
@@ -89,9 +88,9 @@ const AdminDashboard = () => {
                 <div key={service.name} className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     {service.color === 'green' ? (
-                      <checkCircle className="w-4 h-4 text-green-500" />
+                      <CheckCircle className="w-4 h-4 text-green-500" />
                     ) : (
-                      <alertTriangle className="w-4 h-4 text-yellow-500" />
+                      <AlertTriangle className="w-4 h-4 text-yellow-500" />
                     )}
                     <span className="text-sm">{service.name}</span>
                   </div>
@@ -223,35 +222,35 @@ const AdminDashboard = () => {
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
-                <users className="w-6 h-6" />
+                <Users className="w-6 h-6" />
                 <span>User Management</span>
               </Button>
               <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
-                <activity className="w-6 h-6" />
+                <Activity className="w-6 h-6" />
                 <span>Analytics</span>
               </Button>
               <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
-                <shield className="w-6 h-6" />
+                <Shield className="w-6 h-6" />
                 <span>System Config</span>
               </Button>
               <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
-                <alertTriangle className="w-6 h-6" />
+                <AlertTriangle className="w-6 h-6" />
                 <span>Crisis Response</span>
               </Button>
               <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
-                <dollarSign className="w-6 h-6" />
+                <DollarSign className="w-6 h-6" />
                 <span>Financial Reports</span>
               </Button>
               <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
-                <shield className="w-6 h-6" />
+                <Shield className="w-6 h-6" />
                 <span>Security Center</span>
               </Button>
               <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
-                <clock className="w-6 h-6" />
+                <Clock className="w-6 h-6" />
                 <span>Content Moderation</span>
               </Button>
               <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
-                <activity className="w-6 h-6" />
+                <Activity className="w-6 h-6" />
                 <span>Reports</span>
               </Button>
             </div>

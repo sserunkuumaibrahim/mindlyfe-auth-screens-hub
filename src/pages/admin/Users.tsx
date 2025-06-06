@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
-import { search, users, checkCircle, alertTriangle, userX } from 'lucide-react';
+import { Search, Users, CheckCircle, AlertTriangle, UserX } from 'lucide-react';
 
 const UserManagement = () => {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
@@ -77,10 +76,10 @@ const UserManagement = () => {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'Active': return <checkCircle className="w-4 h-4 text-green-500" />;
-      case 'Suspended': return <userX className="w-4 h-4 text-red-500" />;
-      case 'Inactive': return <alertTriangle className="w-4 h-4 text-yellow-500" />;
-      default: return <checkCircle className="w-4 h-4 text-green-500" />;
+      case 'Active': return <CheckCircle className="w-4 h-4 text-green-500" />;
+      case 'Suspended': return <UserX className="w-4 h-4 text-red-500" />;
+      case 'Inactive': return <AlertTriangle className="w-4 h-4 text-yellow-500" />;
+      default: return <CheckCircle className="w-4 h-4 text-green-500" />;
     }
   };
 
@@ -105,7 +104,7 @@ const UserManagement = () => {
             <div className="flex flex-col gap-4">
               <div className="flex gap-4">
                 <div className="flex-1 relative">
-                  <search className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                  <Search className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
                   <Input 
                     placeholder="Search by name, email, or ID..." 
                     className="pl-10"
