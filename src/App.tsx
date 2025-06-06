@@ -68,6 +68,12 @@ import LyfBotSettings from "./pages/chat/LyfBotSettings";
 import LyfBotCrisis from "./pages/chat/LyfBotCrisis";
 import LyfBotRecommendations from "./pages/chat/LyfBotRecommendations";
 import LyfBotInsights from "./pages/chat/LyfBotInsights";
+import SubscriptionPlans from "./pages/profile/SubscriptionPlans";
+import PaymentMethods from "./pages/profile/PaymentMethods";
+import PaymentCheckout from "./pages/profile/PaymentCheckout";
+import PaymentSuccess from "./pages/profile/PaymentSuccess";
+import BillingHistory from "./pages/profile/BillingHistory";
+import SubscriptionDetails from "./pages/profile/SubscriptionDetails";
 
 const queryClient = new QueryClient();
 
@@ -144,6 +150,12 @@ const App = () => (
           <Route path="/profile/notifications" element={<NotificationSettings />} />
           <Route path="/profile/account" element={<AccountSettings />} />
           <Route path="/profile/data-export" element={<DataExport />} />
+          <Route path="/profile/subscription-plans" element={<SubscriptionPlans />} />
+          <Route path="/profile/payment-methods" element={<PaymentMethods />} />
+          <Route path="/profile/payment-checkout" element={<PaymentCheckout />} />
+          <Route path="/profile/payment-success" element={<PaymentSuccess />} />
+          <Route path="/profile/billing-history" element={<BillingHistory />} />
+          <Route path="/profile/subscription-details" element={<SubscriptionDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

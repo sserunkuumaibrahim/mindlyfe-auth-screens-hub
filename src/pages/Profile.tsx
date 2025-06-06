@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
@@ -16,7 +15,8 @@ import {
   CheckCircle,
   AlertTriangle,
   Calendar,
-  Edit
+  Edit,
+  CreditCard
 } from 'lucide-react';
 
 const Profile = () => {
@@ -174,6 +174,55 @@ const Profile = () => {
                 Improve Security
               </Button>
             )}
+          </CardContent>
+        </Card>
+
+        {/* Subscription & Billing */}
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center">
+              <CreditCard className="w-5 h-5 mr-2" />
+              Subscription & Billing
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                <div>
+                  <p className="font-medium text-gray-900">⭐ Premium Plan</p>
+                  <p className="text-sm text-gray-600">$29.99/month • Next billing: Feb 15</p>
+                </div>
+                <Badge className="bg-green-100 text-green-800">Active</Badge>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => navigate('/profile/subscription-details')}
+                  className="text-xs"
+                >
+                  Manage Plan
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => navigate('/profile/billing-history')}
+                  className="text-xs"
+                >
+                  Billing History
+                </Button>
+              </div>
+              
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full mt-2 border-mindlyfe-blue text-mindlyfe-blue hover:bg-mindlyfe-blue/10"
+                onClick={() => navigate('/profile/subscription-plans')}
+              >
+                Upgrade Plan
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
