@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
@@ -147,7 +146,7 @@ const Dashboard = () => {
         notificationCount={3}
       />
       
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-4 md:py-8">
+      <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-16 py-4 md:py-6 lg:py-8">
         {isRefreshing && (
           <div className="fixed top-16 sm:top-20 md:top-24 left-1/2 transform -translate-x-1/2 z-50 bg-white rounded-xl sm:rounded-2xl px-4 sm:px-6 py-3 sm:py-4 shadow-lg border">
             <div className="flex items-center gap-2 sm:gap-3">
@@ -157,10 +156,10 @@ const Dashboard = () => {
           </div>
         )}
         
-        {/* Main Grid Layout - Fully Responsive */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 xl:grid-cols-12 gap-4 md:gap-6">
+        {/* Main Grid Layout - Optimized for Desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6 lg:gap-8">
           {/* Left Column - Main Content */}
-          <div className="lg:col-span-8 xl:col-span-8 space-y-4 md:space-y-6">
+          <div className="lg:col-span-2 xl:col-span-3 2xl:col-span-3 space-y-4 md:space-y-6">
             {/* Wellness Metrics - Full Width */}
             <WellnessMetrics 
               overallScore={wellnessData.overallScore}
@@ -181,7 +180,7 @@ const Dashboard = () => {
           </div>
           
           {/* Right Column - Sidebar Content */}
-          <div className="lg:col-span-4 xl:col-span-4 space-y-4 md:space-y-6">
+          <div className="lg:col-span-1 xl:col-span-1 2xl:col-span-2 space-y-4 md:space-y-6">
             {/* Calendar Widget */}
             <CalendarWidget />
             
@@ -196,8 +195,8 @@ const Dashboard = () => {
         </div>
 
         {/* Action Buttons - Responsive Layout */}
-        <div className="mt-6 md:mt-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+        <div className="mt-6 md:mt-8 lg:mt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
             <button 
               onClick={() => navigate('/dashboard/analytics')}
               className="w-full px-4 md:px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold text-sm md:text-base"
