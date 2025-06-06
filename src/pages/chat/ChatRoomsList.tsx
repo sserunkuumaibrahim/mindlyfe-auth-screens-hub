@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Search, MessageSquare, Users, Shield, Lock, Video } from 'lucide-react';
@@ -27,6 +26,19 @@ const ChatRoomsList = () => {
 
   // Mock chat rooms data
   const chatRooms: ChatRoom[] = [
+    {
+      id: 'lyfbot',
+      name: 'LyfBot',
+      type: 'therapy',
+      lastMessage: 'I\'m here to support your wellness journey. How are you feeling today?',
+      lastMessageTime: 'Always available',
+      unreadCount: 0,
+      isEncrypted: true,
+      isModerated: false,
+      participants: 2,
+      avatarColor: 'linear-gradient(45deg, #21A9E1, #8EBC40)',
+      status: 'online'
+    },
     {
       id: 'room_1',
       name: 'Anxiety Support Group',
@@ -124,6 +136,14 @@ const ChatRoomsList = () => {
     }
   };
 
+  const handleRoomClick = (room: ChatRoom) => {
+    if (room.id === 'lyfbot') {
+      navigate('/chat/lyfbot');
+    } else {
+      navigate(`/chat/room/${room.id}`);
+    }
+  };
+
   const filteredRooms = chatRooms.filter(room =>
     room.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     room.lastMessage.toLowerCase().includes(searchQuery.toLowerCase())
@@ -187,21 +207,28 @@ const ChatRoomsList = () => {
               <Card
                 key={room.id}
                 className="hover:shadow-md transition-shadow cursor-pointer"
-                onClick={() => navigate(`/chat/room/${room.id}`)}
+                onClick={() => handleRoomClick(room)}
               >
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
                     <div className="relative">
                       <div 
-                        className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold"
-                        style={{ backgroundColor: room.avatarColor }}
+                        className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold ${
+                          room.id === 'lyfbot' ? 'bg-gradient-to-br from-mindlyfe-blue to-mindlyfe-green' : ''
+                        }`}
+                        style={room.id !== 'lyfbot' ? { backgroundColor: room.avatarColor } : {}}
                       >
-                        {room.type === 'direct' ? 
+                        {room.id === 'lyfbot' ? (
+                          '🤖'
+                        ) : room.type === 'direct' ? 
                           room.name.split(' ').map(word => word[0]).join('') :
                           getRoomIcon(room.type)
                         }
                       </div>
                       {room.status === 'online' && room.type === 'direct' && (
+                        <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+                      )}
+                      {room.id === 'lyfbot' && (
                         <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
                       )}
                     </div>

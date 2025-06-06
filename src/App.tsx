@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -63,6 +62,12 @@ import Challenges from "./pages/gamification/Challenges";
 import Leaderboard from "./pages/gamification/Leaderboard";
 import Rewards from "./pages/gamification/Rewards";
 import GamificationProgress from "./pages/gamification/Progress";
+import LyfBotChat from "./pages/chat/LyfBotChat";
+import LyfBotHistory from "./pages/chat/LyfBotHistory";
+import LyfBotSettings from "./pages/chat/LyfBotSettings";
+import LyfBotCrisis from "./pages/chat/LyfBotCrisis";
+import LyfBotRecommendations from "./pages/chat/LyfBotRecommendations";
+import LyfBotInsights from "./pages/chat/LyfBotInsights";
 
 const queryClient = new QueryClient();
 
@@ -103,6 +108,12 @@ const App = () => (
           <Route path="/chat/create" element={<CreateChatRoom />} />
           <Route path="/chat/partners" element={<ChatPartners />} />
           <Route path="/chat/settings" element={<ChatSettings />} />
+          <Route path="/chat/lyfbot" element={<LyfBotChat />} />
+          <Route path="/chat/lyfbot/history" element={<LyfBotHistory />} />
+          <Route path="/chat/lyfbot/settings" element={<LyfBotSettings />} />
+          <Route path="/chat/lyfbot/crisis" element={<LyfBotCrisis />} />
+          <Route path="/chat/lyfbot/recommendations" element={<LyfBotRecommendations />} />
+          <Route path="/chat/lyfbot/insights" element={<LyfBotInsights />} />
           <Route path="/journal" element={<Journal />} />
           <Route path="/journal/write" element={<JournalWrite />} />
           <Route path="/journal/analytics" element={<JournalAnalytics />} />
