@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock, Target, FileText, Progress, CheckCircle, Circle, User, Brain, Heart, TrendingUp, Download, Edit, Plus, History } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Target, FileText, TrendingUp, CheckCircle, Circle, User, Brain, Heart, Download, Edit, Plus, History } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -480,7 +479,7 @@ const TreatmentPlan = () => {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">Sessions Attended</CardTitle>
+                  <CardTitle className="text-lg">Sessions Attended</CardHeader>
                 </CardHeader>
                 <CardContent>
                   <div className="text-center">

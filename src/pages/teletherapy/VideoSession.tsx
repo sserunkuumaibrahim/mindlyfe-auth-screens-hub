@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { 
@@ -22,7 +21,6 @@ import {
   X,
   Pin,
   Share,
-  Record,
   StopCircle,
   Camera,
   MonitorSpeaker,
@@ -526,7 +524,7 @@ const VideoSession = () => {
                   className="text-gray-300 hover:text-white hover:bg-gray-700"
                   onClick={toggleRecording}
                 >
-                  <Record className="w-4 h-4 mr-2" />
+                  <Camera className="w-4 h-4 mr-2" />
                   {!isMobileView && "Record"}
                 </Button>
               )}
