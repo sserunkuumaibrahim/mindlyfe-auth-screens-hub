@@ -1,9 +1,9 @@
 
 import React from 'react';
-import { Bell, Menu, Search, Settings, User } from 'lucide-react';
+import { Bell, Menu, Search, Settings, User, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface DashboardHeaderProps {
   firstName: string;
@@ -13,14 +13,16 @@ interface DashboardHeaderProps {
 
 const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: DashboardHeaderProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const navItems = [
-    { label: 'Home', active: true },
-    { label: 'Therapists', active: false },
-    { label: 'Courses', active: false },
-    { label: 'Statistics', active: false },
-    { label: 'Music', active: false },
-    { label: 'Sleep tracker', active: false },
+    { label: 'Home', route: '/dashboard', active: location.pathname === '/dashboard' },
+    { label: 'Community', route: '/community', active: location.pathname.startsWith('/community') },
+    { label: 'Therapists', route: '/therapists', active: false },
+    { label: 'Courses', route: '/courses', active: false },
+    { label: 'Statistics', route: '/dashboard/analytics', active: location.pathname === '/dashboard/analytics' },
+    { label: 'Music', route: '/music', active: false },
+    { label: 'Sleep tracker', route: '/sleep', active: false },
   ];
 
   return (
@@ -34,7 +36,7 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
               <img 
                 src="/lovable-uploads/0a9198ee-9723-465f-b3fd-397599a1f756.png"
                 alt="Mindlyfe"
-                className="h-12 w-auto md:h-16"
+                className="h-14 w-auto md:h-16"
               />
             </div>
             
@@ -43,6 +45,7 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
               {navItems.map((item) => (
                 <button
                   key={item.label}
+                  onClick={() => navigate(item.route)}
                   className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                     item.active
                       ? 'bg-mindlyfe-blue text-white'
@@ -84,6 +87,16 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
               className="md:hidden rounded-lg hover:bg-mindlyfe-blue/10"
             >
               <Search className="w-5 h-5 text-mindlyfe-blue" />
+            </Button>
+
+            {/* Community Quick Access - Mobile */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate('/community')}
+              className="lg:hidden rounded-lg hover:bg-mindlyfe-blue/10"
+            >
+              <Users className="w-5 h-5 text-mindlyfe-blue" />
             </Button>
 
             {/* Notifications */}

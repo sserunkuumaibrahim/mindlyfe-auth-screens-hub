@@ -1,0 +1,56 @@
+
+{
+  "name": "Mindlyfe - Mental Health Platform",
+  "short_name": "Mindlyfe",
+  "description": "Anonymous mental health community and wellness platform",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#21A9E1",
+  "background_color": "#FFFFFF",
+  "icons": [
+    {
+      "src": "/lovable-uploads/0a9198ee-9723-465f-b3fd-397599a1f756.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/lovable-uploads/0a9198ee-9723-465f-b3fd-397599a1f756.png",
+      "sizes": "512x512", 
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["health", "lifestyle", "medical"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Community",
+      "short_name": "Community",
+      "description": "Access the mental health community",
+      "url": "/community",
+      "icons": [
+        {
+          "src": "/lovable-uploads/0a9198ee-9723-465f-b3fd-397599a1f756.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard", 
+      "description": "View your wellness dashboard",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "/lovable-uploads/0a9198ee-9723-465f-b3fd-397599a1f756.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

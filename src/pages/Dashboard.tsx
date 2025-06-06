@@ -196,7 +196,7 @@ const Dashboard = () => {
 
         {/* Action Buttons - Responsive Layout */}
         <div className="mt-6 md:mt-8 lg:mt-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 lg:gap-6">
             <button 
               onClick={() => navigate('/dashboard/analytics')}
               className="w-full px-4 md:px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold text-sm md:text-base"
@@ -208,6 +208,12 @@ const Dashboard = () => {
               className="w-full px-4 md:px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold text-sm md:text-base"
             >
               Track Progress
+            </button>
+            <button 
+              onClick={() => navigate('/community')}
+              className="w-full px-4 md:px-6 py-3 bg-mindlyfe-blue text-white rounded-lg hover:bg-mindlyfe-blue/90 transition-colors font-semibold text-sm md:text-base"
+            >
+              Community
             </button>
             <button 
               onClick={() => navigate('/dashboard/notifications')}

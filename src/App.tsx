@@ -18,6 +18,9 @@ import NotificationsCenter from "./pages/NotificationsCenter";
 import Community from "./pages/Community";
 import CreatePost from "./pages/CreatePost";
 import PostDetails from "./pages/PostDetails";
+import UserProfile from "./pages/UserProfile";
+import FollowManagement from "./pages/FollowManagement";
+import ContentModeration from "./pages/ContentModeration";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +45,9 @@ const App = () => (
           <Route path="/community" element={<Community />} />
           <Route path="/community/create" element={<CreatePost />} />
           <Route path="/community/post/:id" element={<PostDetails />} />
+          <Route path="/community/profile/:anonymousId" element={<UserProfile />} />
+          <Route path="/community/follows" element={<FollowManagement />} />
+          <Route path="/community/moderation" element={<ContentModeration />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
