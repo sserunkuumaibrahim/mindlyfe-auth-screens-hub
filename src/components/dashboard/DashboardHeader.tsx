@@ -31,12 +31,11 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
           <div className="flex items-center gap-4 md:gap-8">
             {/* Mindlyfe Logo */}
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm md:text-base">M</span>
-              </div>
-              <span className="hidden sm:block text-lg md:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Mindlyfe
-              </span>
+              <img 
+                src="/lovable-uploads/cf7924f0-358d-4fb0-92db-69a028877aed.png"
+                alt="Mindlyfe"
+                className="h-8 w-auto md:h-10"
+              />
             </div>
             
             {/* Navigation - Hidden on small screens */}
