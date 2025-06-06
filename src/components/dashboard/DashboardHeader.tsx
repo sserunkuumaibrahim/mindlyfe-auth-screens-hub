@@ -32,7 +32,7 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
             {/* Mindlyfe Logo */}
             <div className="flex items-center gap-2">
               <img 
-                src="/lovable-uploads/cf7924f0-358d-4fb0-92db-69a028877aed.png"
+                src="/lovable-uploads/0a9198ee-9723-465f-b3fd-397599a1f756.png"
                 alt="Mindlyfe"
                 className="h-8 w-auto md:h-10"
               />
