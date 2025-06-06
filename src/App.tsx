@@ -79,6 +79,11 @@ import UserManagement from "./pages/admin/Users";
 import AnalyticsDashboard from "./pages/admin/Analytics";
 import SystemConfiguration from "./pages/admin/Settings";
 import CrisisManagement from "./pages/admin/Crisis";
+import SupportDashboard from "./pages/support/Dashboard";
+import TicketManagement from "./pages/support/Tickets";
+import UserAssistance from "./pages/support/Users";
+import KnowledgeBase from "./pages/support/KnowledgeBase";
+import SupportAnalytics from "./pages/support/Analytics";
 
 const queryClient = new QueryClient();
 
@@ -166,6 +171,11 @@ const App = () => (
           <Route path="/admin/analytics" element={<AnalyticsDashboard />} />
           <Route path="/admin/settings" element={<SystemConfiguration />} />
           <Route path="/admin/crisis" element={<CrisisManagement />} />
+          <Route path="/support/dashboard" element={<SupportDashboard />} />
+          <Route path="/support/tickets" element={<TicketManagement />} />
+          <Route path="/support/users" element={<UserAssistance />} />
+          <Route path="/support/knowledge-base" element={<KnowledgeBase />} />
+          <Route path="/support/analytics" element={<SupportAnalytics />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
