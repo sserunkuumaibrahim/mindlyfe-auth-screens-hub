@@ -479,7 +479,7 @@ const TreatmentPlan = () => {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">Sessions Attended</CardHeader>
+                  <CardTitle className="text-lg">Sessions Attended</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="text-center">
