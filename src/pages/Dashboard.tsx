@@ -22,16 +22,16 @@ const Dashboard = () => {
   ];
 
   const activities = [
-    { id: '1', type: 'journal', title: 'Completed morning reflection', time: '2 hours ago', timestamp: new Date(), icon: '📝' },
-    { id: '2', type: 'therapy', title: 'Session with Dr. Johnson', time: '1 day ago', timestamp: new Date(), icon: '💬' },
-    { id: '3', type: 'meditation', title: '15-minute mindfulness', time: '2 days ago', timestamp: new Date(), icon: '🧘' },
-    { id: '4', type: 'community', title: 'Posted in support group', time: '3 days ago', timestamp: new Date(), icon: '👥' },
+    { id: '1', type: 'journal', title: 'Completed morning reflection', timestamp: '2 hours ago', icon: '📝' },
+    { id: '2', type: 'therapy', title: 'Session with Dr. Johnson', timestamp: '1 day ago', icon: '💬' },
+    { id: '3', type: 'meditation', title: '15-minute mindfulness', timestamp: '2 days ago', icon: '🧘' },
+    { id: '4', type: 'community', title: 'Posted in support group', timestamp: '3 days ago', icon: '👥' },
   ];
 
   const recommendations = [
-    { id: '1', title: 'Breathing Exercise', description: 'Try a 5-minute breathing exercise', type: 'exercise', route: '/mental-health/mood', priority: 'high' },
-    { id: '2', title: 'Sleep Hygiene Tips', description: 'Improve your sleep quality', type: 'article', route: '/resources', priority: 'medium' },
-    { id: '3', title: 'Gratitude Journal', description: 'Start a daily gratitude practice', type: 'activity', route: '/journal/write', priority: 'low' },
+    { id: '1', title: 'Breathing Exercise', description: 'Try a 5-minute breathing exercise', type: 'exercise', route: '/mental-health/mood', priority: 'high' as const },
+    { id: '2', title: 'Sleep Hygiene Tips', description: 'Improve your sleep quality', type: 'article', route: '/resources', priority: 'medium' as const },
+    { id: '3', title: 'Gratitude Journal', description: 'Start a daily gratitude practice', type: 'activity', route: '/journal/write', priority: 'low' as const },
   ];
 
   return (
