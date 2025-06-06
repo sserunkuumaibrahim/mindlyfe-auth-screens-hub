@@ -1,3 +1,4 @@
+
 import React from 'react';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import WellnessOverview from '@/components/dashboard/WellnessOverview';
@@ -11,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, Calendar, BookOpen, MessageSquare, Users, Brain, Target, Award } from 'lucide-react';
+import { Brain, Target, Award, MessageSquare, Video, Users, BookOpen } from 'lucide-react';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const Dashboard = () => {
     { id: '3', title: 'Gratitude Journal', description: 'Start a daily gratitude practice', type: 'activity', route: '/journal/write', priority: 'low' as const },
   ];
 
-  const desktopFeatures = [
+  const mainFeatures = [
     {
       title: 'Mental Health Assessment',
       description: 'Complete comprehensive mental health evaluations',
@@ -55,36 +56,87 @@ const Dashboard = () => {
       stats: '12 day streak'
     },
     {
+      title: 'LyfBot AI Assistant',
+      description: 'Chat with our AI mental health companion 24/7',
+      icon: '🤖',
+      route: '/chat/lyfbot',
+      color: 'bg-green-50 border-green-200',
+      stats: 'Always available'
+    },
+    {
+      title: 'Teletherapy Sessions',
+      description: 'Connect with licensed therapists online',
+      icon: '💬',
+      route: '/teletherapy',
+      color: 'bg-indigo-50 border-indigo-200',
+      stats: '3 upcoming sessions'
+    },
+    {
       title: 'Wellness Goals',
       description: 'Set and track your mental wellness objectives',
       icon: '🎯',
       route: '/mental-health/goals',
-      color: 'bg-green-50 border-green-200',
+      color: 'bg-orange-50 border-orange-200',
       stats: '3 active goals'
     },
     {
-      title: 'Crisis Support',
-      description: 'Immediate help when you need it most',
-      icon: '🚨',
-      route: '/mental-health/crisis',
-      color: 'bg-red-50 border-red-200',
-      stats: '24/7 available'
+      title: 'Community Support',
+      description: 'Connect with others on their wellness journey',
+      icon: '👥',
+      route: '/community',
+      color: 'bg-pink-50 border-pink-200',
+      stats: '150+ members'
+    }
+  ];
+
+  const quickAccessActions = [
+    {
+      title: 'Chat with LyfBot',
+      description: 'Get instant AI support',
+      icon: '🤖',
+      route: '/chat/lyfbot',
+      color: 'bg-blue-50 hover:bg-blue-100',
+      textColor: 'text-blue-700'
     },
     {
-      title: 'Gamification',
-      description: 'Earn badges and track achievements',
-      icon: '🏆',
-      route: '/gamification',
-      color: 'bg-yellow-50 border-yellow-200',
-      stats: '15 badges earned'
+      title: 'Find Therapists',
+      description: 'Browse available therapists',
+      icon: '👩‍⚕️',
+      route: '/teletherapy',
+      color: 'bg-green-50 hover:bg-green-100',
+      textColor: 'text-green-700'
     },
     {
-      title: 'Analytics',
-      description: 'View detailed wellness analytics and insights',
-      icon: '📊',
-      route: '/dashboard/analytics',
-      color: 'bg-indigo-50 border-indigo-200',
-      stats: 'Weekly report ready'
+      title: 'Write Journal',
+      description: 'Record your thoughts',
+      icon: '📔',
+      route: '/journal/write',
+      color: 'bg-purple-50 hover:bg-purple-100',
+      textColor: 'text-purple-700'
+    },
+    {
+      title: 'Track Mood',
+      description: 'Log your current mood',
+      icon: '🎭',
+      route: '/mental-health/mood',
+      color: 'bg-orange-50 hover:bg-orange-100',
+      textColor: 'text-orange-700'
+    },
+    {
+      title: 'Join Community',
+      description: 'Connect with others',
+      icon: '👥',
+      route: '/community',
+      color: 'bg-indigo-50 hover:bg-indigo-100',
+      textColor: 'text-indigo-700'
+    },
+    {
+      title: 'Browse Resources',
+      description: 'Explore wellness content',
+      icon: '📚',
+      route: '/resources',
+      color: 'bg-cyan-50 hover:bg-cyan-100',
+      textColor: 'text-cyan-700'
     }
   ];
 
@@ -114,17 +166,17 @@ const Dashboard = () => {
               <WellnessOverview />
               <TodayProgress progressItems={progressItems} />
               
-              {/* Desktop Features Grid */}
+              {/* Main Features Grid */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Brain className="w-5 h-5 text-mindlyfe-blue" />
-                    Mental Health Features
+                    Your Wellness Features
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {desktopFeatures.map((feature, index) => (
+                    {mainFeatures.map((feature, index) => (
                       <button
                         key={index}
                         onClick={() => navigate(feature.route)}
@@ -175,48 +227,17 @@ const Dashboard = () => {
             <div className="bg-white rounded-lg p-6 shadow-sm border">
               <h3 className="font-semibold text-gray-900 mb-4">Quick Access</h3>
               <div className="grid grid-cols-2 gap-4">
-                <button 
-                  onClick={() => navigate('/chat/lyfbot')}
-                  className="p-4 bg-blue-50 rounded-lg text-center hover:bg-blue-100 transition-colors"
-                >
-                  <div className="text-2xl mb-2">🤖</div>
-                  <div className="text-sm font-medium text-blue-700">Chat with AI</div>
-                </button>
-                <button 
-                  onClick={() => navigate('/teletherapy')}
-                  className="p-4 bg-green-50 rounded-lg text-center hover:bg-green-100 transition-colors"
-                >
-                  <div className="text-2xl mb-2">🎯</div>
-                  <div className="text-sm font-medium text-green-700">Therapists</div>
-                </button>
-                <button 
-                  onClick={() => navigate('/journal')}
-                  className="p-4 bg-purple-50 rounded-lg text-center hover:bg-purple-100 transition-colors"
-                >
-                  <div className="text-2xl mb-2">📔</div>
-                  <div className="text-sm font-medium text-purple-700">Journal</div>
-                </button>
-                <button 
-                  onClick={() => navigate('/mental-health/mood')}
-                  className="p-4 bg-orange-50 rounded-lg text-center hover:bg-orange-100 transition-colors"
-                >
-                  <div className="text-2xl mb-2">🎭</div>
-                  <div className="text-sm font-medium text-orange-700">Mood Tracker</div>
-                </button>
-                <button 
-                  onClick={() => navigate('/community')}
-                  className="p-4 bg-indigo-50 rounded-lg text-center hover:bg-indigo-100 transition-colors"
-                >
-                  <div className="text-2xl mb-2">👥</div>
-                  <div className="text-sm font-medium text-indigo-700">Community</div>
-                </button>
-                <button 
-                  onClick={() => navigate('/resources')}
-                  className="p-4 bg-cyan-50 rounded-lg text-center hover:bg-cyan-100 transition-colors"
-                >
-                  <div className="text-2xl mb-2">📚</div>
-                  <div className="text-sm font-medium text-cyan-700">Resources</div>
-                </button>
+                {quickAccessActions.map((action, index) => (
+                  <button 
+                    key={index}
+                    onClick={() => navigate(action.route)}
+                    className={`p-4 rounded-lg text-center transition-colors ${action.color}`}
+                  >
+                    <div className="text-2xl mb-2">{action.icon}</div>
+                    <div className={`text-sm font-medium ${action.textColor}`}>{action.title}</div>
+                    <div className="text-xs text-gray-600 mt-1">{action.description}</div>
+                  </button>
+                ))}
               </div>
             </div>
           </div>
