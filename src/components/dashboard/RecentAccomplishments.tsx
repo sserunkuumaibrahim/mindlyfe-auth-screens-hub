@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Trophy, Target, Calendar, Star } from 'lucide-react';
+import { Trophy, Target, Calendar, Star, Award, CheckCircle } from 'lucide-react';
 
 const RecentAccomplishments = () => {
   const accomplishments = [
@@ -26,8 +26,8 @@ const RecentAccomplishments = () => {
     },
     {
       id: 3,
-      title: '15-minute mindfulness',
-      description: 'Daily meditation completed',
+      title: '15-minute meditation',
+      description: 'Daily goal completed',
       timestamp: '2 days ago',
       type: 'achievement',
       icon: Trophy,
@@ -35,77 +35,89 @@ const RecentAccomplishments = () => {
     },
     {
       id: 4,
-      title: 'Posted in support group',
-      description: 'Community engagement',
+      title: 'Community support',
+      description: 'Helped a fellow member',
       timestamp: '3 days ago',
       type: 'community',
-      icon: Calendar,
+      icon: Award,
       points: 15
     }
   ];
 
-  const getAccomplishmentColor = (type: string) => {
+  const getAccomplishmentStyle = (type: string) => {
     switch (type) {
-      case 'mindfulness': return 'from-mindlyfe-blue/20 to-mindlyfe-blue/10 border-mindlyfe-blue/30';
-      case 'therapy': return 'from-mindlyfe-green/20 to-mindlyfe-green/10 border-mindlyfe-green/30';
-      case 'achievement': return 'from-amber-50 to-yellow-50 border-amber-200';
-      case 'community': return 'from-purple-50 to-indigo-50 border-purple-200';
-      default: return 'from-gray-50 to-gray-100 border-gray-200';
-    }
-  };
-
-  const getIconColor = (type: string) => {
-    switch (type) {
-      case 'mindfulness': return 'text-mindlyfe-blue';
-      case 'therapy': return 'text-mindlyfe-green';
-      case 'achievement': return 'text-amber-600';
-      case 'community': return 'text-purple-600';
-      default: return 'text-gray-600';
+      case 'mindfulness': return {
+        bg: 'bg-blue-50',
+        icon: 'text-mindlyfe-blue',
+        border: 'border-blue-200'
+      };
+      case 'therapy': return {
+        bg: 'bg-green-50',
+        icon: 'text-mindlyfe-green',
+        border: 'border-green-200'
+      };
+      case 'achievement': return {
+        bg: 'bg-amber-50',
+        icon: 'text-amber-600',
+        border: 'border-amber-200'
+      };
+      case 'community': return {
+        bg: 'bg-purple-50',
+        icon: 'text-purple-600',
+        border: 'border-purple-200'
+      };
+      default: return {
+        bg: 'bg-gray-50',
+        icon: 'text-gray-600',
+        border: 'border-gray-200'
+      };
     }
   };
 
   return (
-    <Card className="relative overflow-hidden bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-      <div className="absolute inset-0 bg-gradient-to-br from-mindlyfe-blue/5 via-transparent to-mindlyfe-green/5" />
-      
-      <CardHeader className="relative pb-4">
-        <CardTitle className="text-lg font-bold text-gray-900 flex items-center gap-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-mindlyfe-blue to-mindlyfe-green rounded-lg flex items-center justify-center">
-            <Trophy className="w-4 h-4 text-white" />
+    <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+      <CardContent className="p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 bg-gradient-to-br from-mindlyfe-blue to-mindlyfe-green rounded-lg flex items-center justify-center">
+            <Trophy className="w-5 h-5 text-white" />
           </div>
-          Recent Accomplishments
-        </CardTitle>
-      </CardHeader>
-      
-      <CardContent className="relative space-y-3">
-        {accomplishments.map((accomplishment) => {
-          const IconComponent = accomplishment.icon;
-          return (
-            <div 
-              key={accomplishment.id}
-              className={`p-4 rounded-xl bg-gradient-to-r ${getAccomplishmentColor(accomplishment.type)} border hover:scale-[1.02] transition-all duration-200 cursor-pointer`}
-            >
-              <div className="flex items-start gap-3">
-                <div className={`w-8 h-8 rounded-lg bg-white/80 flex items-center justify-center ${getIconColor(accomplishment.type)}`}>
-                  <IconComponent className="w-4 h-4" />
-                </div>
-                
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <h4 className="font-medium text-gray-900 text-sm">{accomplishment.title}</h4>
-                      <p className="text-xs text-gray-600 mt-1">{accomplishment.description}</p>
-                    </div>
-                    <Badge variant="outline" className="text-xs font-medium">
-                      +{accomplishment.points}
-                    </Badge>
+          <div>
+            <h3 className="text-xl font-bold text-gray-900">Recent Accomplishments</h3>
+            <p className="text-sm text-gray-600">Your latest achievements</p>
+          </div>
+        </div>
+        
+        <div className="space-y-4">
+          {accomplishments.map((accomplishment) => {
+            const IconComponent = accomplishment.icon;
+            const style = getAccomplishmentStyle(accomplishment.type);
+            return (
+              <div 
+                key={accomplishment.id}
+                className={`p-4 rounded-xl ${style.bg} ${style.border} border hover:shadow-md transition-all duration-200 cursor-pointer group`}
+              >
+                <div className="flex items-start gap-4">
+                  <div className={`w-10 h-10 rounded-lg bg-white/80 flex items-center justify-center ${style.icon} shadow-sm group-hover:shadow-md transition-shadow`}>
+                    <IconComponent className="w-5 h-5" />
                   </div>
-                  <div className="text-xs text-gray-500 mt-2">{accomplishment.timestamp}</div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <div>
+                        <h4 className="font-semibold text-gray-900 text-sm">{accomplishment.title}</h4>
+                        <p className="text-xs text-gray-600 mt-1">{accomplishment.description}</p>
+                      </div>
+                      <Badge variant="outline" className="text-xs font-medium bg-white/80">
+                        +{accomplishment.points}
+                      </Badge>
+                    </div>
+                    <div className="text-xs text-gray-500">{accomplishment.timestamp}</div>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </CardContent>
     </Card>
   );
