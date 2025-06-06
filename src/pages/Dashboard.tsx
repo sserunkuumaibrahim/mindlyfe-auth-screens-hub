@@ -25,31 +25,52 @@ const Dashboard = () => {
           <p className="text-gray-600 text-lg">Here's your wellness overview for today</p>
         </div>
 
-        {/* Desktop Layout */}
-        <div className="hidden lg:grid lg:grid-cols-12 gap-8">
-          {/* Main Content - Left Column */}
-          <div className="lg:col-span-8 space-y-8">
+        {/* Desktop Layout - 3 column grid */}
+        <div className="hidden lg:grid lg:grid-cols-3 gap-8">
+          {/* Left Column */}
+          <div className="space-y-6">
+            <CalendarWidget />
+            <QuickActions />
+            <SupportCenter />
+          </div>
+          
+          {/* Middle Column */}
+          <div className="space-y-6">
             <WellnessOverview />
             <TodayProgress progressItems={progressItems} />
           </div>
           
-          {/* Sidebar - Right Column */}
-          <div className="lg:col-span-4 space-y-6">
+          {/* Right Column */}
+          <div className="space-y-6">
+            <UpcomingSessions />
+            <RecentAccomplishments />
+            <RecentActivity activities={activities} />
+          </div>
+        </div>
+
+        {/* Tablet Layout - 2 column grid */}
+        <div className="hidden md:grid lg:hidden md:grid-cols-2 gap-6">
+          {/* Left Column */}
+          <div className="space-y-6">
+            <WellnessOverview />
+            <TodayProgress progressItems={progressItems} />
+            <RecentActivity activities={activities} />
+          </div>
+          
+          {/* Right Column */}
+          <div className="space-y-6">
             <CalendarWidget />
             <QuickActions />
             <UpcomingSessions />
             <RecentAccomplishments />
             <SupportCenter />
-            <RecentActivity activities={activities} />
           </div>
         </div>
 
-        {/* Mobile Layout */}
-        <div className="lg:hidden space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <WellnessOverview />
-            <CalendarWidget />
-          </div>
+        {/* Mobile Layout - Single column */}
+        <div className="md:hidden space-y-6">
+          <WellnessOverview />
+          <CalendarWidget />
           <TodayProgress progressItems={progressItems} />
           <QuickActions />
           <UpcomingSessions />

@@ -51,33 +51,35 @@ const CalendarWidget = () => {
   };
 
   return (
-    <Card className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
-      <CardHeader className="pb-3 md:pb-4">
+    <Card className="relative overflow-hidden bg-white/90 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+      <div className="absolute inset-0 bg-gradient-to-br from-mindlyfe-blue/5 via-transparent to-mindlyfe-green/5" />
+      
+      <CardHeader className="relative pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-base md:text-lg font-semibold text-gray-900">
-            {monthNames[currentDate.getMonth()]} {currentDate.getDate()}'
+          <CardTitle className="text-lg font-bold text-gray-900">
+            {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
           </CardTitle>
           <div className="flex items-center gap-1">
             <button 
               onClick={() => navigateMonth('prev')}
-              className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
             >
-              <ChevronLeft className="w-3 h-3 md:w-4 md:h-4 text-gray-600" />
+              <ChevronLeft className="w-4 h-4 text-gray-600" />
             </button>
             <button 
               onClick={() => navigateMonth('next')}
-              className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
             >
-              <ChevronRight className="w-3 h-3 md:w-4 md:h-4 text-gray-600" />
+              <ChevronRight className="w-4 h-4 text-gray-600" />
             </button>
           </div>
         </div>
       </CardHeader>
       
-      <CardContent className="pt-0 px-3 md:px-6">
+      <CardContent className="relative pt-0">
         <div className="grid grid-cols-7 gap-1 mb-2">
           {daysOfWeek.map((day) => (
-            <div key={`day-${day}`} className="text-center text-xs font-medium text-gray-500 py-1 md:py-2">
+            <div key={`day-${day}`} className="text-center text-xs font-medium text-gray-500 py-2">
               {day}
             </div>
           ))}
@@ -87,11 +89,11 @@ const CalendarWidget = () => {
           {days.map((day, index) => (
             <div
               key={`date-${index}-${day}`}
-              className={`aspect-square flex items-center justify-center text-xs md:text-sm rounded-lg transition-colors ${
+              className={`aspect-square flex items-center justify-center text-sm rounded-lg transition-colors ${
                 day === null
                   ? ''
                   : day === today
-                  ? 'bg-gray-900 text-white font-semibold'
+                  ? 'bg-gradient-to-br from-mindlyfe-blue to-mindlyfe-green text-white font-semibold shadow-md'
                   : 'text-gray-700 hover:bg-gray-100 cursor-pointer'
               }`}
             >
