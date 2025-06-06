@@ -26,7 +26,7 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
   return (
     <div className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6">
-        <div className="flex items-center justify-between h-14 md:h-16">
+        <div className="flex items-center justify-between h-16 md:h-18">
           {/* Logo & Navigation */}
           <div className="flex items-center gap-4 md:gap-8">
             {/* Mindlyfe Logo */}
@@ -34,7 +34,7 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
               <img 
                 src="/lovable-uploads/0a9198ee-9723-465f-b3fd-397599a1f756.png"
                 alt="Mindlyfe"
-                className="h-8 w-auto md:h-10"
+                className="h-12 w-auto md:h-16"
               />
             </div>
             
@@ -45,8 +45,8 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
                   key={item.label}
                   className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
                     item.active
-                      ? 'bg-gray-900 text-white'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                      ? 'bg-mindlyfe-blue text-white'
+                      : 'text-gray-600 hover:text-mindlyfe-blue hover:bg-mindlyfe-blue/10'
                   }`}
                 >
                   {item.label}
@@ -59,17 +59,17 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
               variant="ghost"
               size="icon"
               onClick={onMenuClick}
-              className="lg:hidden"
+              className="lg:hidden hover:bg-mindlyfe-blue/10"
             >
-              <Menu className="w-5 h-5" />
+              <Menu className="w-5 h-5 text-mindlyfe-blue" />
             </Button>
           </div>
 
           {/* Right Section */}
           <div className="flex items-center gap-2 md:gap-4">
             {/* Search - Hidden on mobile */}
-            <div className="hidden md:flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2">
-              <Search className="w-4 h-4 text-gray-500" />
+            <div className="hidden md:flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2 border border-mindlyfe-blue/20">
+              <Search className="w-4 h-4 text-mindlyfe-blue" />
               <input
                 type="text"
                 placeholder="Search"
@@ -81,9 +81,9 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden rounded-lg"
+              className="md:hidden rounded-lg hover:bg-mindlyfe-blue/10"
             >
-              <Search className="w-5 h-5 text-gray-600" />
+              <Search className="w-5 h-5 text-mindlyfe-blue" />
             </Button>
 
             {/* Notifications */}
@@ -91,13 +91,13 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
               variant="ghost"
               size="icon"
               onClick={() => navigate('/dashboard/notifications')}
-              className="relative rounded-lg"
+              className="relative rounded-lg hover:bg-mindlyfe-blue/10"
             >
-              <Bell className="w-5 h-5 text-gray-600" />
+              <Bell className="w-5 h-5 text-mindlyfe-blue" />
               {notificationCount > 0 && (
                 <Badge 
                   variant="destructive" 
-                  className="absolute -top-1 -right-1 h-4 w-4 md:h-5 md:w-5 rounded-full p-0 flex items-center justify-center text-xs font-bold bg-blue-600 border-2 border-white"
+                  className="absolute -top-1 -right-1 h-4 w-4 md:h-5 md:w-5 rounded-full p-0 flex items-center justify-center text-xs font-bold bg-mindlyfe-green border-2 border-white"
                 >
                   {notificationCount > 9 ? '9+' : notificationCount}
                 </Badge>
@@ -106,7 +106,7 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
 
             {/* Profile */}
             <div className="flex items-center gap-2 md:gap-3">
-              <div className="w-7 h-7 md:w-8 md:h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+              <div className="w-7 h-7 md:w-8 md:h-8 bg-gradient-to-br from-mindlyfe-blue to-mindlyfe-green rounded-full flex items-center justify-center">
                 <User className="w-3 h-3 md:w-4 md:h-4 text-white" />
               </div>
               <span className="hidden sm:block text-sm font-medium text-gray-700">
