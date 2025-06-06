@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, Video, FileText, Play, User, Clock } from 'lucide-react';
+import { ArrowLeft, Calendar, Video, FileText, Play, User, Clock, Users, Plus } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -153,8 +152,8 @@ const SessionHistory = () => {
       <DashboardHeader firstName="John" notificationCount={3} />
       
       <div className="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 py-4 md:py-6">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        {/* Header with Enhanced Navigation */}
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6 gap-4">
           <div className="flex items-center gap-4">
             <Button
               variant="ghost"
@@ -164,18 +163,86 @@ const SessionHistory = () => {
             >
               <ArrowLeft className="w-5 h-5 text-mindlyfe-blue" />
             </Button>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-              My Sessions
-            </h1>
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+                My Therapy Sessions
+              </h1>
+              <p className="text-gray-600">
+                Manage and track your therapy journey
+              </p>
+            </div>
           </div>
           
-          <Button
-            onClick={() => navigate('/teletherapy')}
-            className="bg-mindlyfe-blue hover:bg-mindlyfe-blue/90"
-          >
-            <Calendar className="w-4 h-4 mr-2" />
-            Book New Session
-          </Button>
+          {/* Quick Actions */}
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="outline"
+              onClick={() => navigate('/teletherapy')}
+              className="border-mindlyfe-blue text-mindlyfe-blue hover:bg-mindlyfe-blue/10"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Book Session
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => navigate('/teletherapy/treatment/current')}
+              className="border-mindlyfe-green text-mindlyfe-green hover:bg-mindlyfe-green/10"
+            >
+              <FileText className="w-4 h-4 mr-2" />
+              Treatment Plan
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => navigate('/teletherapy/group/upcoming')}
+              className="border-purple-600 text-purple-600 hover:bg-purple-600/10"
+            >
+              <Users className="w-4 h-4 mr-2" />
+              Group Sessions
+            </Button>
+          </div>
+        </div>
+
+        {/* Session Overview Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <Card className="bg-gradient-to-r from-mindlyfe-blue/10 to-mindlyfe-blue/5 border-mindlyfe-blue/20">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600">Upcoming Sessions</p>
+                  <p className="text-2xl font-bold text-mindlyfe-blue">
+                    {sessions.filter(s => s.status === 'upcoming').length}
+                  </p>
+                </div>
+                <Calendar className="w-8 h-8 text-mindlyfe-blue" />
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-gradient-to-r from-mindlyfe-green/10 to-mindlyfe-green/5 border-mindlyfe-green/20">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600">Completed Sessions</p>
+                  <p className="text-2xl font-bold text-mindlyfe-green">
+                    {sessions.filter(s => s.status === 'completed').length}
+                  </p>
+                </div>
+                <Video className="w-8 h-8 text-mindlyfe-green" />
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-gradient-to-r from-purple-100 to-purple-50 border-purple-200">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600">Total Hours</p>
+                  <p className="text-2xl font-bold text-purple-600">12.5</p>
+                </div>
+                <Clock className="w-8 h-8 text-purple-600" />
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Tabs */}
