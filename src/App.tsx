@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -61,7 +62,7 @@ import Badges from "./pages/gamification/Badges";
 import Challenges from "./pages/gamification/Challenges";
 import Leaderboard from "./pages/gamification/Leaderboard";
 import Rewards from "./pages/gamification/Rewards";
-import ProgressTracking from "./pages/gamification/Progress";
+import GamificationProgress from "./pages/gamification/Progress";
 
 const queryClient = new QueryClient();
 
@@ -125,7 +126,7 @@ const App = () => (
           <Route path="/gamification/challenges" element={<Challenges />} />
           <Route path="/gamification/leaderboard" element={<Leaderboard />} />
           <Route path="/gamification/rewards" element={<Rewards />} />
-          <Route path="/gamification/progress" element={<ProgressTracking />} />
+          <Route path="/gamification/progress" element={<GamificationProgress />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<EditProfile />} />
           <Route path="/profile/privacy" element={<PrivacySettings />} />
