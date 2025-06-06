@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,12 +5,25 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Settings, Bell, Filter, MoreVertical } from 'lucide-react';
 
+// Notifications data
+interface Notification {
+  id: string;
+  type?: string;
+  title: string;
+  message: string;
+  timestamp: string;
+  read: boolean;
+  category: string;
+  icon: string;
+  action?: string;
+}
+
 const NotificationsCenter = () => {
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState('all');
 
   // Notifications data
-  const notifications = [
+  const notifications: Notification[] = [
     {
       id: '1',
       type: 'achievement',
@@ -115,14 +127,14 @@ const NotificationsCenter = () => {
     return notification.category === activeFilter;
   });
 
-  const groupedNotifications = filteredNotifications.reduce((groups, notification) => {
+  const groupedNotifications: Record<string, Notification[]> = filteredNotifications.reduce((groups, notification) => {
     const timeGroup = getTimeGroup(notification.timestamp);
     if (!groups[timeGroup]) {
       groups[timeGroup] = [];
     }
     groups[timeGroup].push(notification);
     return groups;
-  }, {});
+  }, {} as Record<string, Notification[]>);
 
   function getTimeGroup(timestamp: string): string {
     if (timestamp.includes('hour')) return 'Today';
