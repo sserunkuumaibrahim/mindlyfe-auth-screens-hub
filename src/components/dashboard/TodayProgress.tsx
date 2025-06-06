@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, Clock, Circle } from 'lucide-react';
+import { CheckCircle, Clock, Circle, Sparkles, TrendingUp } from 'lucide-react';
 
 interface ProgressItem {
   id: string;
@@ -50,53 +50,100 @@ const TodayProgress = ({ progressItems }: TodayProgressProps) => {
   const progressPercentage = (completedCount / displayItems.length) * 100;
 
   return (
-    <Card className="bg-white/70 backdrop-blur-sm border-white/20 shadow-xl">
-      <CardHeader className="pb-4">
+    <Card className="group relative overflow-hidden bg-white/90 backdrop-blur-sm border-0 shadow-xl shadow-gray-100/50 hover:shadow-2xl hover:shadow-gray-200/60 transition-all duration-500">
+      {/* Premium gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-transparent to-gray-50/30 pointer-events-none" />
+      
+      <CardHeader className="relative pb-6">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg font-bold text-gray-900 flex items-center gap-2">
-            <div className="w-6 h-6 bg-gradient-to-br from-green-400 to-emerald-500 rounded-md flex items-center justify-center">
-              <CheckCircle className="w-4 h-4 text-white" />
+          <CardTitle className="text-xl font-bold text-gray-900 flex items-center gap-3">
+            <div className="relative">
+              <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+                <CheckCircle className="w-5 h-5 text-white" />
+              </div>
+              <div className="absolute -top-1 -right-1">
+                <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+              </div>
             </div>
-            Today's Progress
+            <div>
+              <div className="text-xl font-bold text-gray-900">Today's Progress</div>
+              <div className="text-sm font-medium text-gray-600">Keep up the momentum!</div>
+            </div>
           </CardTitle>
-          <div className="text-sm font-semibold text-gray-600">
-            {completedCount}/{displayItems.length}
+          <div className="flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-green-500" />
+            <div className="text-right">
+              <div className="text-2xl font-bold text-gray-900">{completedCount}</div>
+              <div className="text-xs font-semibold text-gray-600">/{displayItems.length}</div>
+            </div>
           </div>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2 mt-3">
-          <div 
-            className="bg-gradient-to-r from-green-400 to-emerald-500 h-2 rounded-full transition-all duration-500 ease-out"
-            style={{ width: `${progressPercentage}%` }}
-          ></div>
+        
+        {/* Enhanced Progress Bar */}
+        <div className="mt-6 space-y-2">
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-semibold text-gray-700">Progress</span>
+            <span className="text-sm font-bold text-gray-900">{Math.round(progressPercentage)}%</span>
+          </div>
+          <div className="relative">
+            <div className="w-full bg-gray-100 rounded-full h-3 shadow-inner overflow-hidden">
+              <div 
+                className="bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 h-3 rounded-full transition-all duration-700 ease-out shadow-sm relative overflow-hidden"
+                style={{ width: `${progressPercentage}%` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </CardHeader>
-      <CardContent className="p-6 pt-0">
+      
+      <CardContent className="relative p-6 pt-0">
         <div className="space-y-4">
           {displayItems.map((item, index) => (
             <div 
               key={item.id} 
-              className="flex items-center gap-4 p-3 rounded-xl bg-white/50 border border-white/20 hover:bg-white/70 transition-all duration-300"
+              className="group/item relative"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="flex-shrink-0">
-                {item.completed ? (
-                  <CheckCircle className="w-6 h-6 text-green-500" />
-                ) : (
-                  <Circle className="w-6 h-6 text-gray-300" />
-                )}
-              </div>
-              <div className="flex-1">
-                <div className={`text-sm font-medium ${item.completed ? 'text-gray-500 line-through' : 'text-gray-900'}`}>
-                  {item.title}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-50/50 to-transparent rounded-xl opacity-0 group-hover/item:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative flex items-center gap-4 p-4 rounded-xl bg-white/80 border border-gray-200/60 hover:border-gray-300 transition-all duration-300 hover:shadow-md">
+                <div className="flex-shrink-0">
+                  {item.completed ? (
+                    <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-lg">
+                      <CheckCircle className="w-5 h-5 text-white" />
+                    </div>
+                  ) : (
+                    <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center border-2 border-gray-200 hover:border-gray-300 transition-colors duration-200">
+                      <Circle className="w-5 h-5 text-gray-400" />
+                    </div>
+                  )}
                 </div>
-                {item.time && !item.completed && (
-                  <div className="flex items-center gap-1 mt-1">
-                    <Clock className="w-3 h-3 text-primary" />
-                    <span className="text-xs text-primary font-medium">{item.time}</span>
+                
+                <div className="flex-1">
+                  <div className={`text-sm font-semibold transition-all duration-200 ${
+                    item.completed 
+                      ? 'text-gray-500 line-through' 
+                      : 'text-gray-900'
+                  }`}>
+                    {item.title}
                   </div>
-                )}
+                  {item.time && !item.completed && (
+                    <div className="flex items-center gap-2 mt-2">
+                      <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center">
+                        <Clock className="w-3 h-3 text-primary" />
+                      </div>
+                      <span className="text-xs text-primary font-bold bg-primary/10 px-2 py-1 rounded-full">
+                        {item.time}
+                      </span>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="text-2xl">
+                  {item.icon}
+                </div>
               </div>
-              <div className="text-xl">{item.icon}</div>
             </div>
           ))}
         </div>

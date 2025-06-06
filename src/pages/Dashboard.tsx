@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
@@ -105,13 +106,14 @@ const Dashboard = () => {
 
   return (
     <div 
-      className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden"
+      className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 relative"
       onTouchStart={handleTouchStart}
     >
-      {/* Animated background elements */}
+      {/* Professional background pattern */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-secondary/20 to-primary/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-primary/5 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-secondary/5 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-gradient-to-r from-indigo-500/3 to-purple-500/3 rounded-full blur-3xl"></div>
       </div>
 
       <DashboardHeader 
@@ -119,21 +121,20 @@ const Dashboard = () => {
         notificationCount={notificationCount}
       />
       
-      {/* Desktop: Container with max width, Mobile: Full width */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-6 pb-20">
+      <div className="relative z-10 max-w-8xl mx-auto px-4 lg:px-8 py-8 pb-20">
         {isRefreshing && (
-          <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-white/90 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg animate-fade-in">
-            <div className="flex items-center gap-3">
-              <div className="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent"></div>
-              <p className="text-sm font-medium text-gray-700">Refreshing...</p>
+          <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 bg-white/95 backdrop-blur-md rounded-2xl px-8 py-4 shadow-2xl border border-gray-200/50 animate-fade-in">
+            <div className="flex items-center gap-4">
+              <div className="animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent"></div>
+              <p className="text-sm font-semibold text-gray-700">Refreshing dashboard...</p>
             </div>
           </div>
         )}
         
-        {/* Desktop: 3-column grid, Mobile: single column */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Left Column - Main Content */}
-          <div className="lg:col-span-2 space-y-6">
+        {/* Desktop: 3-column layout, Mobile: single column with optimized spacing */}
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 lg:gap-8">
+          {/* Left Column - Primary Content */}
+          <div className="xl:col-span-5 space-y-6 lg:space-y-8">
             <div className="animate-fade-in">
               <WellnessMetrics
                 overallScore={wellnessData.overallScore}
@@ -147,22 +148,18 @@ const Dashboard = () => {
             <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
               <TodayProgress progressItems={progressItems} />
             </div>
-            
-            <div className="animate-fade-in lg:hidden" style={{ animationDelay: '0.2s' }}>
-              <QuickActions actions={quickActions} />
-            </div>
           </div>
           
           {/* Middle Column - Calendar (Desktop only) */}
-          <div className="hidden lg:block space-y-6">
+          <div className="hidden xl:block xl:col-span-3 space-y-6 lg:space-y-8">
             <div className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
               <CalendarWidget />
             </div>
           </div>
           
-          {/* Right Column - Sidebar */}
-          <div className="space-y-6">
-            <div className="animate-fade-in hidden lg:block" style={{ animationDelay: '0.2s' }}>
+          {/* Right Column - Secondary Content */}
+          <div className="xl:col-span-4 space-y-6 lg:space-y-8">
+            <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
               <QuickActions actions={quickActions} />
             </div>
             
@@ -171,7 +168,7 @@ const Dashboard = () => {
             </div>
 
             {/* Mobile Calendar */}
-            <div className="animate-fade-in lg:hidden" style={{ animationDelay: '0.25s' }}>
+            <div className="animate-fade-in xl:hidden" style={{ animationDelay: '0.25s' }}>
               <CalendarWidget />
             </div>
           </div>
