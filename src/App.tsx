@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -39,6 +38,12 @@ import JournalAnalytics from "./pages/journal/JournalAnalytics";
 import JournalHistory from "./pages/journal/JournalHistory";
 import JournalPrompts from "./pages/journal/JournalPrompts";
 import JournalPrivacy from "./pages/journal/JournalPrivacy";
+import Resources from "./pages/Resources";
+import LearningPaths from "./pages/resources/LearningPaths";
+import ResourceViewer from "./pages/resources/ResourceViewer";
+import SavedResources from "./pages/resources/SavedResources";
+import ResourceProgress from "./pages/resources/ResourceProgress";
+import ResourceSearch from "./pages/resources/ResourceSearch";
 
 const queryClient = new QueryClient();
 
@@ -85,6 +90,12 @@ const App = () => (
           <Route path="/journal/history" element={<JournalHistory />} />
           <Route path="/journal/prompts" element={<JournalPrompts />} />
           <Route path="/journal/privacy" element={<JournalPrivacy />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/resources/paths" element={<LearningPaths />} />
+          <Route path="/resources/view/:id" element={<ResourceViewer />} />
+          <Route path="/resources/saved" element={<SavedResources />} />
+          <Route path="/resources/progress" element={<ResourceProgress />} />
+          <Route path="/resources/search" element={<ResourceSearch />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

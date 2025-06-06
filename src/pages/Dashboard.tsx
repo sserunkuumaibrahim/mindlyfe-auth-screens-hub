@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
@@ -193,7 +192,7 @@ const Dashboard = () => {
 
         {/* Action Buttons - Responsive Layout */}
         <div className="mt-6 md:mt-8 lg:mt-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-3 md:gap-4 lg:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-4 lg:gap-6">
             <button 
               onClick={() => navigate('/dashboard/analytics')}
               className="w-full px-4 md:px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold text-sm md:text-base"
@@ -219,16 +218,25 @@ const Dashboard = () => {
               Chat
             </button>
             <button 
-              onClick={() => navigate('/community')}
+              onClick={() => navigate('/journal')}
               className="w-full px-4 md:px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold text-sm md:text-base"
             >
-              Community
+              Journal
             </button>
             <button 
-              onClick={() => navigate('/dashboard/notifications')}
+              onClick={() => navigate('/resources')}
               className="w-full px-4 md:px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors font-semibold text-sm md:text-base"
             >
-              Notifications
+              Resources
+            </button>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-3 md:gap-4 lg:gap-6 mt-3">
+            <button 
+              onClick={() => navigate('/community')}
+              className="w-full px-4 md:px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors font-semibold text-sm md:text-base"
+            >
+              Community
             </button>
             <button 
               onClick={handleRefresh}

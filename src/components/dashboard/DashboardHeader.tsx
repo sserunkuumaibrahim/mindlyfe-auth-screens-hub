@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Bell, Menu, Search, Settings, User, Users } from 'lucide-react';
+import { Bell, Menu, Search, User, Users, BookOpen, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -18,10 +19,8 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
     { label: 'Dashboard', route: '/dashboard', active: location.pathname === '/dashboard' },
     { label: 'Teletherapy', route: '/teletherapy', active: location.pathname.startsWith('/teletherapy') },
     { label: 'Chat', route: '/chat', active: location.pathname.startsWith('/chat') },
-    { label: 'Courses', route: '/courses', active: false },
-    { label: 'Statistics', route: '/dashboard/analytics', active: location.pathname === '/dashboard/analytics' },
-    { label: 'Music', route: '/music', active: false },
-    { label: 'Sleep tracker', route: '/sleep', active: false },
+    { label: 'Journal', route: '/journal', active: location.pathname.startsWith('/journal') },
+    { label: 'Resources', route: '/resources', active: location.pathname.startsWith('/resources') },
     { label: 'Community', route: '/community', active: location.pathname.startsWith('/community') },
   ];
 
@@ -89,12 +88,33 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
               <Search className="w-5 h-5 text-mindlyfe-blue" />
             </Button>
 
-            {/* Community Quick Access - Mobile */}
+            {/* Quick Access Buttons - Mobile */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate('/journal')}
+              className="lg:hidden rounded-lg hover:bg-mindlyfe-blue/10"
+              title="Journal"
+            >
+              <FileText className="w-5 h-5 text-mindlyfe-blue" />
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate('/resources')}
+              className="lg:hidden rounded-lg hover:bg-mindlyfe-blue/10"
+              title="Resources"
+            >
+              <BookOpen className="w-5 h-5 text-mindlyfe-blue" />
+            </Button>
+
             <Button
               variant="ghost"
               size="icon"
               onClick={() => navigate('/community')}
               className="lg:hidden rounded-lg hover:bg-mindlyfe-blue/10"
+              title="Community"
             >
               <Users className="w-5 h-5 text-mindlyfe-blue" />
             </Button>
