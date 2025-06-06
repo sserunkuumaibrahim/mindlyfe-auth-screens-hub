@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Bell, Menu, Search, User, Users, BookOpen, FileText } from 'lucide-react';
+import { Bell, Menu, User, Users, BookOpen, FileText, Headphones, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -24,6 +24,14 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
     { label: 'Community', route: '/community', active: location.pathname.startsWith('/community') },
   ];
 
+  const mobileQuickActions = [
+    { label: 'Teletherapy', route: '/teletherapy', icon: Headphones },
+    { label: 'Chat', route: '/chat', icon: MessageSquare },
+    { label: 'Journal', route: '/journal', icon: FileText },
+    { label: 'Resources', route: '/resources', icon: BookOpen },
+    { label: 'Community', route: '/community', icon: Users },
+  ];
+
   return (
     <div className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6">
@@ -35,7 +43,7 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
               <img 
                 src="/lovable-uploads/0a9198ee-9723-465f-b3fd-397599a1f756.png"
                 alt="Mindlyfe"
-                className="h-14 w-auto md:h-16"
+                className="h-12 w-auto md:h-14"
               />
             </div>
             
@@ -69,55 +77,24 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
 
           {/* Right Section */}
           <div className="flex items-center gap-2 md:gap-4">
-            {/* Search - Hidden on mobile */}
-            <div className="hidden md:flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2 border border-mindlyfe-blue/20">
-              <Search className="w-4 h-4 text-mindlyfe-blue" />
-              <input
-                type="text"
-                placeholder="Search"
-                className="bg-transparent text-sm text-gray-700 placeholder-gray-500 outline-none w-24 lg:w-32"
-              />
+            {/* Mobile Quick Access Buttons */}
+            <div className="flex lg:hidden gap-1">
+              {mobileQuickActions.map((action) => {
+                const IconComponent = action.icon;
+                return (
+                  <Button
+                    key={action.label}
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => navigate(action.route)}
+                    className="rounded-lg hover:bg-mindlyfe-blue/10"
+                    title={action.label}
+                  >
+                    <IconComponent className="w-4 h-4 text-mindlyfe-blue" />
+                  </Button>
+                );
+              })}
             </div>
-
-            {/* Mobile Search Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden rounded-lg hover:bg-mindlyfe-blue/10"
-            >
-              <Search className="w-5 h-5 text-mindlyfe-blue" />
-            </Button>
-
-            {/* Quick Access Buttons - Mobile */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => navigate('/journal')}
-              className="lg:hidden rounded-lg hover:bg-mindlyfe-blue/10"
-              title="Journal"
-            >
-              <FileText className="w-5 h-5 text-mindlyfe-blue" />
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => navigate('/resources')}
-              className="lg:hidden rounded-lg hover:bg-mindlyfe-blue/10"
-              title="Resources"
-            >
-              <BookOpen className="w-5 h-5 text-mindlyfe-blue" />
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => navigate('/community')}
-              className="lg:hidden rounded-lg hover:bg-mindlyfe-blue/10"
-              title="Community"
-            >
-              <Users className="w-5 h-5 text-mindlyfe-blue" />
-            </Button>
 
             {/* Notifications */}
             <Button
