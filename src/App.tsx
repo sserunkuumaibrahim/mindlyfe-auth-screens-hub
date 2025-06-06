@@ -84,6 +84,7 @@ import TicketManagement from "./pages/support/Tickets";
 import UserAssistance from "./pages/support/Users";
 import KnowledgeBase from "./pages/support/KnowledgeBase";
 import SupportAnalytics from "./pages/support/Analytics";
+import CrisisManagement from "./pages/support/Crisis";
 
 const queryClient = new QueryClient();
 
@@ -176,6 +177,7 @@ const App = () => (
           <Route path="/support/users" element={<UserAssistance />} />
           <Route path="/support/knowledge-base" element={<KnowledgeBase />} />
           <Route path="/support/analytics" element={<SupportAnalytics />} />
+          <Route path="/support/crisis" element={<CrisisManagement />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
