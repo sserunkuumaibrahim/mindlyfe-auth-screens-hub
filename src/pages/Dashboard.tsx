@@ -2,13 +2,13 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
-import WellnessOverview from '@/components/dashboard/WellnessOverview';
-import MoodTracker from '@/components/dashboard/MoodTracker';
-import TherapyProgress from '@/components/dashboard/TherapyProgress';
-import MeditationTracker from '@/components/dashboard/MeditationTracker';
-import UpcomingSessions from '@/components/dashboard/UpcomingSessions';
+import WellnessMetrics from '@/components/dashboard/WellnessMetrics';
+import TodayProgress from '@/components/dashboard/TodayProgress';
 import QuickActions from '@/components/dashboard/QuickActions';
+import RecentActivity from '@/components/dashboard/RecentActivity';
+import Recommendations from '@/components/dashboard/Recommendations';
 import CalendarWidget from '@/components/dashboard/CalendarWidget';
+import UpcomingSessions from '@/components/dashboard/UpcomingSessions';
 import { useToast } from '@/hooks/use-toast';
 
 const Dashboard = () => {
@@ -21,6 +21,105 @@ const Dashboard = () => {
     firstName: 'John',
     lastName: 'Doe',
   };
+
+  // Wellness metrics data
+  const wellnessData = {
+    overallScore: 78,
+    goalsCompleted: 3,
+    totalGoals: 5,
+    currentStreak: 12,
+    moodTrend: 'improving' as const
+  };
+
+  // Progress tracking data
+  const progressData = [
+    {
+      id: '1',
+      title: 'Morning mood check',
+      completed: true,
+      icon: '😊'
+    },
+    {
+      id: '2',
+      title: 'Therapy session',
+      completed: false,
+      time: '3 PM',
+      icon: '🩺'
+    },
+    {
+      id: '3',
+      title: 'Meditation',
+      completed: false,
+      time: '5 PM',
+      icon: '🧘'
+    },
+    {
+      id: '4',
+      title: 'Evening reflection',
+      completed: false,
+      icon: '✨'
+    }
+  ];
+
+  // Recent activity data
+  const recentActivities = [
+    {
+      id: '1',
+      type: 'achievement',
+      title: 'Earned "Mindful Week" badge',
+      timestamp: '2 hours ago',
+      icon: '🏆'
+    },
+    {
+      id: '2',
+      type: 'community',
+      title: '3 new community replies',
+      timestamp: '4 hours ago',
+      icon: '💬'
+    },
+    {
+      id: '3',
+      type: 'analytics',
+      title: 'Weekly wellness report ready',
+      timestamp: '1 day ago',
+      icon: '📊'
+    },
+    {
+      id: '4',
+      type: 'milestone',
+      title: 'Meditation goal milestone reached',
+      timestamp: '1 day ago',
+      icon: '🎯'
+    }
+  ];
+
+  // Recommendations data
+  const recommendations = [
+    {
+      id: '1',
+      type: 'course',
+      title: 'Stress Management Course',
+      description: 'Learn effective stress reduction techniques',
+      route: '/courses/stress-management',
+      priority: 'high' as const
+    },
+    {
+      id: '2',
+      type: 'connection',
+      title: 'Connect with Sarah M.',
+      description: 'Fellow community member with similar interests',
+      route: '/community/profile/sarah-m',
+      priority: 'medium' as const
+    },
+    {
+      id: '3',
+      type: 'activity',
+      title: 'Evening Reflection',
+      description: 'Take time to reflect on your day',
+      route: '/reflection/evening',
+      priority: 'medium' as const
+    }
+  ];
 
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
@@ -60,26 +159,63 @@ const Dashboard = () => {
         
         {/* Main Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {/* Left Column - Main Widgets */}
+          {/* Left Column - Main Metrics & Progress */}
           <div className="lg:col-span-2 xl:col-span-2 space-y-6">
-            <WellnessOverview />
+            <WellnessMetrics 
+              overallScore={wellnessData.overallScore}
+              goalsCompleted={wellnessData.goalsCompleted}
+              totalGoals={wellnessData.totalGoals}
+              currentStreak={wellnessData.currentStreak}
+              moodTrend={wellnessData.moodTrend}
+            />
+            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <MoodTracker />
-              <MeditationTracker />
+              <TodayProgress progressItems={progressData} />
+              <RecentActivity activities={recentActivities} />
             </div>
-            <TherapyProgress />
+            
+            <Recommendations recommendations={recommendations} />
           </div>
           
-          {/* Middle Column - Calendar */}
+          {/* Middle Column - Calendar & Sessions */}
           <div className="lg:col-span-1 xl:col-span-1 space-y-6">
             <CalendarWidget />
             <UpcomingSessions />
           </div>
           
-          {/* Right Column - Actions & Plans */}
+          {/* Right Column - Quick Actions */}
           <div className="lg:col-span-3 xl:col-span-1 space-y-6">
             <QuickActions />
           </div>
+        </div>
+
+        {/* Quick Action Buttons */}
+        <div className="mt-8 flex flex-wrap gap-4">
+          <button 
+            onClick={() => navigate('/dashboard/analytics')}
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+          >
+            View Analytics
+          </button>
+          <button 
+            onClick={() => navigate('/dashboard/progress')}
+            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
+          >
+            Track Progress
+          </button>
+          <button 
+            onClick={() => navigate('/dashboard/notifications')}
+            className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold"
+          >
+            Notifications
+          </button>
+          <button 
+            onClick={handleRefresh}
+            className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-semibold"
+            disabled={isRefreshing}
+          >
+            {isRefreshing ? 'Refreshing...' : 'Refresh Data'}
+          </button>
         </div>
       </div>
     </div>

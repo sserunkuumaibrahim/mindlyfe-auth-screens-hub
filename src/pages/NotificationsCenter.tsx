@@ -4,210 +4,187 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Settings, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Settings, Bell, Filter, MoreVertical } from 'lucide-react';
 
 const NotificationsCenter = () => {
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState('all');
 
+  // Notifications data
   const notifications = [
     {
-      id: 1,
+      id: '1',
       type: 'achievement',
       title: 'Achievement Unlocked',
-      description: 'You earned "Mindful Week"',
-      time: '2 hours ago',
+      message: 'You earned "Mindful Week" badge for meditating 7 days in a row!',
+      timestamp: '2 hours ago',
+      read: false,
+      category: 'achievement',
       icon: '🏆',
-      unread: true,
-      category: 'achievement'
+      action: 'View Badge'
     },
     {
-      id: 2,
-      type: 'therapy',
+      id: '2',
       title: 'Session Reminder',
-      description: 'Therapy with Dr. Johnson in 1 hour',
-      time: '1 hour ago',
+      message: 'Your therapy session with Dr. Johnson starts in 1 hour',
+      timestamp: '1 hour ago',
+      read: false,
+      category: 'therapy',
       icon: '👨‍⚕️',
-      unread: true,
-      category: 'therapy'
+      action: 'Join Session'
     },
     {
-      id: 3,
-      type: 'lyfbot',
-      title: 'New Message',
-      description: 'LyfBot has insights about your mood',
-      time: '3 hours ago',
-      icon: '💬',
-      unread: true,
-      category: 'system'
+      id: '3',
+      type: 'ai',
+      title: 'LyfBot Insights',
+      message: 'LyfBot noticed improvements in your mood patterns and has new insights to share',
+      timestamp: '3 hours ago',
+      read: false,
+      category: 'ai',
+      icon: '🤖',
+      action: 'View Insights'
     },
     {
-      id: 4,
-      type: 'report',
-      title: 'Weekly Report Ready',
-      description: 'Your wellness summary is available',
-      time: 'Yesterday',
-      icon: '📊',
-      unread: false,
-      category: 'system'
-    },
-    {
-      id: 5,
+      id: '4',
       type: 'community',
       title: 'Community Activity',
-      description: '3 people liked your post',
-      time: 'Yesterday',
+      message: '3 people liked your post about mindfulness techniques',
+      timestamp: '5 hours ago',
+      read: true,
+      category: 'community',
       icon: '👥',
-      unread: false,
-      category: 'community'
+      action: 'View Post'
     },
     {
-      id: 6,
+      id: '5',
+      type: 'report',
+      title: 'Weekly Report Ready',
+      message: 'Your personalized wellness summary for this week is available',
+      timestamp: '1 day ago',
+      read: true,
+      category: 'analytics',
+      icon: '📊',
+      action: 'View Report'
+    },
+    {
+      id: '6',
       type: 'milestone',
       title: 'Goal Milestone',
-      description: 'Meditation streak: 10 days achieved',
-      time: 'Yesterday',
+      message: 'Congratulations! You achieved your 10-day meditation streak',
+      timestamp: '1 day ago',
+      read: true,
+      category: 'achievement',
       icon: '🎯',
-      unread: false,
-      category: 'achievement'
+      action: 'View Progress'
     },
     {
-      id: 7,
+      id: '7',
       type: 'resource',
       title: 'New Resource Available',
-      description: '"Managing Anxiety" course added',
-      time: 'This week',
+      message: '"Managing Anxiety" course has been added to your recommended resources',
+      timestamp: '2 days ago',
+      read: true,
+      category: 'learning',
       icon: '📚',
-      unread: false,
-      category: 'system'
+      action: 'View Course'
     },
     {
-      id: 8,
-      type: 'update',
+      id: '8',
+      type: 'system',
       title: 'System Update',
-      description: 'New features available in the app',
-      time: 'This week',
+      message: 'New features are now available in the MindLyfe app',
+      timestamp: '3 days ago',
+      read: true,
+      category: 'system',
       icon: '🔄',
-      unread: false,
-      category: 'system'
+      action: 'Learn More'
     }
   ];
 
-  const filters = [
-    { id: 'all', label: 'All', count: notifications.length },
-    { id: 'unread', label: 'Unread', count: notifications.filter(n => n.unread).length },
-    { id: 'therapy', label: 'Therapy', count: notifications.filter(n => n.category === 'therapy').length },
-    { id: 'community', label: 'Community', count: notifications.filter(n => n.category === 'community').length }
+  const filterOptions = [
+    { key: 'all', label: 'All', count: notifications.length },
+    { key: 'unread', label: 'Unread', count: notifications.filter(n => !n.read).length },
+    { key: 'therapy', label: 'Therapy', count: notifications.filter(n => n.category === 'therapy').length },
+    { key: 'community', label: 'Community', count: notifications.filter(n => n.category === 'community').length },
+    { key: 'achievement', label: 'Achievements', count: notifications.filter(n => n.category === 'achievement').length }
   ];
 
   const filteredNotifications = notifications.filter(notification => {
     if (activeFilter === 'all') return true;
-    if (activeFilter === 'unread') return notification.unread;
+    if (activeFilter === 'unread') return !notification.read;
     return notification.category === activeFilter;
   });
 
-  const groupedNotifications = {
-    today: filteredNotifications.filter(n => n.time.includes('hour')),
-    yesterday: filteredNotifications.filter(n => n.time === 'Yesterday'),
-    thisWeek: filteredNotifications.filter(n => n.time === 'This week')
-  };
-
-  const getNotificationColor = (type: string) => {
-    switch (type) {
-      case 'achievement': return 'from-yellow-400 to-orange-500';
-      case 'therapy': return 'from-blue-400 to-cyan-500';
-      case 'lyfbot': return 'from-purple-400 to-pink-500';
-      case 'report': return 'from-green-400 to-emerald-500';
-      case 'community': return 'from-red-400 to-pink-500';
-      case 'milestone': return 'from-indigo-400 to-purple-500';
-      case 'resource': return 'from-teal-400 to-cyan-500';
-      case 'update': return 'from-gray-400 to-slate-500';
-      default: return 'from-gray-400 to-gray-500';
+  const groupedNotifications = filteredNotifications.reduce((groups, notification) => {
+    const timeGroup = getTimeGroup(notification.timestamp);
+    if (!groups[timeGroup]) {
+      groups[timeGroup] = [];
     }
-  };
+    groups[timeGroup].push(notification);
+    return groups;
+  }, {});
 
-  const NotificationGroup = ({ title, notifications, showIndicator = false }: { title: string, notifications: any[], showIndicator?: boolean }) => {
-    if (notifications.length === 0) return null;
+  function getTimeGroup(timestamp: string): string {
+    if (timestamp.includes('hour')) return 'Today';
+    if (timestamp.includes('1 day')) return 'Yesterday';
+    if (timestamp.includes('days')) return 'This Week';
+    return 'Older';
+  }
 
-    return (
-      <Card className="mb-4 bg-white/70 backdrop-blur-sm border-white/20 shadow-xl">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center gap-2">
-            {showIndicator && <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>}
-            {title}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="space-y-3">
-            {notifications.map((notification) => (
-              <div 
-                key={notification.id}
-                className="flex items-center gap-4 p-4 rounded-xl bg-white/50 border border-white/20 hover:bg-white/70 transition-all duration-300 cursor-pointer group"
-              >
-                <div className={`w-12 h-12 bg-gradient-to-br ${getNotificationColor(notification.type)} rounded-lg flex items-center justify-center shadow-md`}>
-                  <span className="text-xl">{notification.icon}</span>
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h4 className="font-semibold text-gray-900">{notification.title}</h4>
-                    {notification.unread && (
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    )}
-                  </div>
-                  <p className="text-sm text-gray-600 mb-1">{notification.description}</p>
-                  <p className="text-xs text-gray-500">{notification.time}</p>
-                </div>
-                <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" />
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    );
+  const getCategoryColor = (category: string) => {
+    const colors = {
+      achievement: 'bg-yellow-100 text-yellow-800',
+      therapy: 'bg-blue-100 text-blue-800',
+      community: 'bg-green-100 text-green-800',
+      ai: 'bg-purple-100 text-purple-800',
+      analytics: 'bg-indigo-100 text-indigo-800',
+      learning: 'bg-pink-100 text-pink-800',
+      system: 'bg-gray-100 text-gray-800'
+    };
+    return colors[category] || 'bg-gray-100 text-gray-800';
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-secondary/20 to-primary/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-6">
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="mb-8 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button
-              variant="ghost"
-              size="icon"
+            <Button 
+              variant="ghost" 
               onClick={() => navigate('/dashboard')}
-              className="hover:bg-white/20"
+              className="flex items-center gap-2"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-4 h-4" />
+              Back to Dashboard
             </Button>
-            <h1 className="text-2xl font-bold text-gray-900">Notifications</h1>
+            <div className="flex items-center gap-3">
+              <Bell className="w-6 h-6 text-blue-600" />
+              <h1 className="text-3xl font-bold text-gray-900">Notifications</h1>
+            </div>
           </div>
-          <Button variant="ghost" size="icon" className="hover:bg-white/20">
-            <Settings className="w-5 h-5" />
+          
+          <Button variant="outline" size="icon">
+            <Settings className="w-4 h-4" />
           </Button>
         </div>
 
         {/* Filter Tabs */}
-        <Card className="mb-6 bg-white/70 backdrop-blur-sm border-white/20 shadow-xl">
+        <Card className="mb-6">
           <CardContent className="p-4">
-            <div className="flex gap-2 overflow-x-auto">
-              {filters.map((filter) => (
+            <div className="flex flex-wrap gap-2">
+              {filterOptions.map((option) => (
                 <Button
-                  key={filter.id}
-                  variant={activeFilter === filter.id ? "default" : "outline"}
+                  key={option.key}
+                  variant={activeFilter === option.key ? 'default' : 'outline'}
                   size="sm"
-                  onClick={() => setActiveFilter(filter.id)}
-                  className={`whitespace-nowrap ${activeFilter === filter.id ? "" : "bg-white/50"}`}
+                  onClick={() => setActiveFilter(option.key)}
+                  className="flex items-center gap-2"
                 >
-                  {filter.label}
-                  {filter.count > 0 && (
-                    <Badge variant="secondary" className="ml-2">
-                      {filter.count}
+                  {option.label}
+                  {option.count > 0 && (
+                    <Badge variant="secondary" className="ml-1">
+                      {option.count}
                     </Badge>
                   )}
                 </Button>
@@ -216,27 +193,75 @@ const NotificationsCenter = () => {
           </CardContent>
         </Card>
 
-        {/* Notifications Groups */}
-        <NotificationGroup 
-          title="Today" 
-          notifications={groupedNotifications.today} 
-          showIndicator={true}
-        />
-        <NotificationGroup 
-          title="Yesterday" 
-          notifications={groupedNotifications.yesterday} 
-        />
-        <NotificationGroup 
-          title="This Week" 
-          notifications={groupedNotifications.thisWeek} 
-        />
+        {/* Notifications List */}
+        <div className="space-y-6">
+          {Object.entries(groupedNotifications).map(([timeGroup, groupNotifications]) => (
+            <Card key={timeGroup}>
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                  {timeGroup}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0 space-y-3">
+                {groupNotifications.map((notification) => (
+                  <div 
+                    key={notification.id} 
+                    className={`p-4 rounded-lg border transition-all duration-200 hover:shadow-md cursor-pointer ${
+                      !notification.read 
+                        ? 'bg-blue-50 border-blue-200 hover:bg-blue-100' 
+                        : 'bg-white border-gray-200 hover:bg-gray-50'
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="text-2xl flex-shrink-0">{notification.icon}</div>
+                      
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <h3 className={`font-semibold ${!notification.read ? 'text-gray-900' : 'text-gray-700'}`}>
+                                {notification.title}
+                              </h3>
+                              {!notification.read && (
+                                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                              )}
+                            </div>
+                            <p className="text-sm text-gray-600 mb-2">{notification.message}</p>
+                            <div className="flex items-center gap-3">
+                              <span className="text-xs text-gray-500">{notification.timestamp}</span>
+                              <Badge variant="secondary" className={getCategoryColor(notification.category)}>
+                                {notification.category}
+                              </Badge>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center gap-2">
+                            {notification.action && (
+                              <Button variant="outline" size="sm">
+                                {notification.action}
+                              </Button>
+                            )}
+                            <Button variant="ghost" size="icon">
+                              <MoreVertical className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
         {filteredNotifications.length === 0 && (
-          <Card className="bg-white/70 backdrop-blur-sm border-white/20 shadow-xl">
+          <Card>
             <CardContent className="p-8 text-center">
-              <div className="text-4xl mb-4">📭</div>
+              <Bell className="w-12 h-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">No notifications</h3>
-              <p className="text-gray-600">You're all caught up!</p>
+              <p className="text-gray-600">You're all caught up! No new notifications to show.</p>
             </CardContent>
           </Card>
         )}

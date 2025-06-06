@@ -3,175 +3,184 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, TrendingUp, Activity, Brain, MessageCircle, Users } from 'lucide-react';
+import { ArrowLeft, TrendingUp, Brain, Activity, Target } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 const WellnessAnalytics = () => {
   const navigate = useNavigate();
-  const [selectedPeriod, setSelectedPeriod] = useState('7days');
+  const [timeframe, setTimeframe] = useState('30');
 
+  // Mock data for mood tracking
   const moodData = [
-    { day: 'Mon', mood: 6.5, energy: 7.2 },
-    { day: 'Tue', mood: 7.8, energy: 8.1 },
-    { day: 'Wed', mood: 8.2, energy: 7.5 },
-    { day: 'Thu', mood: 7.1, energy: 6.8 },
-    { day: 'Fri', mood: 8.5, energy: 8.9 },
-    { day: 'Sat', mood: 9.2, energy: 9.1 },
-    { day: 'Sun', mood: 8.7, energy: 8.3 }
+    { day: 'Mon', mood: 7, energy: 6, stress: 4 },
+    { day: 'Tue', mood: 8, energy: 7, stress: 3 },
+    { day: 'Wed', mood: 6, energy: 5, stress: 6 },
+    { day: 'Thu', mood: 9, energy: 8, stress: 2 },
+    { day: 'Fri', mood: 7, energy: 6, stress: 4 },
+    { day: 'Sat', mood: 8, energy: 7, stress: 3 },
+    { day: 'Sun', mood: 9, energy: 8, stress: 2 },
   ];
 
+  // Activity summary data
   const activityData = [
-    { activity: 'Meditation', count: 5, color: '#10b981' },
-    { activity: 'Journal', count: 7, color: '#8b5cf6' },
-    { activity: 'Therapy', count: 2, color: '#3b82f6' },
-    { activity: 'LyfBot', count: 12, color: '#f59e0b' },
-    { activity: 'Community', count: 15, color: '#ef4444' }
+    { name: 'Meditation', sessions: 15, growth: '+20%' },
+    { name: 'Therapy', sessions: 4, growth: '+15%' },
+    { name: 'Journaling', sessions: 12, growth: '+30%' },
+    { name: 'Community', posts: 8, growth: '+10%' },
+    { name: 'LyfBot', conversations: 25, growth: '+40%' }
   ];
 
+  // Insights data
   const insights = [
     {
-      icon: <TrendingUp className="w-5 h-5 text-green-500" />,
-      title: "Mood Pattern Discovery",
-      description: "Your mood improves significantly on days with meditation sessions"
+      type: 'correlation',
+      title: 'Mood improves on meditation days',
+      description: 'Your mood scores are 23% higher on days when you meditate.',
+      icon: <Brain className="w-5 h-5 text-blue-600" />
     },
     {
-      icon: <Activity className="w-5 h-5 text-blue-500" />,
-      title: "Therapy Correlation",
-      description: "Therapy sessions show positive correlation with wellness score improvements"
+      type: 'pattern',
+      title: 'Therapy sessions boost wellness',
+      description: 'Wellness scores increase by 15% in the week following therapy.',
+      icon: <TrendingUp className="w-5 h-5 text-green-600" />
     },
     {
-      icon: <Brain className="w-5 h-5 text-purple-500" />,
-      title: "Routine Recommendation",
-      description: "Consider adding morning meditation for consistency in mood patterns"
+      type: 'recommendation',
+      title: 'Consider morning routine',
+      description: 'Adding a morning routine could improve consistency by 30%.',
+      icon: <Target className="w-5 h-5 text-purple-600" />
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-secondary/20 to-primary/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-6">
-        <div className="flex items-center gap-4 mb-6">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate('/dashboard')}
-            className="hover:bg-white/20"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
-          <h1 className="text-2xl font-bold text-gray-900">Wellness Analytics</h1>
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Button 
+              variant="ghost" 
+              onClick={() => navigate('/dashboard')}
+              className="flex items-center gap-2"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Dashboard
+            </Button>
+            <h1 className="text-3xl font-bold text-gray-900">Wellness Analytics</h1>
+          </div>
+          
+          <div className="flex gap-2">
+            <Button 
+              variant={timeframe === '7' ? 'default' : 'outline'} 
+              onClick={() => setTimeframe('7')}
+              size="sm"
+            >
+              7 Days
+            </Button>
+            <Button 
+              variant={timeframe === '30' ? 'default' : 'outline'} 
+              onClick={() => setTimeframe('30')}
+              size="sm"
+            >
+              30 Days
+            </Button>
+            <Button 
+              variant={timeframe === '90' ? 'default' : 'outline'} 
+              onClick={() => setTimeframe('90')}
+              size="sm"
+            >
+              3 Months
+            </Button>
+          </div>
         </div>
 
-        {/* Time Period Selector */}
-        <Card className="mb-6 bg-white/70 backdrop-blur-sm border-white/20 shadow-xl">
-          <CardContent className="p-4">
-            <div className="flex gap-2">
-              {['7days', '30days', '3months'].map((period) => (
-                <Button
-                  key={period}
-                  variant={selectedPeriod === period ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedPeriod(period)}
-                  className={selectedPeriod === period ? "" : "bg-white/50"}
-                >
-                  {period === '7days' ? '7 Days' : period === '30days' ? '30 Days' : '3 Months'}
-                </Button>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Mood Tracking Chart */}
-          <Card className="bg-white/70 backdrop-blur-sm border-white/20 shadow-xl">
+          <Card className="lg:col-span-2">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-green-500" />
-                Mood Tracking
+                <Activity className="w-5 h-5 text-blue-600" />
+                Mood & Wellness Trends
               </CardTitle>
-              <div className="flex items-center gap-2">
-                <span className="text-2xl font-bold text-gray-900">7.2/10</span>
-                <Badge variant="outline" className="text-green-600 border-green-200 bg-green-50">
-                  ↗️ +0.8
-                </Badge>
-              </div>
+              <p className="text-sm text-gray-600">
+                Average mood: 7.6/10 (↗️ +0.8 from last week)
+              </p>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={200}>
+              <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={moodData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                  <XAxis dataKey="day" stroke="#64748b" />
-                  <YAxis domain={[0, 10]} stroke="#64748b" />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="day" />
+                  <YAxis domain={[0, 10]} />
                   <Tooltip />
-                  <Line 
-                    type="monotone" 
-                    dataKey="mood" 
-                    stroke="#10b981" 
-                    strokeWidth={3}
-                    dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="energy" 
-                    stroke="#3b82f6" 
-                    strokeWidth={2}
-                    strokeDasharray="5 5"
-                  />
+                  <Line type="monotone" dataKey="mood" stroke="#3B82F6" strokeWidth={3} name="Mood" />
+                  <Line type="monotone" dataKey="energy" stroke="#10B981" strokeWidth={2} name="Energy" />
+                  <Line type="monotone" dataKey="stress" stroke="#EF4444" strokeWidth={2} name="Stress" />
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
 
           {/* Activity Summary */}
-          <Card className="bg-white/70 backdrop-blur-sm border-white/20 shadow-xl">
+          <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Activity className="w-5 h-5 text-blue-500" />
-                Activity Summary
-              </CardTitle>
+              <CardTitle>Activity Summary</CardTitle>
+              <p className="text-sm text-gray-600">Last 30 days</p>
             </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={200}>
-                <BarChart data={activityData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                  <XAxis dataKey="activity" stroke="#64748b" />
-                  <YAxis stroke="#64748b" />
-                  <Tooltip />
-                  <Bar dataKey="count" fill="#8884d8" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
+            <CardContent className="space-y-4">
+              {activityData.map((activity, index) => (
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div>
+                    <div className="font-semibold text-gray-900">{activity.name}</div>
+                    <div className="text-sm text-gray-600">
+                      {activity.sessions ? `${activity.sessions} sessions` : `${activity.posts} posts`}
+                      {activity.conversations && `${activity.conversations} conversations`}
+                    </div>
+                  </div>
+                  <div className="text-sm font-semibold text-green-600">{activity.growth}</div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Insights & Recommendations */}
+          <Card>
+            <CardHeader>
+              <CardTitle>AI Insights & Recommendations</CardTitle>
+              <p className="text-sm text-gray-600">Personalized insights based on your data</p>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {insights.map((insight, index) => (
+                <div key={index} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 mt-1">{insight.icon}</div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">{insight.title}</h4>
+                      <p className="text-sm text-gray-600">{insight.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </CardContent>
           </Card>
         </div>
 
-        {/* Insights & Recommendations */}
-        <Card className="mt-6 bg-white/70 backdrop-blur-sm border-white/20 shadow-xl">
+        {/* Weekly Patterns */}
+        <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Brain className="w-5 h-5 text-purple-500" />
-              Insights & Recommendations
-            </CardTitle>
+            <CardTitle>Weekly Activity Patterns</CardTitle>
+            <p className="text-sm text-gray-600">Your wellness activities throughout the week</p>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {insights.map((insight, index) => (
-                <div key={index} className="flex items-start gap-4 p-4 rounded-xl bg-white/50 border border-white/20">
-                  <div className="flex-shrink-0 mt-1">
-                    {insight.icon}
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">{insight.title}</h4>
-                    <p className="text-sm text-gray-600">{insight.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={moodData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="mood" fill="#3B82F6" name="Mood Score" />
+              </BarChart>
+            </ResponsiveContainer>
           </CardContent>
         </Card>
       </div>
