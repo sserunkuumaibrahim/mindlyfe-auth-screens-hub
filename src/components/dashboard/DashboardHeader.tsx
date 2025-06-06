@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Bell, Menu, Search, Settings, User, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -16,13 +15,14 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
   const location = useLocation();
 
   const navItems = [
-    { label: 'Home', route: '/dashboard', active: location.pathname === '/dashboard' },
-    { label: 'Community', route: '/community', active: location.pathname.startsWith('/community') },
+    { label: 'Dashboard', route: '/dashboard', active: location.pathname === '/dashboard' },
     { label: 'Teletherapy', route: '/teletherapy', active: location.pathname.startsWith('/teletherapy') },
+    { label: 'Chat', route: '/chat', active: location.pathname.startsWith('/chat') },
     { label: 'Courses', route: '/courses', active: false },
     { label: 'Statistics', route: '/dashboard/analytics', active: location.pathname === '/dashboard/analytics' },
     { label: 'Music', route: '/music', active: false },
     { label: 'Sleep tracker', route: '/sleep', active: false },
+    { label: 'Community', route: '/community', active: location.pathname.startsWith('/community') },
   ];
 
   return (

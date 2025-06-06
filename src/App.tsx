@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -27,6 +28,11 @@ import VideoSession from "./pages/teletherapy/VideoSession";
 import GroupSession from "./pages/teletherapy/GroupSession";
 import TreatmentPlan from "./pages/teletherapy/TreatmentPlan";
 import TherapistProfile from "./pages/teletherapy/TherapistProfile";
+import ChatRoomsList from "./pages/chat/ChatRoomsList";
+import ChatRoom from "./pages/chat/ChatRoom";
+import CreateChatRoom from "./pages/chat/CreateChatRoom";
+import ChatPartners from "./pages/chat/ChatPartners";
+import ChatSettings from "./pages/chat/ChatSettings";
 
 const queryClient = new QueryClient();
 
@@ -61,6 +67,11 @@ const App = () => (
           <Route path="/teletherapy/session/:sessionId" element={<VideoSession />} />
           <Route path="/teletherapy/group/:sessionId" element={<GroupSession />} />
           <Route path="/teletherapy/treatment/:therapistId" element={<TreatmentPlan />} />
+          <Route path="/chat" element={<ChatRoomsList />} />
+          <Route path="/chat/room/:roomId" element={<ChatRoom />} />
+          <Route path="/chat/create" element={<CreateChatRoom />} />
+          <Route path="/chat/partners" element={<ChatPartners />} />
+          <Route path="/chat/settings" element={<ChatSettings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
