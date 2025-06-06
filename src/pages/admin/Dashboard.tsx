@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import AdminHeader from '@/components/dashboard/AdminHeader';
 import { Badge } from '@/components/ui/badge';
+import { useNavigate } from 'react-router-dom';
 import { 
   Users, 
   Activity, 
@@ -15,9 +17,11 @@ import {
 } from 'lucide-react';
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <DashboardHeader firstName="Admin" notificationCount={5} />
+      <AdminHeader firstName="Admin" notificationCount={5} />
       
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Platform Overview */}
@@ -221,19 +225,35 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+              <Button 
+                variant="outline" 
+                className="h-auto p-4 flex flex-col gap-2"
+                onClick={() => navigate('/admin/users')}
+              >
                 <Users className="w-6 h-6" />
                 <span>User Management</span>
               </Button>
-              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+              <Button 
+                variant="outline" 
+                className="h-auto p-4 flex flex-col gap-2"
+                onClick={() => navigate('/admin/analytics')}
+              >
                 <Activity className="w-6 h-6" />
                 <span>Analytics</span>
               </Button>
-              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+              <Button 
+                variant="outline" 
+                className="h-auto p-4 flex flex-col gap-2"
+                onClick={() => navigate('/admin/settings')}
+              >
                 <Shield className="w-6 h-6" />
                 <span>System Config</span>
               </Button>
-              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+              <Button 
+                variant="outline" 
+                className="h-auto p-4 flex flex-col gap-2"
+                onClick={() => navigate('/admin/crisis')}
+              >
                 <AlertTriangle className="w-6 h-6" />
                 <span>Crisis Response</span>
               </Button>

@@ -1,9 +1,10 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import AdminHeader from '@/components/dashboard/AdminHeader';
 import { Search, Users, CheckCircle, AlertTriangle, UserX } from 'lucide-react';
 
 const UserManagement = () => {
@@ -85,7 +86,7 @@ const UserManagement = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <DashboardHeader firstName="Admin" notificationCount={5} />
+      <AdminHeader firstName="Admin" notificationCount={5} />
       
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">

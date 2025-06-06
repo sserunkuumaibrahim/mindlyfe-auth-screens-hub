@@ -2,167 +2,131 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import AdminHeader from '@/components/dashboard/AdminHeader';
 import { Badge } from '@/components/ui/badge';
-import DashboardHeader from '@/components/dashboard/DashboardHeader';
-import { AlertTriangle, Shield, Phone, Clock, Users, CheckCircle } from 'lucide-react';
+import { AlertTriangle, Shield, Phone, Clock, Users, CheckCircle, TrendingUp } from 'lucide-react';
 
 const CrisisManagement = () => {
-  const crisisAlerts = [
-    {
-      id: '8934',
-      level: 'critical',
-      type: 'Suicide Risk Detected',
-      triggered: '12 minutes ago',
-      confidence: 94,
-      lastActivity: '"I can\'t take this anymore" in journal entry',
-      location: 'San Francisco, CA',
-      emergencyContact: 'Available',
-      assigned: 'Dr. Sarah Johnson',
-      status: 'In Progress'
-    },
-    {
-      id: '7821',
-      level: 'high',
-      type: 'Self-Harm Indicators',
-      triggered: '45 minutes ago',
-      confidence: 78,
-      lastActivity: 'Declining mood scores, isolation keywords',
-      location: 'Austin, TX',
-      emergencyContact: 'Not Available',
-      assigned: 'Crisis Team',
-      status: 'Monitoring'
-    },
-    {
-      id: '5647',
-      level: 'medium',
-      type: 'Substance Abuse Mention',
-      triggered: '2 hours ago',
-      confidence: 65,
-      lastActivity: 'Community post mentioning alcohol dependency',
-      location: 'Denver, CO',
-      emergencyContact: 'Available',
-      assigned: 'Unassigned',
-      status: 'Pending Review'
-    }
-  ];
-
-  const getAlertBadge = (level: string) => {
-    switch (level) {
-      case 'critical':
-        return <Badge className="bg-red-100 text-red-800">🚨 CRITICAL</Badge>;
-      case 'high':
-        return <Badge className="bg-orange-100 text-orange-800">🟡 HIGH RISK</Badge>;
-      case 'medium':
-        return <Badge className="bg-yellow-100 text-yellow-800">🟡 MEDIUM RISK</Badge>;
-      default:
-        return <Badge variant="outline">{level}</Badge>;
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
-      <DashboardHeader firstName="Admin" notificationCount={5} />
+      <AdminHeader firstName="Admin" notificationCount={5} />
       
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold">Crisis Management Center</h1>
-          <Button className="bg-red-600 hover:bg-red-700">Emergency Broadcast</Button>
+          <h1 className="text-3xl font-bold text-red-600">Crisis Management Center</h1>
+          <div className="flex gap-2">
+            <Button variant="outline" className="text-red-600 border-red-600">Emergency Broadcast</Button>
+            <Button className="bg-red-600 hover:bg-red-700">Crisis Team Chat</Button>
+          </div>
         </div>
 
         {/* Crisis Alert Dashboard */}
-        <Card className="mb-8">
+        <Card className="mb-8 border-red-200">
           <CardHeader>
-            <CardTitle>🚨 Crisis Alert Dashboard</CardTitle>
+            <CardTitle className="flex items-center gap-2 text-red-600">
+              🚨 Crisis Alert Dashboard
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div className="text-center p-6 bg-red-50 rounded-lg border">
+              <div className="text-center p-6 bg-red-50 rounded-lg border border-red-200">
                 <AlertTriangle className="w-8 h-8 text-red-600 mx-auto mb-2" />
                 <div className="text-3xl font-bold text-red-600">3</div>
                 <div className="text-sm text-gray-600">Active Alerts</div>
-                <div className="text-xs text-red-600 font-medium">🔴 Critical</div>
+                <div className="text-xs text-red-600 font-medium mt-1">🔴 Critical</div>
               </div>
-              <div className="text-center p-6 bg-yellow-50 rounded-lg border">
+              <div className="text-center p-6 bg-yellow-50 rounded-lg border border-yellow-200">
                 <Users className="w-8 h-8 text-yellow-600 mx-auto mb-2" />
                 <div className="text-3xl font-bold text-yellow-600">23</div>
                 <div className="text-sm text-gray-600">High Risk</div>
-                <div className="text-xs text-yellow-600 font-medium">🟡 Monitoring</div>
+                <div className="text-xs text-yellow-600 font-medium mt-1">🟡 Monitoring</div>
               </div>
-              <div className="text-center p-6 bg-green-50 rounded-lg border">
+              <div className="text-center p-6 bg-green-50 rounded-lg border border-green-200">
                 <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-2" />
                 <div className="text-3xl font-bold text-green-600">7</div>
                 <div className="text-sm text-gray-600">Interventions Today</div>
-                <div className="text-xs text-green-600 font-medium">✅ Resolved</div>
+                <div className="text-xs text-green-600 font-medium mt-1">✅ Resolved</div>
               </div>
-              <div className="text-center p-6 bg-blue-50 rounded-lg border">
+              <div className="text-center p-6 bg-blue-50 rounded-lg border border-blue-200">
                 <Clock className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-                <div className="text-3xl font-bold text-blue-600">4.2min</div>
-                <div className="text-sm text-gray-600">Response Time</div>
-                <div className="text-xs text-blue-600 font-medium">🎯 Target: 5min</div>
+                <div className="text-3xl font-bold text-blue-600">4.2 min</div>
+                <div className="text-sm text-gray-600">Avg Response Time</div>
+                <div className="text-xs text-green-600 flex items-center justify-center gap-1 mt-1">
+                  <TrendingUp className="w-3 h-3" />
+                  🎯 Target: 5min
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Active Crisis Alerts */}
-        <Card className="mb-8">
+        <Card className="mb-8 border-red-200">
           <CardHeader>
-            <CardTitle>🔴 Active Crisis Alerts</CardTitle>
+            <CardTitle className="flex items-center gap-2 text-red-600">
+              🔴 Active Crisis Alerts
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {crisisAlerts.map((alert) => (
-              <div 
-                key={alert.id} 
-                className={`p-4 rounded-lg border ${
-                  alert.level === 'critical' ? 'bg-red-50 border-red-200' :
-                  alert.level === 'high' ? 'bg-orange-50 border-orange-200' :
-                  'bg-yellow-50 border-yellow-200'
-                }`}
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      {getAlertBadge(alert.level)}
-                      <span className="font-medium">User ID: {alert.id} - {alert.type}</span>
-                    </div>
-                    <div className="text-sm text-gray-600">
-                      Triggered: {alert.triggered} | AI Confidence: {alert.confidence}%
-                    </div>
-                  </div>
+            {/* Critical Alert */}
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <div className="font-bold text-red-900 text-lg">🚨 CRITICAL - User ID: 8934 - Suicide Risk Detected</div>
+                  <div className="text-red-700 text-sm">Triggered: 12 minutes ago | AI Confidence: 94%</div>
+                  <div className="text-red-700 text-sm">Last Activity: "I can't take this anymore" in journal entry</div>
+                  <div className="text-red-700 text-sm">Location: San Francisco, CA | Emergency Contact: Available</div>
+                  <div className="text-red-700 text-sm">Assigned: Dr. Sarah Johnson | Status: In Progress</div>
                 </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 text-sm">
-                  <div>
-                    <div className="text-gray-600">Last Activity:</div>
-                    <div className="font-medium">{alert.lastActivity}</div>
-                  </div>
-                  <div>
-                    <div className="text-gray-600">Location:</div>
-                    <div className="font-medium">{alert.location}</div>
-                  </div>
-                  <div>
-                    <div className="text-gray-600">Emergency Contact:</div>
-                    <div className="font-medium">{alert.emergencyContact}</div>
-                  </div>
-                  <div>
-                    <div className="text-gray-600">Assigned:</div>
-                    <div className="font-medium">{alert.assigned} | Status: {alert.status}</div>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  <Button size="sm" variant="outline">View Full Profile</Button>
-                  <Button size="sm" variant="outline">Contact User</Button>
-                  {alert.level === 'critical' && (
-                    <Button size="sm" className="bg-red-600 hover:bg-red-700">Emergency Services</Button>
-                  )}
-                  <Button size="sm" variant="outline">Update Status</Button>
-                  {alert.assigned === 'Unassigned' && (
-                    <Button size="sm" variant="outline">Assign Counselor</Button>
-                  )}
-                </div>
+                <Badge variant="destructive">CRITICAL</Badge>
               </div>
-            ))}
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" className="border-red-600 text-red-600">View Full Profile</Button>
+                <Button size="sm" className="bg-red-600 hover:bg-red-700">Contact User</Button>
+                <Button size="sm" variant="outline" className="border-red-600 text-red-600">Emergency Services</Button>
+                <Button size="sm" variant="outline">Update Status</Button>
+              </div>
+            </div>
+
+            {/* High Risk Alert */}
+            <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <div className="font-bold text-yellow-900 text-lg">🟡 HIGH RISK - User ID: 7821 - Self-Harm Indicators</div>
+                  <div className="text-yellow-700 text-sm">Triggered: 45 minutes ago | AI Confidence: 78%</div>
+                  <div className="text-yellow-700 text-sm">Pattern: Declining mood scores, isolation keywords</div>
+                  <div className="text-yellow-700 text-sm">Location: Austin, TX | Emergency Contact: Not Available</div>
+                  <div className="text-yellow-700 text-sm">Assigned: Crisis Team | Status: Monitoring</div>
+                </div>
+                <Badge className="bg-yellow-600">HIGH RISK</Badge>
+              </div>
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline">View Full Profile</Button>
+                <Button size="sm" className="bg-yellow-600 hover:bg-yellow-700">Escalate</Button>
+                <Button size="sm" variant="outline">Assign Therapist</Button>
+                <Button size="sm" variant="outline">Send Resources</Button>
+              </div>
+            </div>
+
+            {/* Medium Risk Alert */}
+            <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <div className="font-bold text-orange-900 text-lg">🟡 MEDIUM RISK - User ID: 5647 - Substance Abuse Mention</div>
+                  <div className="text-orange-700 text-sm">Triggered: 2 hours ago | AI Confidence: 65%</div>
+                  <div className="text-orange-700 text-sm">Context: Community post mentioning alcohol dependency</div>
+                  <div className="text-orange-700 text-sm">Location: Denver, CO | Emergency Contact: Available</div>
+                  <div className="text-orange-700 text-sm">Assigned: Unassigned | Status: Pending Review</div>
+                </div>
+                <Badge className="bg-orange-600">MEDIUM RISK</Badge>
+              </div>
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline">View Full Profile</Button>
+                <Button size="sm" variant="outline">Assign Counselor</Button>
+                <Button size="sm" variant="outline">Send Resources</Button>
+                <Button size="sm" variant="outline">Mark Reviewed</Button>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
@@ -174,54 +138,27 @@ const CrisisManagement = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <h4 className="font-medium mb-3">This Month:</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span>Total Alerts:</span>
-                    <span className="font-medium">89</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Critical:</span>
-                    <span className="font-medium text-red-600">12</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>High Risk:</span>
-                    <span className="font-medium text-orange-600">34</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Medium Risk:</span>
-                    <span className="font-medium text-yellow-600">43</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>False Positives:</span>
-                    <span className="font-medium">8.2%</span>
-                  </div>
+                <h4 className="font-medium mb-2">This Month:</h4>
+                <div className="space-y-1 text-sm">
+                  <div>Total Alerts: 89</div>
+                  <div>Critical: 12</div>
+                  <div>High Risk: 34</div>
+                  <div>Medium Risk: 43</div>
+                  <div>False Positives: 8.2%</div>
                 </div>
               </div>
-
+              
               <div>
-                <h4 className="font-medium mb-3">Response Times:</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span>Critical:</span>
-                    <span className="font-medium">Avg 3.1 min</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>High Risk:</span>
-                    <span className="font-medium">Avg 8.7 min</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Medium Risk:</span>
-                    <span className="font-medium">Avg 24.3 min</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Resolution Rate:</span>
-                    <span className="font-medium text-green-600">94.3%</span>
-                  </div>
+                <h4 className="font-medium mb-2">Response Times:</h4>
+                <div className="space-y-1 text-sm">
+                  <div>Critical: Avg 3.1 min</div>
+                  <div>High Risk: Avg 8.7 min</div>
+                  <div>Medium Risk: Avg 24.3 min</div>
+                  <div>Resolution Rate: 94.3%</div>
                 </div>
               </div>
-
-              <Button variant="outline" className="w-full">View Detailed Report</Button>
+              
+              <Button className="w-full">View Detailed Report</Button>
             </CardContent>
           </Card>
 
@@ -232,28 +169,28 @@ const CrisisManagement = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <h4 className="font-medium mb-3">Immediate Response (0-5 min):</h4>
-                <div className="space-y-1 text-sm">
-                  <div>├ AI-powered risk assessment</div>
-                  <div>├ Automatic emergency contact alert</div>
-                  <div>├ Crisis counselor notification</div>
-                  <div>└ Platform safety measures activation</div>
+                <h4 className="font-medium mb-2">Immediate Response (0-5 min):</h4>
+                <div className="space-y-1 text-sm text-gray-600">
+                  <div>• AI-powered risk assessment</div>
+                  <div>• Automatic emergency contact alert</div>
+                  <div>• Crisis counselor notification</div>
+                  <div>• Platform safety measures activation</div>
                 </div>
               </div>
-
+              
               <div>
-                <h4 className="font-medium mb-3">Follow-up Response (5-30 min):</h4>
-                <div className="space-y-1 text-sm">
-                  <div>├ Professional intervention</div>
-                  <div>├ Emergency services coordination</div>
-                  <div>├ Family/emergency contact outreach</div>
-                  <div>└ Continuous monitoring activation</div>
+                <h4 className="font-medium mb-2">Follow-up Response (5-30 min):</h4>
+                <div className="space-y-1 text-sm text-gray-600">
+                  <div>• Professional intervention</div>
+                  <div>• Emergency services coordination</div>
+                  <div>• Family/emergency contact outreach</div>
+                  <div>• Continuous monitoring activation</div>
                 </div>
               </div>
-
+              
               <div className="flex gap-2">
-                <Button variant="outline" size="sm">Update Protocols</Button>
-                <Button variant="outline" size="sm">Training Materials</Button>
+                <Button variant="outline">Update Protocols</Button>
+                <Button variant="outline">Training Materials</Button>
               </div>
             </CardContent>
           </Card>
@@ -266,21 +203,38 @@ const CrisisManagement = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { icon: '📢', label: 'Emergency Broadcast' },
-                { icon: '💬', label: 'Crisis Team Chat' },
-                { icon: '📚', label: 'Resource Library' },
-                { icon: '🎓', label: 'Training Hub' },
-                { icon: '📋', label: 'Incident Reports' },
-                { icon: '⚖️', label: 'Legal Documentation' },
-                { icon: '🏥', label: 'External Services' },
-                { icon: '📊', label: 'Analytics' }
-              ].map((tool) => (
-                <Button key={tool.label} variant="outline" className="h-auto p-4 flex flex-col gap-2">
-                  <span className="text-lg">{tool.icon}</span>
-                  <span className="text-sm">{tool.label}</span>
-                </Button>
-              ))}
+              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+                <Phone className="w-6 h-6" />
+                <span>Emergency Broadcast</span>
+              </Button>
+              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+                <Users className="w-6 h-6" />
+                <span>Crisis Team Chat</span>
+              </Button>
+              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+                <Shield className="w-6 h-6" />
+                <span>Resource Library</span>
+              </Button>
+              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+                <CheckCircle className="w-6 h-6" />
+                <span>Training Hub</span>
+              </Button>
+              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+                <AlertTriangle className="w-6 h-6" />
+                <span>Incident Reports</span>
+              </Button>
+              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+                <Shield className="w-6 h-6" />
+                <span>Legal Documentation</span>
+              </Button>
+              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+                <Phone className="w-6 h-6" />
+                <span>External Services</span>
+              </Button>
+              <Button variant="outline" className="h-auto p-4 flex flex-col gap-2">
+                <TrendingUp className="w-6 h-6" />
+                <span>Analytics</span>
+              </Button>
             </div>
           </CardContent>
         </Card>
