@@ -74,6 +74,11 @@ import PaymentCheckout from "./pages/profile/PaymentCheckout";
 import PaymentSuccess from "./pages/profile/PaymentSuccess";
 import BillingHistory from "./pages/profile/BillingHistory";
 import SubscriptionDetails from "./pages/profile/SubscriptionDetails";
+import AdminDashboard from "./pages/admin/Dashboard";
+import UserManagement from "./pages/admin/Users";
+import AnalyticsDashboard from "./pages/admin/Analytics";
+import SystemConfiguration from "./pages/admin/Settings";
+import CrisisManagement from "./pages/admin/Crisis";
 
 const queryClient = new QueryClient();
 
@@ -156,6 +161,11 @@ const App = () => (
           <Route path="/profile/payment-success" element={<PaymentSuccess />} />
           <Route path="/profile/billing-history" element={<BillingHistory />} />
           <Route path="/profile/subscription-details" element={<SubscriptionDetails />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/users" element={<UserManagement />} />
+          <Route path="/admin/analytics" element={<AnalyticsDashboard />} />
+          <Route path="/admin/settings" element={<SystemConfiguration />} />
+          <Route path="/admin/crisis" element={<CrisisManagement />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
