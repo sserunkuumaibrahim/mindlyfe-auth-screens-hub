@@ -15,6 +15,9 @@ import Dashboard from "./pages/Dashboard";
 import WellnessAnalytics from "./pages/WellnessAnalytics";
 import ProgressTracking from "./pages/ProgressTracking";
 import NotificationsCenter from "./pages/NotificationsCenter";
+import Community from "./pages/Community";
+import CreatePost from "./pages/CreatePost";
+import PostDetails from "./pages/PostDetails";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +39,9 @@ const App = () => (
           <Route path="/dashboard/analytics" element={<WellnessAnalytics />} />
           <Route path="/dashboard/progress" element={<ProgressTracking />} />
           <Route path="/dashboard/notifications" element={<NotificationsCenter />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/community/create" element={<CreatePost />} />
+          <Route path="/community/post/:id" element={<PostDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
