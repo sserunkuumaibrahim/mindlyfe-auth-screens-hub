@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -21,6 +20,12 @@ import PostDetails from "./pages/PostDetails";
 import UserProfile from "./pages/UserProfile";
 import FollowManagement from "./pages/FollowManagement";
 import ContentModeration from "./pages/ContentModeration";
+import TherapistDiscovery from "./pages/teletherapy/TherapistDiscovery";
+import SessionBooking from "./pages/teletherapy/SessionBooking";
+import SessionHistory from "./pages/teletherapy/SessionHistory";
+import VideoSession from "./pages/teletherapy/VideoSession";
+import GroupSession from "./pages/teletherapy/GroupSession";
+import TreatmentPlan from "./pages/teletherapy/TreatmentPlan";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +53,12 @@ const App = () => (
           <Route path="/community/profile/:anonymousId" element={<UserProfile />} />
           <Route path="/community/follows" element={<FollowManagement />} />
           <Route path="/community/moderation" element={<ContentModeration />} />
+          <Route path="/teletherapy" element={<TherapistDiscovery />} />
+          <Route path="/teletherapy/book/:therapistId" element={<SessionBooking />} />
+          <Route path="/teletherapy/sessions" element={<SessionHistory />} />
+          <Route path="/teletherapy/session/:sessionId" element={<VideoSession />} />
+          <Route path="/teletherapy/group/:sessionId" element={<GroupSession />} />
+          <Route path="/teletherapy/treatment/:therapistId" element={<TreatmentPlan />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

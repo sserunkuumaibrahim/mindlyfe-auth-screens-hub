@@ -18,7 +18,7 @@ const DashboardHeader = ({ firstName, notificationCount = 0, onMenuClick }: Dash
   const navItems = [
     { label: 'Home', route: '/dashboard', active: location.pathname === '/dashboard' },
     { label: 'Community', route: '/community', active: location.pathname.startsWith('/community') },
-    { label: 'Therapists', route: '/therapists', active: false },
+    { label: 'Teletherapy', route: '/teletherapy', active: location.pathname.startsWith('/teletherapy') },
     { label: 'Courses', route: '/courses', active: false },
     { label: 'Statistics', route: '/dashboard/analytics', active: location.pathname === '/dashboard/analytics' },
     { label: 'Music', route: '/music', active: false },
