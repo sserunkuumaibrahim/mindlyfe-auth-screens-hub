@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -78,13 +79,13 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import UserManagement from "./pages/admin/Users";
 import AnalyticsDashboard from "./pages/admin/Analytics";
 import SystemConfiguration from "./pages/admin/Settings";
-import CrisisManagement from "./pages/admin/Crisis";
+import AdminCrisisManagement from "./pages/admin/Crisis";
 import SupportDashboard from "./pages/support/Dashboard";
 import TicketManagement from "./pages/support/Tickets";
 import UserAssistance from "./pages/support/Users";
 import KnowledgeBase from "./pages/support/KnowledgeBase";
 import SupportAnalytics from "./pages/support/Analytics";
-import CrisisManagement from "./pages/support/Crisis";
+import SupportCrisisManagement from "./pages/support/Crisis";
 
 const queryClient = new QueryClient();
 
@@ -171,13 +172,13 @@ const App = () => (
           <Route path="/admin/users" element={<UserManagement />} />
           <Route path="/admin/analytics" element={<AnalyticsDashboard />} />
           <Route path="/admin/settings" element={<SystemConfiguration />} />
-          <Route path="/admin/crisis" element={<CrisisManagement />} />
+          <Route path="/admin/crisis" element={<AdminCrisisManagement />} />
           <Route path="/support/dashboard" element={<SupportDashboard />} />
           <Route path="/support/tickets" element={<TicketManagement />} />
           <Route path="/support/users" element={<UserAssistance />} />
           <Route path="/support/knowledge-base" element={<KnowledgeBase />} />
           <Route path="/support/analytics" element={<SupportAnalytics />} />
-          <Route path="/support/crisis" element={<CrisisManagement />} />
+          <Route path="/support/crisis" element={<SupportCrisisManagement />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -19,8 +19,8 @@ const Dashboard = () => {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             <WellnessOverview />
-            <TodayProgress />
-            <RecentActivity />
+            <TodayProgress progressItems={[]} />
+            <RecentActivity activities={[]} />
           </div>
           
           {/* Sidebar */}
@@ -28,7 +28,7 @@ const Dashboard = () => {
             <UpcomingSessions />
             <QuickActions />
             <SupportCenter />
-            <Recommendations />
+            <Recommendations recommendations={[]} />
           </div>
         </div>
       </div>
