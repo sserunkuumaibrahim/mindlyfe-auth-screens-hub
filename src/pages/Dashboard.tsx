@@ -147,20 +147,21 @@ const Dashboard = () => {
         notificationCount={3}
       />
       
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-4 md:py-8">
         {isRefreshing && (
-          <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 bg-white rounded-2xl px-6 py-4 shadow-lg border">
-            <div className="flex items-center gap-3">
-              <div className="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent"></div>
-              <p className="text-sm font-medium text-gray-700">Refreshing dashboard...</p>
+          <div className="fixed top-16 sm:top-20 md:top-24 left-1/2 transform -translate-x-1/2 z-50 bg-white rounded-xl sm:rounded-2xl px-4 sm:px-6 py-3 sm:py-4 shadow-lg border">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-2 border-primary border-t-transparent"></div>
+              <p className="text-xs sm:text-sm font-medium text-gray-700">Refreshing dashboard...</p>
             </div>
           </div>
         )}
         
-        {/* Main Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {/* Left Column - Main Metrics & Progress */}
-          <div className="lg:col-span-2 xl:col-span-2 space-y-6">
+        {/* Main Grid Layout - Fully Responsive */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 xl:grid-cols-12 gap-4 md:gap-6">
+          {/* Left Column - Main Content */}
+          <div className="lg:col-span-8 xl:col-span-8 space-y-4 md:space-y-6">
+            {/* Wellness Metrics - Full Width */}
             <WellnessMetrics 
               overallScore={wellnessData.overallScore}
               goalsCompleted={wellnessData.goalsCompleted}
@@ -169,53 +170,60 @@ const Dashboard = () => {
               moodTrend={wellnessData.moodTrend}
             />
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Progress & Activity Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <TodayProgress progressItems={progressData} />
               <RecentActivity activities={recentActivities} />
             </div>
             
+            {/* Recommendations - Full Width on Mobile */}
             <Recommendations recommendations={recommendations} />
           </div>
           
-          {/* Middle Column - Calendar & Sessions */}
-          <div className="lg:col-span-1 xl:col-span-1 space-y-6">
+          {/* Right Column - Sidebar Content */}
+          <div className="lg:col-span-4 xl:col-span-4 space-y-4 md:space-y-6">
+            {/* Calendar Widget */}
             <CalendarWidget />
+            
+            {/* Upcoming Sessions */}
             <UpcomingSessions />
-          </div>
-          
-          {/* Right Column - Quick Actions */}
-          <div className="lg:col-span-3 xl:col-span-1 space-y-6">
-            <QuickActions />
+            
+            {/* Quick Actions - Mobile: Full Width, Desktop: Sidebar */}
+            <div className="lg:block">
+              <QuickActions />
+            </div>
           </div>
         </div>
 
-        {/* Quick Action Buttons */}
-        <div className="mt-8 flex flex-wrap gap-4">
-          <button 
-            onClick={() => navigate('/dashboard/analytics')}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
-          >
-            View Analytics
-          </button>
-          <button 
-            onClick={() => navigate('/dashboard/progress')}
-            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
-          >
-            Track Progress
-          </button>
-          <button 
-            onClick={() => navigate('/dashboard/notifications')}
-            className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold"
-          >
-            Notifications
-          </button>
-          <button 
-            onClick={handleRefresh}
-            className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-semibold"
-            disabled={isRefreshing}
-          >
-            {isRefreshing ? 'Refreshing...' : 'Refresh Data'}
-          </button>
+        {/* Action Buttons - Responsive Layout */}
+        <div className="mt-6 md:mt-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            <button 
+              onClick={() => navigate('/dashboard/analytics')}
+              className="w-full px-4 md:px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold text-sm md:text-base"
+            >
+              View Analytics
+            </button>
+            <button 
+              onClick={() => navigate('/dashboard/progress')}
+              className="w-full px-4 md:px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold text-sm md:text-base"
+            >
+              Track Progress
+            </button>
+            <button 
+              onClick={() => navigate('/dashboard/notifications')}
+              className="w-full px-4 md:px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold text-sm md:text-base"
+            >
+              Notifications
+            </button>
+            <button 
+              onClick={handleRefresh}
+              className="w-full px-4 md:px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-semibold text-sm md:text-base"
+              disabled={isRefreshing}
+            >
+              {isRefreshing ? 'Refreshing...' : 'Refresh Data'}
+            </button>
+          </div>
         </div>
       </div>
     </div>
