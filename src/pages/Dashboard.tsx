@@ -140,6 +140,16 @@ const Dashboard = () => {
     }
   ];
 
+  const handleFeatureClick = (route: string) => {
+    console.log('Navigating to:', route);
+    navigate(route);
+  };
+
+  const handleQuickActionClick = (route: string) => {
+    console.log('Quick action navigation to:', route);
+    navigate(route);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <DashboardHeader firstName="Alex" notificationCount={3} />
@@ -179,7 +189,7 @@ const Dashboard = () => {
                     {mainFeatures.map((feature, index) => (
                       <button
                         key={index}
-                        onClick={() => navigate(feature.route)}
+                        onClick={() => handleFeatureClick(feature.route)}
                         className={`p-4 rounded-lg border-2 text-left hover:shadow-md transition-all ${feature.color}`}
                       >
                         <div className="flex items-start gap-3">
@@ -230,7 +240,7 @@ const Dashboard = () => {
                 {quickAccessActions.map((action, index) => (
                   <button 
                     key={index}
-                    onClick={() => navigate(action.route)}
+                    onClick={() => handleQuickActionClick(action.route)}
                     className={`p-4 rounded-lg text-center transition-colors ${action.color}`}
                   >
                     <div className="text-2xl mb-2">{action.icon}</div>
