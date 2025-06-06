@@ -12,6 +12,9 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import MFAVerify from "./pages/auth/MFAVerify";
 import Dashboard from "./pages/Dashboard";
+import WellnessAnalytics from "./pages/WellnessAnalytics";
+import ProgressTracking from "./pages/ProgressTracking";
+import NotificationsCenter from "./pages/NotificationsCenter";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +33,9 @@ const App = () => (
           <Route path="/auth/reset-password" element={<ResetPassword />} />
           <Route path="/auth/mfa-verify" element={<MFAVerify />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/analytics" element={<WellnessAnalytics />} />
+          <Route path="/dashboard/progress" element={<ProgressTracking />} />
+          <Route path="/dashboard/notifications" element={<NotificationsCenter />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

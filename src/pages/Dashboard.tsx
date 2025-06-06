@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
@@ -6,6 +5,7 @@ import WellnessMetrics from '@/components/dashboard/WellnessMetrics';
 import TodayProgress from '@/components/dashboard/TodayProgress';
 import QuickActions from '@/components/dashboard/QuickActions';
 import RecentActivity from '@/components/dashboard/RecentActivity';
+import CalendarWidget from '@/components/dashboard/CalendarWidget';
 import { useToast } from '@/hooks/use-toast';
 
 interface ProgressItem {
@@ -130,8 +130,8 @@ const Dashboard = () => {
           </div>
         )}
         
-        {/* Desktop: 2-column grid, Mobile: single column */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Desktop: 3-column grid, Mobile: single column */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Left Column - Main Content */}
           <div className="lg:col-span-2 space-y-6">
             <div className="animate-fade-in">
@@ -153,6 +153,13 @@ const Dashboard = () => {
             </div>
           </div>
           
+          {/* Middle Column - Calendar (Desktop only) */}
+          <div className="hidden lg:block space-y-6">
+            <div className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
+              <CalendarWidget />
+            </div>
+          </div>
+          
           {/* Right Column - Sidebar */}
           <div className="space-y-6">
             <div className="animate-fade-in hidden lg:block" style={{ animationDelay: '0.2s' }}>
@@ -161,6 +168,11 @@ const Dashboard = () => {
             
             <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
               <RecentActivity activities={recentActivity} />
+            </div>
+
+            {/* Mobile Calendar */}
+            <div className="animate-fade-in lg:hidden" style={{ animationDelay: '0.25s' }}>
+              <CalendarWidget />
             </div>
           </div>
         </div>
