@@ -1,71 +1,79 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Plus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { MessageSquare, Video, Phone, BookOpen, Users, Brain } from 'lucide-react';
 
 const QuickActions = () => {
   const navigate = useNavigate();
 
-  const plans = [
+  const quickActions = [
     {
-      title: 'Insomnia recovery',
-      description: 'Cognitive and behavioral techniques to manage insomnia.',
-      color: 'bg-cyan-100 text-cyan-700',
-      tag: 'Sleep',
-      route: '/resources/paths'
+      title: 'Chat with LyfBot',
+      description: 'Get instant AI mental health support',
+      icon: <Brain className="w-5 h-5" />,
+      action: () => navigate('/chat/lyfbot'),
+      color: 'bg-blue-600 hover:bg-blue-700'
     },
     {
-      title: 'Anxiety relief',
-      description: 'Meditations focused on calming the nervous system.',
-      color: 'bg-orange-100 text-orange-700',
-      tag: 'Meditation',
-      route: '/mental-health/mood'
+      title: 'Message Therapist',
+      description: 'Connect with your therapist',
+      icon: <MessageSquare className="w-5 h-5" />,
+      action: () => navigate('/teletherapy'),
+      color: 'bg-green-600 hover:bg-green-700'
     },
     {
-      title: 'Stress management',
-      description: 'Learn effective stress coping strategies.',
-      color: 'bg-purple-100 text-purple-700',
-      tag: 'Studying',
-      route: '/resources'
+      title: 'Video Session',
+      description: 'Join a therapy session',
+      icon: <Video className="w-5 h-5" />,
+      action: () => navigate('/teletherapy/sessions'),
+      color: 'bg-purple-600 hover:bg-purple-700'
+    },
+    {
+      title: 'Journal Entry',
+      description: 'Write your thoughts',
+      icon: <BookOpen className="w-5 h-5" />,
+      action: () => navigate('/journal/write'),
+      color: 'bg-orange-600 hover:bg-orange-700'
+    },
+    {
+      title: 'Community',
+      description: 'Connect with others',
+      icon: <Users className="w-5 h-5" />,
+      action: () => navigate('/community'),
+      color: 'bg-indigo-600 hover:bg-indigo-700'
+    },
+    {
+      title: 'Crisis Support',
+      description: '24/7 emergency help',
+      icon: <Phone className="w-5 h-5" />,
+      action: () => navigate('/mental-health/crisis'),
+      color: 'bg-red-600 hover:bg-red-700'
     }
   ];
 
   return (
-    <Card className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
-      <CardHeader className="pb-4">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-lg font-semibold text-gray-900">Plans</CardTitle>
-          <button 
-            className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-gray-200 transition-colors"
-            onClick={() => navigate('/mental-health/goals')}
-          >
-            <Plus className="w-4 h-4 text-gray-600" />
-          </button>
-        </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Quick Actions</CardTitle>
       </CardHeader>
-      
-      <CardContent className="pt-0 space-y-4">
-        {plans.map((plan, index) => (
-          <div key={index} className="relative">
-            <div 
-              className="bg-gradient-to-r from-gray-50 to-white p-4 rounded-lg border hover:shadow-sm transition-shadow cursor-pointer"
-              onClick={() => navigate(plan.route)}
+      <CardContent>
+        <div className="grid grid-cols-2 gap-3">
+          {quickActions.map((action, index) => (
+            <Button
+              key={index}
+              onClick={action.action}
+              className={`h-auto p-3 flex flex-col gap-2 text-left ${action.color} text-white`}
             >
-              <div className="flex items-center justify-between mb-3">
-                <span className={`text-xs font-medium px-2 py-1 rounded-full ${plan.color}`}>
-                  {plan.tag}
-                </span>
-                <button className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
-                  <div className="w-2 h-2 bg-white rounded-full"></div>
-                </button>
+              {action.icon}
+              <div>
+                <div className="font-medium text-sm">{action.title}</div>
+                <div className="text-xs opacity-90">{action.description}</div>
               </div>
-              
-              <h3 className="font-semibold text-gray-900 mb-2">{plan.title}</h3>
-              <p className="text-sm text-gray-600">{plan.description}</p>
-            </div>
-          </div>
-        ))}
+            </Button>
+          ))}
+        </div>
       </CardContent>
     </Card>
   );

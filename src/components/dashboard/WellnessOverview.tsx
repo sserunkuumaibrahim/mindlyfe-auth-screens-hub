@@ -1,63 +1,82 @@
 
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { TrendingUp, Zap } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { Brain, TrendingUp, Activity, Target } from 'lucide-react';
 
 const WellnessOverview = () => {
+  const navigate = useNavigate();
+
+  const handleNavigateToMood = () => {
+    navigate('/mental-health/mood');
+  };
+
+  const handleNavigateToGoals = () => {
+    navigate('/mental-health/goals');
+  };
+
+  const handleNavigateToAssessment = () => {
+    navigate('/mental-health/assessment');
+  };
+
   return (
-    <Card className="bg-gradient-to-br from-blue-50 to-indigo-100 border-0 shadow-sm">
-      <CardContent className="p-8">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Mindful Meditation</h2>
-            <p className="text-gray-600">Focus and clarity sounds</p>
-          </div>
-          <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
-            <Zap className="w-8 h-8 text-blue-600" />
-          </div>
-        </div>
-
-        <div className="relative">
-          <div className="w-32 h-32 mx-auto mb-6">
-            <svg viewBox="0 0 100 100" className="w-full h-full transform -rotate-90">
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                fill="none"
-                stroke="rgb(255 255 255 / 0.3)"
-                strokeWidth="8"
-              />
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                fill="none"
-                stroke="rgb(59 130 246)"
-                strokeWidth="8"
-                strokeDasharray={`${78 * 2.83} ${(100 - 78) * 2.83}`}
-                strokeLinecap="round"
-                className="transition-all duration-1000"
-              />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900">78</div>
-                <div className="text-xs text-gray-600">Score</div>
-              </div>
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Brain className="w-5 h-5 text-mindlyfe-blue" />
+          Mental Health Overview
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Mood Tracking */}
+          <div className="text-center p-6 bg-blue-50 rounded-lg border border-blue-200">
+            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Activity className="w-8 h-8 text-white" />
             </div>
+            <h3 className="font-semibold text-gray-900 mb-2">Mood Tracking</h3>
+            <p className="text-sm text-gray-600 mb-3">Track your daily emotional patterns</p>
+            <Badge variant="outline" className="mb-3">12 day streak</Badge>
+            <Button 
+              onClick={handleNavigateToMood}
+              className="w-full bg-blue-600 hover:bg-blue-700"
+            >
+              Track Mood
+            </Button>
           </div>
 
-          <div className="flex items-center justify-center gap-4">
-            <button className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
-              <div className="w-4 h-4 bg-gray-600 rounded-sm"></div>
-            </button>
-            <button className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform">
-              <div className="w-6 h-6 bg-blue-600 rounded-sm"></div>
-            </button>
-            <button className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
-              <div className="w-4 h-4 bg-gray-600 rounded-sm"></div>
-            </button>
+          {/* Wellness Goals */}
+          <div className="text-center p-6 bg-green-50 rounded-lg border border-green-200">
+            <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Target className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="font-semibold text-gray-900 mb-2">Wellness Goals</h3>
+            <p className="text-sm text-gray-600 mb-3">Set and track your mental health objectives</p>
+            <Badge variant="outline" className="mb-3">3 active goals</Badge>
+            <Button 
+              onClick={handleNavigateToGoals}
+              className="w-full bg-green-600 hover:bg-green-700"
+            >
+              View Goals
+            </Button>
+          </div>
+
+          {/* Assessment Progress */}
+          <div className="text-center p-6 bg-purple-50 rounded-lg border border-purple-200">
+            <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <TrendingUp className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="font-semibold text-gray-900 mb-2">Health Assessment</h3>
+            <p className="text-sm text-gray-600 mb-3">Complete mental health evaluations</p>
+            <Badge variant="outline" className="mb-3">5 completed</Badge>
+            <Button 
+              onClick={handleNavigateToAssessment}
+              className="w-full bg-purple-600 hover:bg-purple-700"
+            >
+              Take Assessment
+            </Button>
           </div>
         </div>
       </CardContent>
