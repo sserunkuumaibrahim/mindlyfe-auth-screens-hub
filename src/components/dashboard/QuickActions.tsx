@@ -98,7 +98,8 @@ const QuickActions = ({ actions }: QuickActionsProps) => {
         </CardTitle>
       </CardHeader>
       <CardContent className="p-6 pt-0">
-        <div className="grid grid-cols-2 gap-4">
+        {/* Mobile: 2 columns, Desktop sidebar: 1 column, Desktop main: 3 columns */}
+        <div className="grid grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
           {displayActions.map((action, index) => {
             const IconComponent = iconComponents[action.icon as keyof typeof iconComponents] || MessageCircle;
             return (

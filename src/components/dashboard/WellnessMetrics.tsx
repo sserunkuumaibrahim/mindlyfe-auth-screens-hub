@@ -57,25 +57,25 @@ const WellnessMetrics = ({
             <p className="text-sm text-gray-600 mt-2 font-medium">Overall Wellness Score</p>
           </div>
           
-          {/* Metrics Grid */}
-          <div className="grid grid-cols-3 gap-4">
-            <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
-              <Target className="w-6 h-6 text-blue-600 mx-auto mb-2" />
-              <div className="text-lg font-bold text-gray-900">{goalsCompleted}/{totalGoals}</div>
+          {/* Metrics Grid - Responsive: 3 columns on mobile, 3 columns on desktop */}
+          <div className="grid grid-cols-3 gap-3 lg:gap-4">
+            <div className="text-center p-3 lg:p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+              <Target className="w-5 h-5 lg:w-6 lg:h-6 text-blue-600 mx-auto mb-2" />
+              <div className="text-base lg:text-lg font-bold text-gray-900">{goalsCompleted}/{totalGoals}</div>
               <div className="text-xs text-gray-600 font-medium">Goals</div>
             </div>
             
-            <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-red-50 rounded-xl border border-orange-100">
-              <Flame className="w-6 h-6 text-orange-600 mx-auto mb-2" />
-              <div className="text-lg font-bold text-gray-900">{currentStreak}</div>
+            <div className="text-center p-3 lg:p-4 bg-gradient-to-br from-orange-50 to-red-50 rounded-xl border border-orange-100">
+              <Flame className="w-5 h-5 lg:w-6 lg:h-6 text-orange-600 mx-auto mb-2" />
+              <div className="text-base lg:text-lg font-bold text-gray-900">{currentStreak}</div>
               <div className="text-xs text-gray-600 font-medium">Day Streak</div>
             </div>
             
-            <div className="text-center p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border border-green-100">
+            <div className="text-center p-3 lg:p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border border-green-100">
               <div className="flex items-center justify-center mb-2">
                 {getTrendIcon(moodTrend)}
               </div>
-              <div className="text-lg font-bold text-gray-900 capitalize">{moodTrend}</div>
+              <div className="text-base lg:text-lg font-bold text-gray-900 capitalize">{moodTrend}</div>
               <div className="text-xs text-gray-600 font-medium">Mood</div>
             </div>
           </div>

@@ -119,7 +119,8 @@ const Dashboard = () => {
         notificationCount={notificationCount}
       />
       
-      <main className="relative z-10 px-4 py-6 pb-20 space-y-6">
+      {/* Desktop: Container with max width, Mobile: Full width */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-6 pb-20">
         {isRefreshing && (
           <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-white/90 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg animate-fade-in">
             <div className="flex items-center gap-3">
@@ -129,28 +130,41 @@ const Dashboard = () => {
           </div>
         )}
         
-        <div className="animate-fade-in">
-          <WellnessMetrics
-            overallScore={wellnessData.overallScore}
-            goalsCompleted={wellnessData.goalsCompleted}
-            totalGoals={wellnessData.totalGoals}
-            currentStreak={wellnessData.currentStreak}
-            moodTrend={wellnessData.moodTrend}
-          />
+        {/* Desktop: 2-column grid, Mobile: single column */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column - Main Content */}
+          <div className="lg:col-span-2 space-y-6">
+            <div className="animate-fade-in">
+              <WellnessMetrics
+                overallScore={wellnessData.overallScore}
+                goalsCompleted={wellnessData.goalsCompleted}
+                totalGoals={wellnessData.totalGoals}
+                currentStreak={wellnessData.currentStreak}
+                moodTrend={wellnessData.moodTrend}
+              />
+            </div>
+            
+            <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              <TodayProgress progressItems={progressItems} />
+            </div>
+            
+            <div className="animate-fade-in lg:hidden" style={{ animationDelay: '0.2s' }}>
+              <QuickActions actions={quickActions} />
+            </div>
+          </div>
+          
+          {/* Right Column - Sidebar */}
+          <div className="space-y-6">
+            <div className="animate-fade-in hidden lg:block" style={{ animationDelay: '0.2s' }}>
+              <QuickActions actions={quickActions} />
+            </div>
+            
+            <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              <RecentActivity activities={recentActivity} />
+            </div>
+          </div>
         </div>
-        
-        <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
-          <TodayProgress progressItems={progressItems} />
-        </div>
-        
-        <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          <QuickActions actions={quickActions} />
-        </div>
-        
-        <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
-          <RecentActivity activities={recentActivity} />
-        </div>
-      </main>
+      </div>
     </div>
   );
 };
