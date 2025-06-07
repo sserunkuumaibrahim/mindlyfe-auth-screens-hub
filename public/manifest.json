@@ -5,9 +5,11 @@
   "description": "Anonymous mental health community and wellness platform",
   "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "theme_color": "#21A9E1",
   "background_color": "#FFFFFF",
+  "scope": "/",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/lovable-uploads/0a9198ee-9723-465f-b3fd-397599a1f756.png",
@@ -25,14 +27,24 @@
   "categories": ["health", "lifestyle", "medical"],
   "lang": "en",
   "dir": "ltr",
-  "scope": "/",
-  "prefer_related_applications": false,
   "shortcuts": [
     {
       "name": "Community",
       "short_name": "Community",
       "description": "Access the mental health community",
       "url": "/community",
+      "icons": [
+        {
+          "src": "/lovable-uploads/0a9198ee-9723-465f-b3fd-397599a1f756.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Chat with LyfBot",
+      "short_name": "LyfBot", 
+      "description": "AI mental health support",
+      "url": "/chat/lyfbot",
       "icons": [
         {
           "src": "/lovable-uploads/0a9198ee-9723-465f-b3fd-397599a1f756.png",

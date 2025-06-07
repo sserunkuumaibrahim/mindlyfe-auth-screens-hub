@@ -9,11 +9,13 @@ import QuickActions from '@/components/dashboard/QuickActions';
 import SupportCenter from '@/components/dashboard/SupportCenter';
 import CalendarWidget from '@/components/dashboard/CalendarWidget';
 import RecentAccomplishments from '@/components/dashboard/RecentAccomplishments';
+import MobileNavigation from '@/components/ui/mobile-navigation';
+import PWAInstallPrompt from '@/components/ui/pwa-install-prompt';
 import { progressItems, activities } from '@/data/dashboardData';
 
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100/50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100/50 pb-20 md:pb-0">
       <DashboardHeader firstName="Alex" notificationCount={3} />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
@@ -70,6 +72,12 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Navigation */}
+      <MobileNavigation />
+      
+      {/* PWA Install Prompt */}
+      <PWAInstallPrompt />
     </div>
   );
 };
